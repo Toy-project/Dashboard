@@ -1,0 +1,50 @@
+//
+// Footer
+//
+
+.site-footer {
+  clear: both;
+  border-top: 1px solid gray('200');
+  margin-top: map-get($spacers, 2);
+  color: gray('200');
+  font-size: $font-size-sm;
+  background-color: color('blue-dark');
+
+  .inner {
+    padding: map-get($spacers, 3);
+    position: relative;
+    max-width: map-get($grid-breakpoints, 'xl');
+    margin: 0 auto;
+  }
+
+  .sns {
+    position: absolute;
+    top: 50%;
+    right: map-get($spacers, 3);
+    transform: translateY(-50%);
+
+    > li {
+      font-size: $font-size-base * 1.2;
+      display: inline-block;
+      padding: map-get($spacers, 1) map-get($spacers, 2);
+
+      &:first-child {
+        font-size: $font-size-base * 1.1;
+      }
+    }
+  }
+
+  @include media-breakpoint-up('sm') { 
+    margin-top: map-get($spacers, 4);
+
+    .sns {
+      > li {
+        font-size: $font-size-base * 1.4;
+
+        &:first-child {
+          font-size: $font-size-base * 1.3;
+        }
+      }
+    }
+  } 
+}

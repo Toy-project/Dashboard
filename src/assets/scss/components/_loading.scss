@@ -1,0 +1,32 @@
+//
+// Loading
+//
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: $zindex-loading;
+  align-content: center;
+  text-align: center;
+
+  &.loading-fixed {
+    position: fixed;
+  }
+
+  .message {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: $font-size-sm;
+    line-height: $line-height-base;
+    margin-top: 55px;
+    color: gray('700');
+  }
+}

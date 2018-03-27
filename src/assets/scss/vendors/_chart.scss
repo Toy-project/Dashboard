@@ -1,0 +1,32 @@
+// 
+// Custom Chart Design
+//
+
+.ngx-charts {
+  float: none !important;
+}
+
+ngx-charts-number-card .cell {
+  stroke: gray('200');
+}
+
+ngx-charts-number-card .cell .card {
+  rx: 0;
+  ry: 0;
+}
+
+ngx-charts-number-card .cell .trimmed-label {
+  height: $font-size-lg !important;
+}
+
+ngx-charts-number-card .cell .trimmed-label p {
+  font-size: $font-size-base !important;
+  height: $font-size-lg;
+  line-height: $line-height-base;
+  color: gray('600') !important;
+}
+
+ngx-charts-number-card .cell .value-text {
+  fill: color('blue-dark') !important;
+  stroke: color('blue-dark');
+}

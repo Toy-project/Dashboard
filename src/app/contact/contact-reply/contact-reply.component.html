@@ -1,0 +1,23 @@
+<!-- loading -->
+<app-loading [loading]="replyLoding"></app-loading>
+<!-- reply form -->
+<form [formGroup]="replyForm" (ngSubmit)="onSubmit(replyForm.value)" class="modal">
+  <p class="modal-title"><strong>REPLY</strong></p>
+  <!-- title -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Message Title" type="text" formControlName="title" required>
+    <mat-error *ngIf="title.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- text -->
+  <mat-form-field floatLabel="always">
+    <textarea matInput #messageTextarea maxlength="1000" placeholder="Message Text" required formControlName="text"></textarea>
+    <mat-error *ngIf="text.invalid">{{message.requiredMessage}}</mat-error>
+    <mat-hint align="end">{{messageTextarea.value.length}} / 1000</mat-hint>
+  </mat-form-field>
+  <!-- close button -->
+  <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
+    <i class="fa fa-times icons" aria-label="modal close icon"></i>
+  </button>
+  <!-- submit button -->
+  <button type="submit" mat-raised-button class="btn-block">REPLY</button>
+</form>

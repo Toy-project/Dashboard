@@ -1,0 +1,39 @@
+//
+// Contact
+//
+
+.intro {
+  text-align: center;
+  padding: map-get($spacers, 5) 0;
+
+  .icon {
+    font-size: $font-size-base * 5;
+    color: gray('400');
+  }
+
+  .text {
+    padding-top: map-get($spacers, 4);
+    font-size: $font-size-base;
+    line-height: $line-height-lg;
+
+    strong {
+      color: theme-color('primary');
+    }
+  }
+}
+
+.contact {
+  
+  @include media-breakpoint-up('lg') {
+    margin-left: -20px;
+
+    .contents {
+      float: left;
+      width: calc(50% - 20px);
+      margin-left: 20px;
+      margin-top: 0;
+    }
+
+    @include clearfix();
+  }
+}

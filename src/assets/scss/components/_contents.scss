@@ -1,0 +1,60 @@
+//
+// Contents
+//
+
+.contents {
+  position: relative;
+  background-color: color('white');
+  border: 1px solid gray('200');
+  padding: map-get($spacers, 3);
+  min-height: 150px;
+
+  &.no-border {
+    border: 0;
+  }
+
+  &:not(:first-child) {
+    margin-top: map-get($spacers, 3);
+  }
+
+  .contents-title {
+    font-size: $font-size-base;
+    color: gray('700');
+    padding-bottom: map-get($spacers, 3);
+  }
+
+  @include media-breakpoint-up('sm') {
+    min-height: 300px;
+  }
+}
+
+// responsive
+
+.contents {
+  &.project {
+    text-align: left;
+  }
+
+  @include media-breakpoint-up('sm') {
+    &.project,
+    &.github {
+      float: left;
+      width: calc(50% - 10px);
+      height: 300px;
+
+      .table-container {
+        max-height: 220px;
+        overflow: scroll;
+      }
+    }
+
+    &.github {
+      margin-top: 0;
+      margin-left: 20px;
+    }
+  }
+}
+
+.clearfix {
+  @include clearfix();
+}

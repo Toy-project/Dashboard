@@ -1,0 +1,5 @@
+<!-- loading -->
+<div *ngIf="loading" [class]="fixed ? 'loading loading-fixed' : 'loading'">
+  <mat-spinner strokeWidth="8"></mat-spinner>
+  <p class="message">{{message}}</p>
+</div>

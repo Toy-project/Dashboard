@@ -1,0 +1,19 @@
+//
+// Button
+//
+
+.btn-change-level {
+  display: block;
+  width: 100%;
+  font-size: $font-size-base * 1.2;
+  color: theme-color('primary');
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}

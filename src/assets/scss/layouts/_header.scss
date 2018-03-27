@@ -1,0 +1,83 @@
+//
+// Header
+//
+
+.site-header {
+  position: relative;
+  background-color: color('white');
+  border-bottom: 1px solid gray('200');
+
+  .inner {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    padding: map-get($spacers, 2) map-get($spacers, 3);
+    color: color('blue-dark');
+    max-width: map-get($grid-breakpoints, 'xl');
+  }
+
+  .title {
+    flex: auto;
+    font-size: $font-size-base;
+    color: theme-color('primary');
+
+    > a {
+      display: block;
+      height: 100%;
+    }
+  }
+
+  .right {
+    display: none;
+
+    button {
+      border: 1px solid gray('200');
+      border-radius: 50%;
+
+      i {
+        display: block;
+      }
+    }
+  }
+
+  .icons {
+    font-size: $font-size-base * 1.2;
+  }
+
+  .user {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    
+    img {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid gray('200');
+      background-color: color('white');
+      overflow: hidden;
+    }
+
+    .count {
+      position: absolute;
+      top: -(map-get($spacers, 1));
+      left: -(map-get($spacers, 1));
+      padding: map-get($spacers, 1) (map-get($spacers, 1) * 1.5);
+      background-color: theme-color('primary');
+      color: color('white');
+      font-size: 0.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  @include media-breakpoint-up('xl') {
+    .right {
+      display: block;
+    }
+    
+    .btn-menu {
+      display: none;
+    }
+  }
+}

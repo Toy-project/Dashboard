@@ -1,0 +1,30 @@
+//
+// Container
+//
+
+.site-container {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+.site-contents {
+  min-height: 500px;
+
+  @include clearfix();
+
+  @include media-breakpoint-up('xl') {
+    min-height: 700px;
+  }
+}
+
+.site-inner-contents {
+  margin: 0 auto;
+  max-width: map-get($grid-breakpoints, 'xl');
+  padding: map-get($spacers, 3);
+
+  .site-title {
+    padding: 0 0 map-get($spacers, 2);
+    font-size: $font-size-lg;
+    color: gray('700');
+  }
+}

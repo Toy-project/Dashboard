@@ -1,0 +1,66 @@
+<section class="site-inner-contents">
+  <!-- title -->
+  <h2 class="site-title">Contact</h2>
+  <!-- intro -->
+  <div class="intro">
+    <span class="icon"><i class="far fa-envelope"></i></span>
+    <p class="text">
+      TOY-PROJECT에 궁금하신 사항은<br>
+      아래 <strong>Message</strong> 혹은 <strong>Email</strong>을 남겨주세요!
+    </p>
+  </div>
+  <!-- contact form -->
+  <div class="contact">
+    <!-- message -->
+    <div class="contents">
+      <h3 class="contents-title">Send Message</h3>
+      <!-- loading -->
+      <app-loading [loading]="messageLoading"></app-loading>
+      <!-- message form -->
+      <form [formGroup]="messageForm" (ngSubmit)="onSendMessage(messageForm.value)" class="form">
+        <mat-form-field floatLabel="always">
+          <mat-select placeholder="Select Message Type" required formControlName="type">
+            <mat-option>Select Message Type</mat-option>
+            <mat-option value="qna">QnA</mat-option>
+            <mat-option value="error">Error</mat-option>
+            <mat-option value="etc">Etc</mat-option>
+          </mat-select>
+          <mat-error *ngIf="messageType.invalid">{{message.requiredMessage}}</mat-error>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <input matInput placeholder="Message Title" required formControlName="title">
+          <mat-error *ngIf="messageTitle.invalid">{{message.requiredMessage}}</mat-error>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <textarea matInput #messageTextarea maxlength="1000" placeholder="Message Text" required formControlName="text"></textarea>
+          <mat-error *ngIf="messageText.invalid">{{message.requiredMessage}}</mat-error>
+          <mat-hint align="end">{{messageTextarea.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+        <button type="submit" mat-raised-button class="btn-block">Send Message</button>
+      </form>
+    </div>
+    <!-- email -->
+    <div class="contents">
+      <h3 class="contents-title">Send Email</h3>
+      <!-- loading -->
+      <app-loading [loading]="emailLoading"></app-loading>
+      <!-- email form -->
+      <form [formGroup]="emailForm" (ngSubmit)="onSendEmail(emailForm.value)" class="form">
+        <mat-form-field floatLabel="always">
+          <input matInput placeholder="Yout Email" required formControlName="email">
+          <mat-error *ngIf="email.invalid">{{message.validatorEmail}}</mat-error>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <input matInput placeholder="Email Title" required formControlName="title">
+          <mat-error *ngIf="emailTitle.invalid">{{message.requiredMessage}}</mat-error>
+        </mat-form-field>
+        <mat-form-field floatLabel="always">
+          <textarea matInput #emailTextarea maxlength="2000" placeholder="Email Text" required formControlName="text"></textarea>
+          <mat-error *ngIf="emailText.invalid">{{message.requiredMessage}}</mat-error>
+          <mat-hint align="end">{{emailTextarea.value.length}} / 2000</mat-hint>
+        </mat-form-field>
+        <button type="submit" mat-raised-button class="btn-block">Send Email</button>
+      </form>
+    </div>
+  </div>
+</section>

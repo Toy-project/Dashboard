@@ -1,0 +1,137 @@
+<section class="site-inner-contents">
+  <!-- access loading -->
+  <app-loading [loading]="memberService.access.loading" [message]="message.accessLoading" [fixed]="loadingFixed"></app-loading>
+  <!-- access loading end -->
+  <div *ngIf="!memberService.access.loading">
+    <!-- failed access -->
+    <app-access *ngIf="!memberService.access.level" [message]="message.requiredLogin"></app-access>
+    <!-- success access -->
+    <div *ngIf="memberService.access.level">
+      <!-- header -->
+      <header class="member-header">
+        <div class="contents">
+          <img src="{{memberService.user.photoURL ? memberService.user.photoURL : defaultImage}}" alt="user thumbnail" class="photo">
+          <strong class="email">{{memberService.user.email}}</strong>
+        </div>
+      </header>
+      <!-- message -->
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <!-- header -->
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>Message</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!-- message list -->
+          <div class="none-message" *ngIf="!messageList.length">
+            메세지가 없습니다.
+          </div>
+          <mat-list role="list" class="list-message" *ngIf="messageList.length">
+            <mat-list-item *ngFor="let message of messageList; let i = index;" role="listitem" (click)="readMessage(message.id, message)">
+              <span mat-list-icon [ngSwitch]="message.data().type" [class]="message.data().read ? 'text-success' : 'text-danger'">
+                <i class="fas fa-question-circle" *ngSwitchCase="'qna'"></i>
+                <i class="fas fa-exclamation-circle" *ngSwitchCase="'error'"></i>
+                <i class="fas fa-comment-alt" *ngSwitchCase="'etc'"></i>
+                <i class="fas fa-comments" *ngSwitchDefault></i>
+              </span>
+              <h5 mat-line class="title">{{message.data().title}}</h5>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <!-- basic info -->
+        <mat-expansion-panel [expanded]="messageList ? 'false' : 'true'">
+          <!-- loading -->
+          <app-loading [loading]="infoLoading"></app-loading>
+          <!-- header -->
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>Member Info</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!-- info form -->
+          <form [formGroup]="infoForm" (ngSubmit)="updateUserProfile(infoForm.value)" class="form">
+            <!-- email -->
+            <mat-form-field floatLabel="always">
+              <input matInput placeholder="Email Address ({{memberService.user.emailVerified ? message.emailVerified : message.emailVerifiedNot}})" type="text" value="{{memberService.user.email}}" readonly>
+              <button type="button" mat-icon-button [class]="memberService.user.emailVerified ? 'btn-verify text-success' : 'btn-verify text-danger'">
+                <i *ngIf="!memberService.user.emailVerified" (click)="sendVerifyEmail()" class="fa fa-exclamation-circle" aria-label="email verify icon"></i>
+                <i *ngIf="memberService.user.emailVerified" class="fa fa-exclamation-circle" aria-label="email verify icon"></i>
+              </button>
+            </mat-form-field>
+            <!-- diabled -->
+            <mat-form-field floatLabel="always" *ngIf="!modified">
+              <input matInput placeholder="Profile Photo Url" type="text" value="{{memberService.user.photoURL ? memberService.user.photoURL : message.notPhoto}}" readonly class="user-profile-photo">
+            </mat-form-field>
+            <!-- modify -->
+            <div class="form-group" *ngIf="modified">
+              <span class="form-group-title">Profile Photo Upload</span>
+              <label class="form-control-file">
+                <input formControlName="photo" type="file" accept=".jpg, .jpeg, .png, .gif" #file (change)="onChangeFile(img, file)">
+              </label>
+              <div class="form-control-file-preview">
+                <img src="{{memberService.user.photoURL ? memberService.user.photoURL : defaultImage}}" alt="preview image" #img>
+              </div>
+            </div>
+            <!-- etc info -->
+            <mat-form-field floatLabel="always">
+              <input matInput placeholder="Last Login Date" type="text" value="{{memberService.user.lastLoginAt | date: 'yyyy-MM-dd'}}" readonly>
+            </mat-form-field>
+            <mat-form-field floatLabel="always">
+              <input matInput placeholder="Create Date" type="text" value="{{memberService.user.createdAt | date: 'yyyy-MM-dd'}}" readonly>
+            </mat-form-field>
+            <!-- button -->
+            <button type="button" mat-raised-button *ngIf="!modified" (click)="modified = !modified" class="btn-block">MODIFY</button>
+            <button type="button" mat-raised-button *ngIf="modified" (click)="modified = !modified" class="btn-block">CANCLE</button>
+            <button type="submit" mat-raised-button *ngIf="modified" class="btn-block">SAVE</button>
+          </form>
+        </mat-expansion-panel>
+    
+        <!-- change password -->
+        <mat-expansion-panel>
+          <!-- loading -->
+          <app-loading [loading]="passwordLoading"></app-loading>
+          <!-- header -->
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>Change Password</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!-- change password form -->
+          <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword(changePasswordForm.value)" class="form">
+            <mat-form-field floatLabel="always">
+              <input matInput placeholder="New Password" required type="password" formControlName="newPassword">
+              <mat-error *ngIf="newPassword.invalid">{{getPasswordErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field floatLabel="always">
+              <input matInput placeholder="New Password Confirm" required type="password" formControlName="newPasswordConfirm" (keyup)="comparePasswordEvent($event)">
+              <small *ngIf="comparePassword" class="form-error text-danger">{{getPasswordConfrimErrorMessage()}}</small>
+            </mat-form-field>
+            <!-- button -->
+            <button type="submit" mat-raised-button class="btn-block">CHANGE</button>
+          </form>
+        </mat-expansion-panel>
+    
+        <!-- signout -->
+        <mat-expansion-panel>
+          <app-loading [loading]="deleteLoading" [fixed]="true"></app-loading>
+          <!-- header -->
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>Delete</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!-- delete user -->
+          <div class="form text-center">
+            <p>
+              서비스를 탈퇴할 경우<br>
+              <strong class="text-danger">회원의 모든 정보가</strong> 삭제됩니다.<br>
+              서비스 탈퇴를 원하시나요?
+            </p>
+            <button type="button" mat-raised-button (click)="deleteUser()" class="btn-block mt-3">DELETE</button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</section>

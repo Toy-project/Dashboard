@@ -1,0 +1,28 @@
+//
+// Member
+//
+
+.member-header {
+  margin-bottom: 10px;
+  text-align: center;
+  
+  .contents {
+    min-height: auto;
+  }
+  
+  .photo {
+    margin: map-get($spacers, 3) auto 0;
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: $border-width solid gray('200');
+    overflow: hidden;
+  }
+
+  .email {
+    display: block;
+    font-size: $font-size-base;
+    margin: map-get($spacers, 3) 0;
+  }
+}

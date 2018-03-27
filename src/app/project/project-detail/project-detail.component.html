@@ -1,0 +1,89 @@
+<!-- project detail -->
+<article class="site-inner-contents">
+  <!-- project -->
+  <div class="project" *ngIf="project">
+    <!-- type -->
+    <p class="project-type">
+      <span [ngSwitch]="project.type" class="icons">
+        <i class="fab fa-edge text-blue" aria-label="web icon" *ngSwitchCase="'web'"></i>
+        <i class="fab fa-android text-green" aria-label="android icon" *ngSwitchCase="'android'"></i>
+        <i class="fab fa-apple text-gray-dark" aria-label="apple icon" *ngSwitchCase="'ios'"></i>
+        <i class="fas fa-mobile-alt text-indigo" aria-label="hybrid icon" *ngSwitchCase="'hybrid'"></i>
+        <i class="fab fa-hubspot text-cyan" aria-label="api icon" *ngSwitchCase="'api'"></i>
+      </span>
+      {{project.type | uppercase}}
+    </p>
+    <!-- date -->
+    <p class="project-date">{{project.startDate | date: "yyyy-MM-dd"}} ~ {{project.endDate | date: "yyyy-MM-dd"}}</p>
+    <!-- link -->
+    <div class="project-link">
+      <ul>
+        <li>
+          <a href="{{project.git}}" target="_blank" class="link">
+            <i class="fab fa-github" aria-label="github icon"></i>
+          </a>
+        </li>
+        <li>
+          <a href="{{project.url}}" target="_blank" class="link" *ngIf="project.url">
+            <i class="fas fa-link" aria-label="link icon"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- button -->
+    <div class="project-btn">
+      <button type="button" disabled>
+        <span class="icons"><i class="fa fa-eye" aira-label="view icon"></i></span>
+        <span class="number">{{project.view}}</span>
+      </button>
+      <button type="button">
+        <span class="icons"><i class="fa fa-share-alt" aira-label="share icon"></i></span>
+        <span class="number">{{project.share}}</span>
+      </button>
+      <button type="button" (click)="updateProjectLike(key)">
+        <span class="icons"><i class="fab fa-gratipay" aira-label="like icon"></i></span>
+        <span class="number">{{project.like}}</span>
+      </button>
+    </div>
+    <!-- language -->
+    <div class="project-lang" *ngIf="projectLang">
+      <span class="lang" *ngFor="let lang of projectLang">{{lang}}</span>
+    </div>
+    <!-- title -->
+    <h2 class="project-title">
+      {{project.title}}
+    </h2>
+    <!-- sub title -->
+    <p class="project-sub-title">
+      {{project.subTitle}}
+    </p>
+    <!-- info -->
+    <div class="project-explain">
+      {{project.explain}}
+    </div>
+    <!-- photo -->
+    <div class="project-photo" *ngIf="project.photo">
+      <!-- color -->
+      <div class="project-color" *ngIf="projectColor">
+        <span class="color" *ngFor="let color of projectColor" [style.backgroundColor]="color"></span>
+      </div>
+      <div class="image" *ngFor="let photo of project.photo; let i = index;">
+        <img src="{{photo}}" alt="photo-{{i}}">
+      </div>
+    </div>
+    <!-- etc button -->
+    <div class="project-manage" *ngIf="memberService.access.level < 3 ? false : true">
+      <button mat-fab color="primary" [matMenuTriggerFor]="menu">
+        <i class="fas fa-plus"></i>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <span><i class="fas fa-edit"></i>&nbsp;&nbsp;MODIFY</span>
+        </button>
+        <button mat-menu-item (click)="deleteProject()">
+          <span><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;DELETE</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,22 @@
+<!-- loading -->
+<app-loading [loading]="loginLoading"></app-loading>
+<!-- login -->
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="modal">
+  <p class="modal-title"><strong>LOGIN</strong></p>
+  <!-- email -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Email Address" required formControlName="email">
+    <mat-error *ngIf="email.invalid">{{message.requiredEmail}}</mat-error>
+  </mat-form-field>
+  <!-- password -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Password" required type="password" formControlName="password">
+    <mat-error *ngIf="password.invalid">{{message.requiredPassword}}</mat-error>
+  </mat-form-field>
+  <!-- button -->
+  <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
+    <i class="fa fa-times icons" aria-label="modal close icon"></i>
+  </button>
+  <button type="submit" mat-raised-button class="btn-block">LOGIN</button>
+  <button type="button" mat-raised-button class="btn-block" (click)="goSignup()">SIGNUP</button>
+</form>

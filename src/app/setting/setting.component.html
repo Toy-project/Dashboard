@@ -1,0 +1,43 @@
+<section class="site-inner-contents">
+  <!-- access loading -->
+  <app-loading [loading]="memberService.access.loading" [message]="message.accessLoading" [fixed]="loadingFixed"></app-loading>
+  <!-- access loading end -->
+  <div *ngIf="!memberService.access.loading">
+    <!-- failed access -->
+    <app-access *ngIf="memberService.access.level < 3 ? true : false" [message]="message.failedAccess"></app-access>
+    <!-- success access -->
+    <div *ngIf="memberService.access.level < 3 ? false : true">
+      <!-- title -->
+      <h2 class="site-title">Setting</h2>
+      <!-- setting -->
+      <mat-accordion>
+        <!-- default image -->
+        <mat-expansion-panel>
+          <!-- loading -->
+          <app-loading [loading]="imageLoading"></app-loading>
+          <!-- header -->
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>Member Default Image</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <!-- image form -->
+          <form [formGroup]="imageForm" (ngSubmit)="defaultImageUpload(imageForm.value)" class="form">
+            <!-- thumbnail -->
+            <div class="form-group">
+              <span class="form-group-title">Member Default Photo <span *ngIf="defaultInfo">&nbsp;(Last Update: {{defaultInfo.lastUpdatedAt | date: "yyyy-MM-dd h:mm a"}})</span></span>
+              <label class="form-control-file">
+                <input type="file" formControlName="src" accept=".jpg, .jpeg, .png, .gif" #file (change)="onChangeImageFile(img, file)">
+              </label>
+              <div class="form-control-file-preview">
+                <img src="{{defaultInfo ? defaultInfo.src : ''}}" alt="preview image" #img>
+              </div>
+            </div>
+            <!-- button -->
+            <button type="submit" mat-raised-button class="btn-block">SAVE</button>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Material Import
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+// Base Import
+@import './assets/scss/base/normalize';
+@import './assets/scss/base/common';
+
+// Utils Import
+@import './assets/scss/utils/functions';
+@import './assets/scss/utils/variables';
+@import './assets/scss/utils/breakpoints';
+@import './assets/scss/utils/mixins';
+
+// Layouts Import
+@import './assets/scss/layouts/container';
+@import './assets/scss/layouts/header';
+@import './assets/scss/layouts/nav';
+@import './assets/scss/layouts/footer';
+
+// Component Import
+@import './assets/scss/components/contents';
+@import './assets/scss/components/form';
+@import './assets/scss/components/loading';
+@import './assets/scss/components/spacers';
+@import './assets/scss/components/text';
+@import './assets/scss/components/member';
+@import './assets/scss/components/project';
+@import './assets/scss/components/chart';
+@import './assets/scss/components/table';
+@import './assets/scss/components/modal';
+@import './assets/scss/components/access';
+@import './assets/scss/components/button';
+@import './assets/scss/components/contact';
+@import './assets/scss/components/message';
+@import './assets/scss/components/notFound';
+
+// Vendors Import
+@import './assets/scss/vendors/material';
+@import './assets/scss/vendors/carousel';
+@import './assets/scss/vendors/chart';
+@import './assets/scss/vendors/font-awesome';

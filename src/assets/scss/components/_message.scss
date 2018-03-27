@@ -1,0 +1,55 @@
+//
+// Message
+//
+
+.none-message {
+  text-align: center;
+  font-size: $font-size-sm;
+  color: gray('700');
+}
+
+.list-message {
+  .mat-list-item {
+    border-bottom: 1px solid gray('200');
+
+    &:first-child {
+      border-top: 1px solid gray('200');
+    }
+  }
+}
+
+.detail-message {
+  .title {
+    padding: map-get($spacers, 2) 0 map-get($spacers, 3);
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: gray('700');
+  }
+
+  .text {
+    font-size: $font-size-base;
+    color: gray('600');
+    line-height: $line-height-base;
+    word-wrap: break-word;
+    max-height: 250px;
+    overflow-y: scroll;
+  }
+
+  .sub {
+    padding: map-get($spacers, 3) 0;
+    font-size: $font-size-base * 0.7;
+    color: gray('500');
+  }
+
+  .button {
+    button {
+      border-radius: 50%;
+      border: 1px solid gray('200');
+      font-size: $font-size-base;
+      
+      i {
+        display: block;
+      }
+    }
+  }
+}

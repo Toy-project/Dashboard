@@ -1,0 +1,22 @@
+//
+// Access
+//
+
+.access {
+  padding: (map-get($spacers, 5) * 2) 0;
+  text-align: center;
+  font-size: $font-size-lg;
+  line-height: $line-height-base;
+
+  .icons {
+    color: theme-color('primary');
+    font-size: $font-size-base * 3;
+  }
+
+  strong {
+    display: block;
+    color: theme-color('primary');
+    font-size: $font-size-base * 2;
+    padding: map-get($spacers, 3);
+  }
+}

@@ -1,0 +1,141 @@
+//
+// Login & Signup
+//
+
+.form {
+  position: relative;
+
+  .form-error {
+    position: absolute;
+    bottom: -(map-get($spacers, 3));
+    font-size: 0.65rem;
+  }
+  
+  .btn-verify {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: $font-size-base * 1.1;
+  }
+
+  .btn-block {
+    display: block;
+    width: 100%;
+    box-shadow: none !important;
+    border: 1px solid gray('200');
+    margin-top: map-get($spacers, 2);
+  }
+}
+
+.form-group {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: map-get($spacers, 2);
+  }
+  
+  .form-valid {
+    font-size: $font-size-base * 0.8;
+    padding: map-get($spacers, 1) map-get($spacers, 2) 0;
+  }
+
+  .form-group-title {
+    font-size: 0.65rem;
+    color: gray('600');
+    padding-bottom: map-get($spacers, 2);
+  }
+}
+
+.form-control {
+  width: 100%;
+  display: block;
+  padding: map-get($spacers, 2) map-get($spacers, 3);
+  background-color: color('white');
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: gray('800');
+  border: 1px solid gray('200');
+
+  &[readonly],
+  &[disabled] {
+    background-color: gray('200');
+  }
+}
+
+.form-control-file {
+  position: relative;
+  display: block;
+  border: $border-width solid gray('200');
+  margin: map-get($spacers, 1) 0;
+  font-size: 0.7rem;
+  color: gray('600');
+  padding: map-get($spacers, 2);
+  text-align: center;
+
+  &::before {
+    content: 'IMAGE UPLOAD';
+  }
+
+  > input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+
+  + .form-control-file-preview {
+    padding: map-get($spacers, 1);
+    min-height: 150px;
+    text-align: center;
+    border: 1px solid gray('200');
+    
+    > img {
+      max-height: 150px;
+
+      @include text-hide();
+    }
+  }
+
+  + .form-control-file-list {
+    min-height: 150px;
+    border: 1px solid gray('200');
+
+    > li {
+      position: relative;
+      font-size: 0.7rem;
+      color: gray('600');
+      line-height: $line-height-base;
+      padding: map-get($spacers, 2);
+
+      small {
+        padding-left: map-get($spacers, 1);
+      }
+
+      &::before {
+        content: '';
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        background-color: gray('600');
+        margin-right: map-get($spacers, 2);
+      }
+      
+      .btn-close {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        padding: map-get($spacers, 2);
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

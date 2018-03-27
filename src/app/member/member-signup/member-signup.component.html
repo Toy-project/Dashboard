@@ -1,0 +1,22 @@
+<!-- loading -->
+<app-loading [loading]="signupLoading"></app-loading>
+<!-- signup -->
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)" class="modal">
+  <p class="modal-title"><strong>SIGNUP</strong></p>
+  <!-- email -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Email Address" required formControlName="email">
+    <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!-- password -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Password" required minlength="8" type="password" formControlName="password">
+    <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <!-- close button -->
+  <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
+    <i class="fa fa-times icons" aria-label="modal close icon"></i>
+  </button>
+  <!-- submit button -->
+  <button type="submit" mat-raised-button class="btn-block">SIGNUP</button>
+</form>

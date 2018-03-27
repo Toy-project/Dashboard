@@ -1,0 +1,24 @@
+//
+// NotFound
+//
+
+.not-found {
+  font-size: $font-size-base;
+  line-height: $line-height-lg;
+  text-align: center;
+  padding: (map-get($spacers, 5) * 2) 0;
+
+  .number {
+    display: block;
+    font-size: $font-size-base * 8;
+    color: theme-color('primary');
+  }
+
+  @include media-breakpoint-up('md') {
+    font-size: $font-size-lg;
+
+    .number {
+      font-size: $font-size-base * 10;
+    }
+  }
+}

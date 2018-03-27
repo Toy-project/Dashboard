@@ -1,0 +1,118 @@
+<!-- home -->
+<section class="site-inner-contents">
+  <!-- title -->
+  <h2 class="site-title">Home</h2>
+  <div class="clearfix mt-2">
+    <!-- project -->
+    <div class="contents project">
+      <h3 class="contents-title">Projects</h3>
+      <!-- loading -->
+      <app-loading [loading]="projectListLoading"></app-loading>
+      <!-- project none -->
+      <div *ngIf="!projectListLoading">
+        <app-project-none *ngIf="projectList.length === 0"></app-project-none>
+      </div>
+      <!-- table -->
+      <div class="table-container" *ngIf="projectList.length > 0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Title</th>
+              <th scope="col">Type</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let project of projectList; let ind = index;">
+              <td>{{ind + 1}}</td>
+              <td class="text-left">
+                <a [routerLink]="['/project', 'detail', project.id]">{{project.data().title}}</a>
+              </td>
+              <td>
+                <span [ngSwitch]="project.data().type" class="icons">
+                  <i class="fab fa-edge text-blue" aria-label="web icon" *ngSwitchCase="'web'"></i>
+                  <i class="fab fa-android text-green" aria-label="android icon" *ngSwitchCase="'android'"></i>
+                  <i class="fab fa-apple" aria-label="apple icon" *ngSwitchCase="'ios'"></i>
+                  <i class="fas fa-mobile-alt text-indigo" aria-label="hybrid icon" *ngSwitchCase="'hybrid'"></i>
+                  <i class="fab fa-hubspot text-cyan" aria-label="api icon" *ngSwitchCase="'api'"></i>
+                </span>
+              </td>
+              <td>
+                <span [ngSwitch]="project.data().status" class="icons">
+                  <i class="fas fa-circle text-green" aria-label="status icon" *ngSwitchCase="'on'"></i>
+                  <i class="fas fa-circle text-red" aria-label="status icon" *ngSwitchCase="'off'"></i>
+                  <i class="fas fa-circle text-yellow" aria-label="status icon" *ngSwitchCase="'pending'"></i>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- github -->
+    <div class="contents github">
+      <h3 class="contents-title">Repositories</h3>
+      <!-- loading -->
+      <app-loading [loading]="githubList ? false : true"></app-loading>
+      <!-- table -->
+      <div class="table-container" *ngIf="githubList">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Star</th>
+              <th scope="col">Forks</th>
+              <th scope="col">Pushed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let github of githubList; let ind = index;">
+              <td>{{ind + 1}}</td>
+              <td>
+                <a href="{{github.html_url}}" target="_blank">{{github.name}}</a>
+              </td>
+              <td>{{github.stargazers_count}}</td>
+              <td>{{github.forks_count}}</td>
+              <td>{{github.pushed_at | date: "yyyy-MM-dd"}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- visit area chart -->
+  <div class="contents chart-area">
+    <h3 class="contents-title">Visits</h3>
+    <!-- loading -->
+    <app-loading [loading]="visitRender ? false : true"></app-loading>
+    <!-- chart -->
+    <div class="chart-area-inner" *ngIf="visitRender">
+      <ngx-charts-area-chart [results]="visitList" [xAxis]="true" [yAxis]="true" [xAxisLabel]="true">
+      </ngx-charts-area-chart>
+    </div>
+  </div>
+  <!-- visit pie grid -->
+  <div class="contents chart-pie-grid">
+    <h3 class="contents-title">Visits Type</h3>
+    <!-- loading -->
+    <app-loading [loading]="visitRender ? false : true"></app-loading>
+    <!-- chart -->
+    <div class="chart-pie-grid-inner" *ngIf="visitRender">
+        <ngx-charts-pie-grid [results]="visitType">
+        </ngx-charts-pie-grid>
+    </div>
+  </div>
+  <!-- visit pie -->
+  <div class="contents chart-pie">
+    <h3 class="contents-title">Visits Browser</h3>
+    <!-- loading -->
+    <app-loading [loading]="visitRender ? false : true"></app-loading>
+    <!-- chart -->
+    <div class="chart-pie-inner" *ngIf="visitRender">
+        <ngx-charts-pie-chart [results]="visitBrowser" [labels]="true">
+        </ngx-charts-pie-chart>
+    </div>
+  </div>
+</section>

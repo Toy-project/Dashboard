@@ -1,0 +1,31 @@
+<!-- header -->
+<header class="site-header">
+  <div class="inner">
+    <!-- title-->
+    <h1 class="title"><a [routerLink]="['home']">TOY-PROJECT</a></h1>
+    <!-- button & user -->
+    <div class="right">
+      <!-- login button -->
+      <button mat-icon-button type="button" (click)="openDialogLogin()" *ngIf="!memberService.user.logined" disableRipple>
+        <i class="fa fa-sign-in-alt icons" aria-label="login icon"></i>
+      </button>
+      <!-- logout button -->
+      <button mat-icon-button (click)="onLogout()" *ngIf="memberService.user.logined" disableRipple>
+        <i class="fa fa-sign-out-alt icons" aria-label="logout icon"></i>
+      </button>
+      <!-- user -->
+      <div class="user" *ngIf="memberService.user.logined">
+        <a [routerLink]="['member', 'mypage']">
+          <img src="{{memberService.user.photoURL ? memberService.user.photoURL : defaultImage}}" alt="thumbnail">
+          <span class="count" *ngIf="messageCount">{{messageCount}}</span>
+        </a>
+      </div>
+    </div>
+    <!-- menu button -->
+    <button mat-icon-button disableRipple class="btn-menu" (click)="navStatusChange(true)">
+      <i class="fas fa-bars icons" aria-label="menu icon"></i>
+    </button>
+  </div>
+</header>
+<!-- nav -->
+<app-layout-nav [navStatus]="navStatus" [messageCount]="messageCount" (navStatusChange)="navStatusChange($event)"></app-layout-nav>

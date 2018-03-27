@@ -1,0 +1,47 @@
+<section class="site-inner-contents">
+  <!-- access loading -->
+  <app-loading [loading]="memberService.access.loading" [message]="message.accessLoading" [fixed]="loadingFixed"></app-loading>
+  <!-- access loading end -->
+  <div *ngIf="!memberService.access.loading">
+    <!-- failed access -->
+    <app-access *ngIf="memberService.access.level < 3 ? true : false" [message]="message.failedAccess"></app-access>
+    <!-- success access -->
+    <div *ngIf="memberService.access.level < 3 ? false : true">
+      <!-- title -->
+      <h2 class="site-title">Member</h2>
+      <div class="contents">
+        <h3 class="contents-title">Member List</h3>
+        <!-- member list -->
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Email</th>
+                <th>Created</th>
+                <th>LastLogin</th>
+                <th>Level</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of memberList; let ind = index;">
+                <td>{{ind + 1}}</td>
+                <td>{{member.data().email}}</td>
+                <td>{{member.data().createdAt | date: "yyyy-MM-dd"}}</td>
+                <td>{{member.data().lastLoginAt | date: "yyyy-MM-dd"}}</td>
+                <td>{{member.data().level}}</td>
+                <td>
+                  <button type="button" class="btn-change-level" (click)="changeLevel(member.id)">
+                    <i class="fas fa-sort-numeric-up" aria-label="levelup icon"></i>
+                    <i class="fas fa-sort-numeric-down" aria-label="leveldown icon"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+<!-- message detail -->
+<div class="modal detail-message">
+  <p class="modal-title"><strong>MESSAGE</strong></p>
+  <!-- message info -->
+  <h4 class="title">{{data.data().title}}</h4>
+  <p class="text">{{data.data().text}}</p>
+  <p class="sub">
+    <span>{{data.data().type | uppercase}}</span> - 
+    <span>{{data.data().createdAt | date: "yyyy-MM-dd h:mm a"}}</span>
+  </p>
+  <!-- delete & reply button -->
+  <div class="text-right button">
+    <button type="button" mat-icon-button (click)="onDelete(data.id)">
+      <i class="fas fa-trash-alt" aria-lable="delete icon"></i>
+    </button>
+    <button type="button" mat-icon-button (click)="onReply(data.id, data.data())">
+      <i class="fas fa-reply" aria-lable="reply icon"></i>
+    </button>
+  </div>
+  <!-- close button -->
+  <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
+    <i class="fa fa-times icons" aria-label="modal close icon"></i>
+  </button>
+</div>

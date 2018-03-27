@@ -1,0 +1,99 @@
+<!-- loading -->
+<app-loading [loading]="createLoading"></app-loading>
+<!-- project form -->
+<form [formGroup]="createForm" (ngSubmit)="createProject(createForm.value)" class="form">
+  <!-- title -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Project Title" required maxlength="50" formControlName="title">
+    <mat-error *ngIf="title.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- sub title -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Project Sub Title" required maxlength="100" formControlName="subTitle">
+    <mat-error *ngIf="subTitle.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- thumbnail -->
+  <div class="form-group">
+    <span class="form-group-title">Project Thumbnail Upload *</span>
+    <label class="form-control-file">
+      <input type="file" formControlName="thumbnail" accept=".jpg, .jpeg, .png, .gif" #file (change)="onChangeThumbnailFile(img, file)">
+    </label>
+    <div class="form-control-file-preview">
+      <img src="" alt="preview image" #img>
+    </div>
+  </div>
+  <!-- explain -->
+  <mat-form-field floatLabel="always">
+    <textarea matInput placeholder="Project Explain" required maxlength="2000" formControlName="explain" #explain></textarea>
+    <mat-error *ngIf="explain.invalid">{{message.requiredMessage}}</mat-error>
+    <mat-hint align="end">{{explain.value.length}} / 2000</mat-hint>
+  </mat-form-field>
+  <!-- start date -->
+  <mat-form-field floatLabel="always">
+    <input matInput [matDatepicker]="dp1" (focus)="dp1.open()" [max]="endDate.value" required placeholder="Project Start Date (mm/dd/yyyy)" formControlName="startDate">
+    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+    <mat-datepicker #dp1 touchUi="true" disabled="false"></mat-datepicker>
+    <mat-error *ngIf="startDate.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- end date -->
+  <mat-form-field floatLabel="always">
+    <input matInput [matDatepicker]="dp2" (focus)="dp2.open()" [min]="startDate.value" required placeholder="Project end Date (mm/dd/yyyy)" formControlName="endDate">
+    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+    <mat-datepicker #dp2 touchUi="true" disabled="false"></mat-datepicker>
+    <mat-error *ngIf="endDate.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- type -->
+  <div class="form-group">
+    <span class="form-group-title">Project Type *</span>
+    <mat-radio-group formControlName="type" required>
+      <mat-radio-button value="web" color="primary">Web</mat-radio-button>
+      <mat-radio-button value="android" color="primary">Andorid Native App</mat-radio-button>
+      <mat-radio-button value="ios" color="primary">IOS Native App</mat-radio-button>
+      <mat-radio-button value="hybrid" color="primary">Hybrid App</mat-radio-button>
+      <mat-radio-button value="api" color="primary">API</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <!-- status -->
+  <div class="form-group">
+    <span class="form-group-title">Project Status *</span>
+    <mat-radio-group formControlName="status" required>
+      <mat-radio-button value="on" color="primary">Working</mat-radio-button>
+      <mat-radio-button value="pending" color="primary">Pending</mat-radio-button>
+      <mat-radio-button value="off" color="primary">Terminate</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <!-- language -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Language or Framework, Libaray (Java, React,...)" formControlName="language" required>
+    <mat-error *ngIf="language.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- git -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Git Url" formControlName="git" required>
+    <mat-error *ngIf="git.invalid">{{message.validatorUrl}}</mat-error>
+  </mat-form-field>
+  <!-- url -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Project Url" formControlName="url">
+    <mat-error *ngIf="url.invalid">{{message.validatorUrl}}</mat-error>
+  </mat-form-field>
+  <!-- color -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Primary Color (#ffffff, #000000)" formControlName="color">
+  </mat-form-field>
+  <!-- photo -->
+  <div class="form-group">
+    <span class="form-group-title">Project Photo Upload (multiple, maxinum: 5)</span>
+    <label class="form-control-file">
+      <input type="file" multiple formControlName="photo" accept=".jpg, .jpeg, .png, .gif" #photo (change)="onChangePhotoFile(photo)">
+    </label>
+    <ul class="form-control-file-list">
+      <li *ngFor="let file of photoFile">
+        <strong>{{file.name}}</strong>&nbsp;<small>({{file.size}})</small>
+        <i aria-label="delete icon" class="fa fa-times btn-close" (click)="onDeletePhotoFile(file)"></i>
+      </li>
+    </ul>
+  </div>
+  <!-- button -->
+  <button type="submit" mat-raised-button class="btn-block">SAVE</button>
+</form>

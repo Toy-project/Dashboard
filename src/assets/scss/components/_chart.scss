@@ -1,0 +1,58 @@
+//
+// Chart
+//
+
+// number chart
+
+.chart-number {
+  width: calc(100% + 33px);
+  height: 300px;
+  margin: 0 -10px;
+
+  @include media-breakpoint-up('sm') {
+    height: 200px;
+  }
+  
+  @include media-breakpoint-up('md') {
+    height: 150px;
+  }
+}
+
+// line chart
+
+.chart-area {
+  
+
+  .chart-area-inner {
+    height: 300px;
+  }
+}
+
+// pie grid chart
+
+.chart-pie-grid {
+
+  .chart-pie-grid-inner {
+    height: 300px;
+  }
+
+  @include media-breakpoint-up('sm') {
+    float: left;
+    width: calc(50% - 10px);
+  }
+}
+
+// pie chart
+
+.chart-pie {
+
+  .chart-pie-inner {
+    height: 300px;
+  }
+
+  @include media-breakpoint-up('sm') {
+    float: left;
+    width: calc(50% - 10px);
+    margin-left: 20px;
+  }
+}

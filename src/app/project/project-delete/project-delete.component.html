@@ -1,0 +1,17 @@
+<!-- loading -->
+<app-loading [loading]="deleteLoading"></app-loading>
+<!-- delete form -->
+<form [formGroup]="deleteForm" (ngSubmit)="onSubmit(deleteForm.value)" class="modal">
+  <p class="modal-title"><strong>DELETE</strong></p>  
+  <!-- title -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Title" required type="text" formControlName="title">
+    <mat-error *ngIf="title.invalid">{{message.requiredMessage}}</mat-error>
+  </mat-form-field>
+  <!-- close button -->
+  <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
+    <i class="fa fa-times icons" aria-label="modal close icon"></i>
+  </button>
+  <!-- submit button -->
+  <button type="submit" mat-raised-button class="btn-block">DELETE</button>
+</form>

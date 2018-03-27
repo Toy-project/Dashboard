@@ -1,0 +1,36 @@
+//
+// Table
+//
+
+.table-container {
+  overflow-x: scroll;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  min-width: 500px;
+  margin-bottom: $spacer;
+  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: middle;
+    border-top: 1px solid gray('200');
+    text-align: center;
+    font-size: $font-size-sm;
+  }
+
+  thead th {
+    vertical-align: bottom;
+  }
+
+  tbody + tbody {
+    border-top: 2px solid gray('200');
+  }
+}

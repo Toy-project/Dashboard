@@ -1,0 +1,20 @@
+<!-- loading -->
+<app-loading [loading]="levelLoading"></app-loading>
+<!-- change level form -->
+<form [formGroup]="changeLevelForm" (ngSubmit)="onSubmit(changeLevelForm.value)" class="modal form">
+  <p class="modal-title"><strong>CHANGE LEVEL</strong></p>
+  <!-- level -->
+  <div class="form-group">
+    <mat-radio-group formControlName="level" required>
+      <mat-radio-button value="1" color="primary">Common(1)</mat-radio-button>
+      <mat-radio-button value="3" color="primary">Manager(3)</mat-radio-button>
+      <mat-radio-button value="5" color="primary">Admin (5)</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <!-- close button -->
+  <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
+    <i class="fa fa-times icons" aria-label="modal close icon"></i>
+  </button>
+  <!-- submit button -->
+  <button type="submit" mat-raised-button class="btn-block">CHANGE</button>
+</form>

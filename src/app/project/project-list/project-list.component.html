@@ -1,0 +1,33 @@
+<!-- project list -->
+<ul class="list-project">
+  <li *ngFor="let project of projectList">
+    <!-- thumbnail -->
+    <a [routerLink]="['/project/detail', project.id]" class="thumbnail">
+      <img src="{{project.data().thumbnail}}" alt="{{project.data().title}}">
+      <span [ngSwitch]="project.data().type" class="icons">
+        <i class="fab fa-edge text-blue" aria-label="web icon" *ngSwitchCase="'web'"></i>
+        <i class="fab fa-android text-green" aria-label="android icon" *ngSwitchCase="'android'"></i>
+        <i class="fab fa-apple" aria-label="apple icon" *ngSwitchCase="'ios'"></i>
+        <i class="fas fa-mobile-alt text-indigo" aria-label="hybrid icon" *ngSwitchCase="'hybrid'"></i>
+        <i class="fab fa-hubspot text-cyan" aria-label="api icon" *ngSwitchCase="'api'"></i>
+      </span>
+    </a>
+    <!-- info -->
+    <div class="info">
+      <div class="left">
+        <!-- title -->
+        <h4 class="title">{{project.data().title}}</h4>
+        <!-- date -->
+        <p class="date">
+          <span>{{project.data().startDate | date: "yyyy-MM-dd"}}</span> ~ 
+          <span>{{project.data().endDate | date: "yyyy-MM-dd"}}</span>
+        </p>
+      </div>
+      <!-- like button -->
+      <button type="button" mat-icon-button disableRipple class="btn-like" (click)="updateProjectLike(project.id)">
+        <i class="fab fa-gratipay" aria-label="like icon"></i>
+        <span class="count">{{project.data().like}}</span>
+      </button>
+    </div>
+  </li>
+</ul>
