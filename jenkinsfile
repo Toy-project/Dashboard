@@ -1,0 +1,69 @@
+pipeline {
+  agent none
+  environment {
+    CI = 'true'
+  }
+  stages {
+    stage('Checkout') {
+      agent any
+      steps {
+        // start checkout
+        echo 'start checkout'
+        echo "Building ${BRANCH_NAME}"
+        echo "Current workspace : ${workspace}"
+
+        // copy workspace => app directory
+        echo 'copy workspace diretory'
+        sh 'cp -rf ./* /app'
+
+        // copy config => app directory
+        echo 'copy config diretory'
+        sh 'cp -rf /config /app'
+      }
+    }
+    stage() {
+      stage('App Build') {
+        agent any
+        when {
+          branch 'master'
+        }
+        steps {
+          retry(2) {
+            timeout(2) { // 2minutes
+              // change diretory
+              echo 'change directory'
+              sh 'cd /app'
+
+              // npm install
+              echo 'start module install'
+              sh 'npm install'
+
+              // npm cache verify
+              echo 'start cache verify'
+              sh 'npm cache verify'
+
+              // npm build
+              ehco 'start app build'
+              sh 'npm run-script build'
+            }
+          }
+        }
+      }
+    }
+    stage('App Production') {
+      agent any
+      when {
+        branch 'master'
+      }
+      steps {
+        retry(2) {
+          timeout(2) { // 2minutes
+            // pm2 delete & start
+            echo 'pm2 product delete & start'
+            sh 'pm2 start ecosystem.json'
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "apps" : [{
+    "name"        : "product",
+    "script"      : "./server.js",
+    "args"        : "start",
+    "watch"       : false
+  }]
+}
