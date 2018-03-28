@@ -16,20 +16,20 @@ import { ProjectDeleteComponent } from '../project-delete/project-delete.compone
 })
 export class ProjectDetailComponent implements OnInit {
 
-  private key: string;
-  private project: object = null;
-  private projectLang: Array<any> = [];
-  private projectColor: Array<any> = [];
+  public key: string;
+  public project: object = null;
+  public projectLang: Array<any> = [];
+  public projectColor: Array<any> = [];
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private projectService: ProjectService,
-    private memberService: MemberService,
-    private cookieService: CookieService,
-    private message: Message
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public projectService: ProjectService,
+    public memberService: MemberService,
+    public cookieService: CookieService,
+    public message: Message
   ) {
     this.key = this.activatedRoute.params['_value']['id'];
   }
@@ -41,7 +41,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   // get project detail
-  private getProjectDetail(key: string = this.key) {
+  public getProjectDetail(key: string = this.key) {
     this.projectService.getProject(key).subscribe((res) => {
       this.project = res;
       this.projectLang = res.language ? res.language.split(',') : [];
@@ -50,7 +50,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   // update project like
-  private updateProjectLike(key: string): any {
+  public updateProjectLike(key: string): any {
     // not login
     if (!this.memberService.user.logined) {
       // alert
@@ -69,7 +69,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   // update project view
-  private updateProjectView(key: string): any {
+  public updateProjectView(key: string): any {
     // cookie
     if (this.cookieService.getCookie(`${key}View`)) {
       return false;
@@ -79,7 +79,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   // open project delete dialog
-  private deleteProject(): void {
+  public deleteProject(): void {
     if (!this.memberService.user.emailVerified) {
       // alert
       this.snackBar.open(this.message.NotemailVerified, 'CLOSE', {duration: 3000});

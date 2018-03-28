@@ -9,10 +9,10 @@ import { VisitService } from './shared/visit/visit.service';
 })
 export class AppComponent {
   
-  private date: Date = new Date();
+  public date: Date = new Date();
 
   constructor(
-    private visitService: VisitService,
+    public visitService: VisitService,
   ){ }
 
   ngOnInit() {

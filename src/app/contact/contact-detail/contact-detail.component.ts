@@ -13,9 +13,9 @@ import { ContactReplyComponent } from '../contact-reply/contact-reply.component'
 export class ContactDetailComponent implements OnInit {
 
   constructor(
-    private dialog: MatDialog,
-    private dialogRef: MatDialogRef<ContactDetailComponent>,
-    private messageService: MessageService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<ContactDetailComponent>,
+    public messageService: MessageService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -23,12 +23,12 @@ export class ContactDetailComponent implements OnInit {
   }
 
   // dialog close event
-  private onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
   // delete event
-  private onDelete(key: string): void {
+  public onDelete(key: string): void {
     this.messageService.deleteMessage(key)
     .then(() => {
       // dialog close
@@ -40,7 +40,7 @@ export class ContactDetailComponent implements OnInit {
   }
 
   // reply event
-  private onReply(key: string, data: any): void {
+  public onReply(key: string, data: any): void {
     // close now dialog
     this.onClose();
     // open dialog

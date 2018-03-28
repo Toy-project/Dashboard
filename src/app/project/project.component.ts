@@ -13,13 +13,13 @@ import { Message } from '../shared/message/message';
 export class ProjectComponent implements OnInit {
 
   public projectList: Array<any> = [];
-  private projectLoading: boolean = true;
+  public projectLoading: boolean = true;
 
   constructor(
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private projectService: ProjectService,
-    private message: Message
+    public router: Router,
+    public snackBar: MatSnackBar,
+    public projectService: ProjectService,
+    public message: Message
   ) { }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class ProjectComponent implements OnInit {
   }
 
   // get project list
-  private getProjectList(field: string, limit: number) {
+  public getProjectList(field: string, limit: number) {
     this.projectService.getProjectSortLimit(field, limit).onSnapshot((res) => {
       this.projectList = res.docs;
       this.projectLoading = false;

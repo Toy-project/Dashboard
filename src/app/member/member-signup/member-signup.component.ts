@@ -13,18 +13,18 @@ import { Message } from '../../shared/message/message';
 })
 export class MemberSignupComponent implements OnInit {
 
-  private signupLoading: boolean = false;
-  private signupForm: FormGroup;
-  private email: AbstractControl;
-  private password: AbstractControl;
+  public signupLoading: boolean = false;
+  public signupForm: FormGroup;
+  public email: AbstractControl;
+  public password: AbstractControl;
 
   constructor(
-    private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<MemberSignupComponent>,
-    private router: Router,
-    private memberService: MemberService,
-    private fb: FormBuilder,
-    private message: Message
+    public snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<MemberSignupComponent>,
+    public router: Router,
+    public memberService: MemberService,
+    public fb: FormBuilder,
+    public message: Message
   ) { }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class MemberSignupComponent implements OnInit {
   }
 
   // create signup form
-  private createSignUpForm() {
+  public createSignUpForm() {
     this.signupForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
@@ -42,22 +42,22 @@ export class MemberSignupComponent implements OnInit {
   }
 
   // email error message event
-  private getEmailErrorMessage(): string {
+  public getEmailErrorMessage(): string {
     return this.email.hasError('required') ? this.message.requiredEmail : this.email.hasError('email') ? this.message.validatorEmail : '';
   }
 
   // password error message event
-  private getPasswordErrorMessage(): string {
+  public getPasswordErrorMessage(): string {
     return this.password.hasError('required') ? this.message.requiredPassword : this.password.hasError('minlength') ? this.message.validatorPassword : '';
   }
 
   // dialog close event
-  private onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
   // signupForm submit event
-  private onSubmit(value): any {
+  public onSubmit(value): any {
     // if not valid
     if (this.signupForm.invalid) {
       return false;

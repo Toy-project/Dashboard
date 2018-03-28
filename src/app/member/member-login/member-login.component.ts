@@ -14,19 +14,19 @@ import { Message } from '../../shared/message/message';
 })
 export class MemberLoginComponent implements OnInit {
 
-  private loginLoading: boolean = false;
-  private loginForm: FormGroup;
-  private email: AbstractControl;
-  private password: AbstractControl;
+  public loginLoading: boolean = false;
+  public loginForm: FormGroup;
+  public email: AbstractControl;
+  public password: AbstractControl;
 
   constructor(
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private dialogRef: MatDialogRef<MemberLoginComponent>,
-    private router: Router,
-    private memberService: MemberService,
-    private fb: FormBuilder,
-    private message: Message
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<MemberLoginComponent>,
+    public router: Router,
+    public memberService: MemberService,
+    public fb: FormBuilder,
+    public message: Message
   ) {
     this.createLoginForm();
   }
@@ -35,7 +35,7 @@ export class MemberLoginComponent implements OnInit {
   }
 
   // create login form
-  private createLoginForm(): void {
+  public createLoginForm(): void {
     this.loginForm = this.fb.group({
       email: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])]
@@ -45,7 +45,7 @@ export class MemberLoginComponent implements OnInit {
   }
 
   // signup dialog open event
-  private goSignup(): void {
+  public goSignup(): void {
     // close login
     this.onClose();
     // open signup
@@ -57,12 +57,12 @@ export class MemberLoginComponent implements OnInit {
   }
 
   // dialog close event
-  private onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
   // loginForm submit event
-  private onSubmit(value): any {
+  public onSubmit(value): any {
     // if not valid
     if (this.loginForm.invalid) {
       return false;

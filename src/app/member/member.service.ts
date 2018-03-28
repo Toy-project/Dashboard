@@ -11,9 +11,9 @@ export class MemberService {
   public access: any = {level: 0, loading: true};
 
   constructor(
-    private afs: AngularFirestore,
-    private afAuth: AngularFireAuth,
-    private storage: AngularFireStorage
+    public afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    public storage: AngularFireStorage
   ) { }
 
   // login

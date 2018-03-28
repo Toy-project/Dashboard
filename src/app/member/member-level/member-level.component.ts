@@ -12,16 +12,16 @@ import { Message } from '../../shared/message/message';
 })
 export class MemberLevelComponent implements OnInit {
 
-  private levelLoading: boolean = false;
-  private changeLevelForm: FormGroup;
-  private level: AbstractControl;
+  public levelLoading: boolean = false;
+  public changeLevelForm: FormGroup;
+  public level: AbstractControl;
 
   constructor(
-    private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<MemberLevelComponent>,
-    private memberService: MemberService,
-    private fb: FormBuilder,
-    private message: Message,
+    public snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<MemberLevelComponent>,
+    public memberService: MemberService,
+    public fb: FormBuilder,
+    public message: Message,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -30,12 +30,12 @@ export class MemberLevelComponent implements OnInit {
   }
 
   // dialog close event
-  private onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
   // create chang level form
-  private createChangeLevelForm(): void {
+  public createChangeLevelForm(): void {
     this.changeLevelForm = this.fb.group({
       level: ['', Validators.compose([Validators.required])]
     });
@@ -43,7 +43,7 @@ export class MemberLevelComponent implements OnInit {
   }
 
   // changeLevelForm submit event
-  private onSubmit(value): any {
+  public onSubmit(value): any {
     // if not valid
     if (this.changeLevelForm.valid) {
       return false;

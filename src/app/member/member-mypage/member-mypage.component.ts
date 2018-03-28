@@ -19,35 +19,35 @@ import { ContactDetailComponent } from '../../contact/contact-detail/contact-det
 })
 export class MemberMypageComponent implements OnInit {
 
-  private loadingFixed: boolean = true;
-  private defaultImage: string = this.cookieService.getCookie('defaultImage');
+  public loadingFixed: boolean = true;
+  public defaultImage: string = this.cookieService.getCookie('defaultImage');
 
-  private infoLoading: boolean = false;
-  private infoForm: FormGroup;
-  private photo: AbstractControl;
-  private modified: boolean = false;
-  private file: any;
-  private fileSize: number = 1 * 1024 * 1024;
+  public infoLoading: boolean = false;
+  public infoForm: FormGroup;
+  public photo: AbstractControl;
+  public modified: boolean = false;
+  public file: any;
+  public fileSize: number = 1 * 1024 * 1024;
 
-  private changePasswordForm: FormGroup;
-  private newPassword: AbstractControl;
-  private newPasswordConfirm: AbstractControl;
-  private comparePassword: boolean = false;
-  private passwordLoading: boolean = false;
+  public changePasswordForm: FormGroup;
+  public newPassword: AbstractControl;
+  public newPasswordConfirm: AbstractControl;
+  public comparePassword: boolean = false;
+  public passwordLoading: boolean = false;
 
-  private messageList: Array<any> = [];
-  private deleteLoading: boolean = false;
+  public messageList: Array<any> = [];
+  public deleteLoading: boolean = false;
 
   constructor(
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private fb: FormBuilder,
-    private memberService: MemberService,
-    private settingService: SettingService,
-    private cookieService: CookieService,
-    private messageService: MessageService,
-    private message: Message,
+    public router: Router,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public fb: FormBuilder,
+    public memberService: MemberService,
+    public settingService: SettingService,
+    public cookieService: CookieService,
+    public messageService: MessageService,
+    public message: Message,
   ) {
     this.createInfoForm();
     this.createChangePasswordForm();
@@ -59,7 +59,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // create info form
-  private createInfoForm(): void {
+  public createInfoForm(): void {
     this.infoForm = this.fb.group({
       photo: ['', Validators.compose([])],
     });
@@ -67,7 +67,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // create change password form
-  private createChangePasswordForm(): void {
+  public createChangePasswordForm(): void {
     this.changePasswordForm = this.fb.group({
       newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       newPasswordConfirm: ['', Validators.compose([Validators.required])]
@@ -77,7 +77,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // get message list
-  private getMessageList(limit: number): any {
+  public getMessageList(limit: number): any {
     // if not valid
     if (!this.memberService.user.logined) {
       return false;
@@ -90,7 +90,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // update message read
-  private readMessage(key: string, data: any): void {
+  public readMessage(key: string, data: any): void {
     // open dialog
     let dialogRef = this.dialog.open(ContactDetailComponent, {
       minWidth: 300,
@@ -109,22 +109,22 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // compare password 
-  private comparePasswordEvent(event) {
+  public comparePasswordEvent(event) {
     this.comparePassword = event.target.value !== this.changePasswordForm.get('newPassword').value ? true : false;
   }
 
   // password error message event
-  private getPasswordErrorMessage(): string {
+  public getPasswordErrorMessage(): string {
     return this.newPassword.hasError('required') ? this.message.requiredPassword : this.newPassword.hasError('minlength') ? this.message.validatorPassword : '';
   }
 
   // passwrod confirm error message event
-  private getPasswordConfrimErrorMessage(): string {
+  public getPasswordConfrimErrorMessage(): string {
     return this.newPasswordConfirm.hasError('required') ? this.message.requiredPassword : this.comparePassword ? this.message.validatorConfirmPassword : '';
   }
 
   // send verify email
-  private sendVerifyEmail(): void {
+  public sendVerifyEmail(): void {
     this.memberService.emailVerified()
     .then(() => {
       // alert
@@ -137,7 +137,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // image preview event
-  private onChangeFile(img, fileData): void {
+  public onChangeFile(img, fileData): void {
     // type
     const type = fileData.files.length ? fileData.files[0].type.split('/')[1] : null;
     // validator
@@ -163,7 +163,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // update user info
-  private updateUserProfile(value): any {
+  public updateUserProfile(value): any {
     // in not file
     if (!this.file) {
       return false;
@@ -200,7 +200,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // change password
-  private changePassword(value): any {
+  public changePassword(value): any {
     // validator
     if (this.changePasswordForm.invalid && (this.changePasswordForm.get('newPassword').value !== this.changePasswordForm.get('newPasswordConfirm').value)) {
       return false;
@@ -254,7 +254,7 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // delete user
-  private deleteUser(): void {
+  public deleteUser(): void {
     // open dialog event
     let dialogRef = this.dialog.open(MemberPasswordComponent, {
       minWidth: 300,

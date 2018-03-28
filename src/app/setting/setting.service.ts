@@ -7,8 +7,8 @@ import { Observable } from 'rxjs/Observable';
 export class SettingService {
 
   constructor(
-    private afs: AngularFirestore,
-    private storage: AngularFireStorage
+    public afs: AngularFirestore,
+    public storage: AngularFireStorage
   ) { }
 
   // project upload file

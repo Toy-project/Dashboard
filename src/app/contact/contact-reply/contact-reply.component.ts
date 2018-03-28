@@ -13,18 +13,18 @@ import { Message } from '../../shared/message/message';
 })
 export class ContactReplyComponent implements OnInit {
 
-  private replyLoding: boolean = false;
-  private replyForm: FormGroup;
-  private title: AbstractControl;
-  private text: AbstractControl;
+  public replyLoding: boolean = false;
+  public replyForm: FormGroup;
+  public title: AbstractControl;
+  public text: AbstractControl;
 
   constructor(
-    private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<ContactReplyComponent>,
-    private memberService: MemberService,
-    private messageService: MessageService,
-    private fb: FormBuilder,
-    private message: Message,
+    public snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<ContactReplyComponent>,
+    public memberService: MemberService,
+    public messageService: MessageService,
+    public fb: FormBuilder,
+    public message: Message,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.createReplyForm();
@@ -35,12 +35,12 @@ export class ContactReplyComponent implements OnInit {
   }
 
   // dialog close event
-  private onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
   // create reply form
-  private createReplyForm(): void {
+  public createReplyForm(): void {
     this.replyForm = this.fb.group({
       type: ['', Validators.compose([])],
       title: ['', Validators.compose([Validators.required])],
@@ -56,7 +56,7 @@ export class ContactReplyComponent implements OnInit {
   }
 
   // submit event
-  private onSubmit(value): any {
+  public onSubmit(value): any {
     // not valid form
     if (!this.replyForm.valid) {
       return false;

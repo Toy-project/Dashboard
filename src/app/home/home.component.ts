@@ -15,22 +15,22 @@ import { Message } from '../shared/message/message';
 })
 export class HomeComponent implements OnInit {
 
-  private projectList: Array<any> = [];
-  private projectListLoading: boolean = true;
-  private visitRender: boolean = false;
-  private visitList: Array<any> = [{name: 'visit', series: []}];
-  private visitType: Array<any> = [];
-  private visitBrowser: Array<any> = [];
-  private githubList: any;
+  public projectList: Array<any> = [];
+  public projectListLoading: boolean = true;
+  public visitRender: boolean = false;
+  public visitList: Array<any> = [{name: 'visit', series: []}];
+  public visitType: Array<any> = [];
+  public visitBrowser: Array<any> = [];
+  public githubList: any;
 
   constructor(
-    private router: Router,
-    private datePipe: DatePipe,
-    private memberService: MemberService,
-    private projectService: ProjectService,
-    private visitService: VisitService,
-    private githubService: GithubService,
-    private message: Message
+    public router: Router,
+    public datePipe: DatePipe,
+    public memberService: MemberService,
+    public projectService: ProjectService,
+    public visitService: VisitService,
+    public githubService: GithubService,
+    public message: Message
   ) { }
 
   ngOnInit() {
@@ -41,14 +41,14 @@ export class HomeComponent implements OnInit {
   }
 
   // get github user data
-  private getGithubPublicRepo(order: string, dir: string): void {
+  public getGithubPublicRepo(order: string, dir: string): void {
     this.githubService.getGithubRepo(order, dir).subscribe((res) => {
       this.githubList = res;
     })
   }
 
   // get project list
-  private getProjectList(limit: number): void {
+  public getProjectList(limit: number): void {
     this.projectService.getProjectSortLimit('createdAt', limit).onSnapshot((res) => {
       this.projectList = res.docs;
       this.projectListLoading = false;
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
   }
 
   // get visit list
-  private getAllVisitList(): void {
+  public getAllVisitList(): void {
     this.visitService.getAllVisitList().get()
     .then((res) => {
       // render false

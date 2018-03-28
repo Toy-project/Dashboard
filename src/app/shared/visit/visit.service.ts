@@ -10,10 +10,10 @@ import { UserAgent } from '../userAgent/user-agent';
 export class VisitService {
 
   constructor(
-    private afs: AngularFirestore,
-    private cookieService : CookieService,
-    private userAgent: UserAgent,
-    private datePipe: DatePipe
+    public afs: AngularFirestore,
+    public cookieService : CookieService,
+    public userAgent: UserAgent,
+    public datePipe: DatePipe
   ) { }
   
   // set or update visit

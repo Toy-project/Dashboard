@@ -12,27 +12,27 @@ import { Message } from '../../shared/message/message';
 })
 export class LayoutNavComponent implements OnInit {
 
-  @Input() private messageCount: number = 0;
-  @Input() private navStatus: boolean;
+  @Input() public messageCount: number = 0;
+  @Input() public navStatus: boolean;
   @Output() public navStatusChange = new EventEmitter<boolean>();
 
   constructor(
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private memberService: MemberService,
-    private message: Message
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public memberService: MemberService,
+    public message: Message
   ) { }
 
   ngOnInit() {
   }
 
   // nav close event
-  private navClose() {
+  public navClose() {
     this.navStatusChange.emit(false);
   }
 
   // open & close login dialog event
-  private openDialogLogin(): void {
+  public openDialogLogin(): void {
     // open event
     let dialogRef = this.dialog.open(MemberLoginComponent, {
       minWidth: 300,
@@ -42,7 +42,7 @@ export class LayoutNavComponent implements OnInit {
   }
 
   // logout event
-  private onLogout(): void {
+  public onLogout(): void {
     this.memberService.logout()
     .then(() => {
       // delete localStorage

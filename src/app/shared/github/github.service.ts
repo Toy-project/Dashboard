@@ -7,8 +7,8 @@ import { githubKey } from '../../../../config/github';
 @Injectable()
 export class GithubService {
 
-  private apiUrl: string = 'https://api.github.com';
-  private httpOptions = {
+  public apiUrl: string = 'https://api.github.com';
+  public httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
       'Authorization': githubKey.token
@@ -16,7 +16,7 @@ export class GithubService {
   };
 
   constructor(
-    private http: HttpClient
+    public http: HttpClient
   ) { }
 
   // get github repo sort created 

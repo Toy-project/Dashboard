@@ -14,15 +14,15 @@ import { MemberLevelComponent } from './member-level/member-level.component';
 })
 export class MemberComponent implements OnInit {
 
-  private loadingFixed: boolean = true;
-  private memberList: Array<any> = [];
+  public loadingFixed: boolean = true;
+  public memberList: Array<any> = [];
 
   constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private memberService: MemberService,
-    private message: Message
+    public router: Router,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public memberService: MemberService,
+    public message: Message
   ) { }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class MemberComponent implements OnInit {
   }
 
   // get all member
-  private getMemberList(limit: number): void {
+  public getMemberList(limit: number): void {
     if (this.memberService.user.logined) {
       this.memberService.getDatabaseUserList(limit).onSnapshot((res) => {
         this.memberList = res.docs;
@@ -42,7 +42,7 @@ export class MemberComponent implements OnInit {
   }
 
   // change level event
-  private changeLevel(key: string): void {
+  public changeLevel(key: string): void {
     if (!this.memberService.user.emailVerified) {
       // alert
       this.snackBar.open(this.message.requiredLogin, 'CLOSE', {duration: 3000});

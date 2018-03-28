@@ -11,13 +11,13 @@ import { Message } from '../../shared/message/message';
 })
 export class MemberPasswordComponent implements OnInit {
 
-  private confirmForm: FormGroup;
-  private password: AbstractControl;
+  public confirmForm: FormGroup;
+  public password: AbstractControl;
 
   constructor(
-    private fb: FormBuilder,
-    private message: Message,
-    private dialogRef: MatDialogRef<MemberPasswordComponent>
+    public fb: FormBuilder,
+    public message: Message,
+    public dialogRef: MatDialogRef<MemberPasswordComponent>
   ) {
     this.createConfirmPasswordForm();
   }
@@ -26,7 +26,7 @@ export class MemberPasswordComponent implements OnInit {
   }
 
   // create confirm form
-  private createConfirmPasswordForm() {
+  public createConfirmPasswordForm() {
     this.confirmForm = this.fb.group({
       password: ['', Validators.compose([Validators.required])]
     });
@@ -34,19 +34,19 @@ export class MemberPasswordComponent implements OnInit {
   }
 
   // dialog close event
-  private onClose(password: string = null): void {
+  public onClose(password: string = null): void {
     this.dialogRef.close(password);
   }
 
   // confirmForm submit event
-  private onSubmit(): any {
+  public onSubmit(value): any {
     // if not valid
     if (this.confirmForm.invalid) {
       return false;  
     }
 
     // close
-    this.onClose(this.password.value);
+    this.onClose(value.password);
   }
 
 }

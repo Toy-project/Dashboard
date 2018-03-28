@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AccessComponent implements OnInit {
 
-  @Input() private message: string;
+  @Input() public message: string;
 
   constructor() { }
 

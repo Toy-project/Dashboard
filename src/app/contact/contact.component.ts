@@ -14,25 +14,25 @@ import { Message } from '../shared/message/message';
 })
 export class ContactComponent implements OnInit {
 
-  private messageLoading: boolean = false;
-  private messageForm: FormGroup;
-  private messageType: AbstractControl;
-  private messageTitle: AbstractControl;
-  private messageText: AbstractControl;
+  public messageLoading: boolean = false;
+  public messageForm: FormGroup;
+  public messageType: AbstractControl;
+  public messageTitle: AbstractControl;
+  public messageText: AbstractControl;
 
-  private emailLoading: boolean = false;
-  private emailForm: FormGroup;
-  private email: AbstractControl;
-  private emailTitle: AbstractControl;
-  private emailText: AbstractControl;
+  public emailLoading: boolean = false;
+  public emailForm: FormGroup;
+  public email: AbstractControl;
+  public emailTitle: AbstractControl;
+  public emailText: AbstractControl;
 
   constructor(
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private fb: FormBuilder,
-    private messageService: MessageService,
-    private memberService: MemberService,
-    private message: Message
+    public router: Router,
+    public snackBar: MatSnackBar,
+    public fb: FormBuilder,
+    public messageService: MessageService,
+    public memberService: MemberService,
+    public message: Message
   ) {
     this.createMessageForm();
     this.createEmailForm(); 
@@ -43,7 +43,7 @@ export class ContactComponent implements OnInit {
   }
 
   // create message form
-  private createMessageForm(): void {
+  public createMessageForm(): void {
     this.messageForm = this.fb.group({
       type: ['', Validators.compose([Validators.required])],
       title: ['', Validators.compose([Validators.required])],
@@ -60,7 +60,7 @@ export class ContactComponent implements OnInit {
   }
   
   // create email form
-  private createEmailForm(): void {
+  public createEmailForm(): void {
     this.emailForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
       title: ['', Validators.compose([Validators.required])],
@@ -72,7 +72,7 @@ export class ContactComponent implements OnInit {
   }
 
   // send message
-  private onSendMessage(value): any {
+  public onSendMessage(value): any {
     // login confirm
     this.memberService.loginConfirm();
     // not valid
@@ -131,7 +131,7 @@ export class ContactComponent implements OnInit {
   }
 
   // send email
-  private onSendEmail(value): void {
+  public onSendEmail(value): void {
     alert('준비 중 입니다.');
   }
 

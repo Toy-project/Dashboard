@@ -14,34 +14,34 @@ import { Message } from '../../shared/message/message';
 })
 export class ProjectCreateComponent implements OnInit {
 
-  private createLoading: boolean = false;
-  private createForm: FormGroup;
-  private title: AbstractControl;
-  private subTitle: AbstractControl;
-  private thumbnail: AbstractControl;
-  private explain: AbstractControl;
-  private startDate: AbstractControl;
-  private endDate: AbstractControl;
-  private url: AbstractControl;
-  private color: AbstractControl;
-  private type: AbstractControl;
-  private git: AbstractControl;
-  private language: AbstractControl;
-  private status: AbstractControl;
-  private photo: AbstractControl;
-  private email: AbstractControl;
-  private thumbnailFile: any;
-  private thumbnailFileSize: number = 1 * 1024 * 1024;
-  private photoFile: Array<any> = [];
-  private photoFileSize: number = 2 * 1024 * 1024;
+  public createLoading: boolean = false;
+  public createForm: FormGroup;
+  public title: AbstractControl;
+  public subTitle: AbstractControl;
+  public thumbnail: AbstractControl;
+  public explain: AbstractControl;
+  public startDate: AbstractControl;
+  public endDate: AbstractControl;
+  public url: AbstractControl;
+  public color: AbstractControl;
+  public type: AbstractControl;
+  public git: AbstractControl;
+  public language: AbstractControl;
+  public status: AbstractControl;
+  public photo: AbstractControl;
+  public email: AbstractControl;
+  public thumbnailFile: any;
+  public thumbnailFileSize: number = 1 * 1024 * 1024;
+  public photoFile: Array<any> = [];
+  public photoFileSize: number = 2 * 1024 * 1024;
 
   constructor(
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private fb: FormBuilder,
-    private memberService: MemberService,
-    private projectService: ProjectService,
-    private message: Message
+    public router: Router,
+    public snackBar: MatSnackBar,
+    public fb: FormBuilder,
+    public memberService: MemberService,
+    public projectService: ProjectService,
+    public message: Message
   ) {
     this.createPorjectForm();
   }
@@ -50,7 +50,7 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   // create project form
-  private createPorjectForm(): void {
+  public createPorjectForm(): void {
     this.createForm = this.fb.group({
       title: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       subTitle: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -88,7 +88,7 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   // image thumbnail preview event
-  private onChangeThumbnailFile(img, fileData): void {
+  public onChangeThumbnailFile(img, fileData): void {
     // type
     const type = fileData.files.length ? fileData.files[0].type.split('/')[1] : null;
     const size = fileData.files ? fileData.files[0].size : Infinity;
@@ -114,7 +114,7 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   // image photo event
-  private onChangePhotoFile(fileData): void {
+  public onChangePhotoFile(fileData): void {
     if ((fileData.files.length + this.photoFile.length) > 5) {
       // failed validator
       this.snackBar.open(this.message.validatorFileLength, 'CLOSE', {duration: 3000});
@@ -134,12 +134,12 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   // delete upload photo event
-  private onDeletePhotoFile(file): void {
+  public onDeletePhotoFile(file): void {
     this.photoFile.splice(this.photoFile.indexOf(file), 1);
   }
 
   // create project event
-  private createProject(value): void {
+  public createProject(value): void {
     // create date
     const createDate = new Date().getTime();
     // loading start

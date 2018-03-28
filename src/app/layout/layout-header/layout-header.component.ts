@@ -20,19 +20,19 @@ import { MemberLoginComponent } from '../../member/member-login/member-login.com
 export class LayoutHeaderComponent implements OnInit {
 
   public navStatus: boolean = false;
-  private messageCount: number = 0;
-  private defaultImage: string = '';
+  public messageCount: number = 0;
+  public defaultImage: string = '';
 
   constructor(
-    private router: Router,
-    private location: Location,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private memberService: MemberService,
-    private messageService: MessageService,
-    private settingService: SettingService,
-    private cookieService: CookieService,
-    private message: Message
+    public router: Router,
+    public location: Location,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public memberService: MemberService,
+    public messageService: MessageService,
+    public settingService: SettingService,
+    public cookieService: CookieService,
+    public message: Message
   ) { }
 
   ngOnInit() {
@@ -42,12 +42,12 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   // navStatus Change
-  private navStatusChange(bool): void {
+  public navStatusChange(bool): void {
     this.navStatus = bool;
   }
 
   // open login dialog
-  private openDialogLogin(): void {
+  public openDialogLogin(): void {
     let dialogRef = this.dialog.open(MemberLoginComponent, {
       minWidth: 300,
       maxWidth: 500,
@@ -56,7 +56,7 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   // logout event
-  private onLogout(): void {
+  public onLogout(): void {
     this.memberService.logout()
     .then(() => {
       // delete localStorage
@@ -71,7 +71,7 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   // get default image
-  private getDefaultImage(): void {
+  public getDefaultImage(): void {
     if (this.memberService.user.logined && !this.memberService.user.photoURL) {
       if (this.cookieService.getCookie('defaultImage')) {
         // if cookie
@@ -94,7 +94,7 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   // get message count
-  private getMessageCount(): void {
+  public getMessageCount(): void {
     if (this.memberService.user.logined) {
       this.messageService.getAllMessageNotRead(this.memberService.user.uid).onSnapshot((res) => {
         this.messageCount = res.docs.length;

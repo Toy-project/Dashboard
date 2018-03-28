@@ -14,22 +14,22 @@ import { Message } from '../../shared/message/message';
 })
 export class ProjectListComponent implements OnInit {
 
-  @Input() private projectList: Array<any>;
+  @Input() public projectList: Array<any>;
 
   constructor(
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private projectService: ProjectService,
-    private memberService: MemberService,
-    private cookieService: CookieService,
-    private message: Message
+    public router: Router,
+    public snackBar: MatSnackBar,
+    public projectService: ProjectService,
+    public memberService: MemberService,
+    public cookieService: CookieService,
+    public message: Message
   ) { }
 
   ngOnInit() {
   }
 
   // update project like
-  private updateProjectLike(key: string): any {
+  public updateProjectLike(key: string): any {
     // not login
     if (!this.memberService.user.logined) {
       // alert

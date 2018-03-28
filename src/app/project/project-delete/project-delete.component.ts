@@ -13,17 +13,17 @@ import { Message } from '../../shared/message/message';
 })
 export class ProjectDeleteComponent implements OnInit {
 
-  private deleteLoading: boolean = false;
-  private deleteForm: FormGroup;
-  private title: AbstractControl;
+  public deleteLoading: boolean = false;
+  public deleteForm: FormGroup;
+  public title: AbstractControl;
 
   constructor(
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<ProjectDeleteComponent>,
-    private fb: FormBuilder,
-    private projectService: ProjectService,
-    private message: Message,
+    public router: Router,
+    public snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<ProjectDeleteComponent>,
+    public fb: FormBuilder,
+    public projectService: ProjectService,
+    public message: Message,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.createDeleteForm();
@@ -33,12 +33,12 @@ export class ProjectDeleteComponent implements OnInit {
   }
 
   // dialog close event
-  private onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
   // create delete form
-  private createDeleteForm() {
+  public createDeleteForm() {
     this.deleteForm = this.fb.group({
       title: ['', Validators.compose([Validators.required])]
     });
@@ -46,7 +46,7 @@ export class ProjectDeleteComponent implements OnInit {
   }
 
   // deleteform submit event
-  private onSubmit(value): any {
+  public onSubmit(value): any {
     // not valid
     if (this.deleteForm.invalid) {
       return false;

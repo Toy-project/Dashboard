@@ -10,12 +10,12 @@ import { Message } from '../shared/message/message';
 })
 export class UploadComponent implements OnInit {
 
-  private createLoading: boolean = false;
-  private loadingFixed: boolean = true;
+  public createLoading: boolean = false;
+  public loadingFixed: boolean = true;
 
   constructor(
-    private memberService: MemberService,
-    private message: Message
+    public memberService: MemberService,
+    public message: Message
   ) { }
 
   ngOnInit() {

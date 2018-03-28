@@ -13,21 +13,21 @@ import { Message } from '../shared/message/message';
 })
 export class SettingComponent implements OnInit {
 
-  private loadingFixed: boolean = true;
+  public loadingFixed: boolean = true;
 
-  private imageLoading: boolean = false;
-  private imageForm: FormGroup;
-  private defaultSrc: AbstractControl;
-  private defaultInfo: Object = {};
-  private defaultImageFile: any;
-  private DefaultImageFileSize: number = 1 * 1024 * 1024;
+  public imageLoading: boolean = false;
+  public imageForm: FormGroup;
+  public defaultSrc: AbstractControl;
+  public defaultInfo: Object = {};
+  public defaultImageFile: any;
+  public DefaultImageFileSize: number = 1 * 1024 * 1024;
 
   constructor(
-    private snackBar: MatSnackBar,
-    private fb: FormBuilder,
-    private settingService: SettingService,
-    private memberService: MemberService,
-    private message: Message
+    public snackBar: MatSnackBar,
+    public fb: FormBuilder,
+    public settingService: SettingService,
+    public memberService: MemberService,
+    public message: Message
   ) {
     this.createImageForm();
   }
@@ -38,7 +38,7 @@ export class SettingComponent implements OnInit {
   }
 
   // create image form
-  private createImageForm(): void {
+  public createImageForm(): void {
     this.imageForm = this.fb.group({
       src: ['', Validators.compose([])],
       lastUpdatedAt: ['', Validators.compose([])]
@@ -47,7 +47,7 @@ export class SettingComponent implements OnInit {
   }
 
   // get default image
-  private getDefaultImage() {
+  public getDefaultImage() {
     if (this.memberService.user.logined) {
       this.settingService.getDefaultImage('member')
       .then((res) => {
@@ -62,7 +62,7 @@ export class SettingComponent implements OnInit {
   }
 
   // image thumbnail preview event
-  private onChangeImageFile(img, fileData): void {
+  public onChangeImageFile(img, fileData): void {
     // type
     const type = fileData.files.length ? fileData.files[0].type.split('/')[1] : null;
     const size = fileData.files ? fileData.files[0].size : Infinity;
@@ -88,7 +88,7 @@ export class SettingComponent implements OnInit {
   }
 
   // default image upload
-  private defaultImageUpload(value): void {
+  public defaultImageUpload(value): void {
     if (this.imageForm.valid) {
       // loading start
       this.imageLoading = true;

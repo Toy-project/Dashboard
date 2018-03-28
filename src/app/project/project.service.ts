@@ -9,9 +9,9 @@ import { CookieService } from '../shared/cookie/cookie.service';
 export class ProjectService {
 
   constructor(
-    private afs: AngularFirestore,
-    private storage: AngularFireStorage,
-    private cookieService: CookieService
+    public afs: AngularFirestore,
+    public storage: AngularFireStorage,
+    public cookieService: CookieService
   ) { }
 
   // project upload file
