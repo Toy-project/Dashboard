@@ -21,31 +21,29 @@ pipeline {
         sh 'cp -rf /config /app'
       }
     }
-    stage() {
-      stage('App Build') {
-        agent any
-        when {
-          branch 'master'
-        }
-        steps {
-          retry(2) {
-            timeout(2) { // 2minutes
-              // change diretory
-              echo 'change directory'
-              sh 'cd /app'
+    stage('App Build') {
+      agent any
+      when {
+        branch 'master'
+      }
+      steps {
+        retry(2) {
+          timeout(2) { // 2minutes
+            // change diretory
+            echo 'change directory'
+            sh 'cd /app'
 
-              // npm install
-              echo 'start module install'
-              sh 'npm install'
+            // npm install
+            echo 'start module install'
+            sh 'npm install'
 
-              // npm cache verify
-              echo 'start cache verify'
-              sh 'npm cache verify'
+            // npm cache verify
+            echo 'start cache verify'
+            sh 'npm cache verify'
 
-              // npm build
-              ehco 'start app build'
-              sh 'npm run-script build'
-            }
+            // npm build
+            ehco 'start app build'
+            sh 'npm run-script build'
           }
         }
       }
