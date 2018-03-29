@@ -26,21 +26,17 @@ pipeline {
       steps {
         retry(2) {
           timeout(2) { // 2minutes
-            // change diretory
-            echo 'change directory'
-            sh 'cd /app'
-
             // npm install
             echo 'start module install'
-            sh 'npm install'
+            sh 'sudo npm install --prefix /app install /app'
 
             // npm cache verify
             echo 'start cache verify'
             sh 'npm cache verify'
 
             // npm build
-            ehco 'start app build'
-            sh 'npm run-script build'
+            echo 'start app build'
+            sh 'sudo npm --prefix /app run-script build /app'
           }
         }
       }
@@ -52,7 +48,7 @@ pipeline {
           timeout(2) { // 2minutes
             // pm2 delete & start
             echo 'pm2 product delete & start'
-            sh 'pm2 start ecosystem.json'
+            sh 'sudo npm --prefix /app run-script product'
           }
         }
       }
