@@ -14,18 +14,15 @@ pipeline {
 
         // copy workspace => app directory
         echo 'copy workspace diretory'
-        sh 'cp -rf ./* /app'
+        sh 'sudo cp -rf ./* /app'
 
         // copy config => app directory
         echo 'copy config diretory'
-        sh 'cp -rf /config /app'
+        sh 'sudo cp -rf /config /app'
       }
     }
     stage('App Build') {
       agent any
-      when {
-        branch 'master'
-      }
       steps {
         retry(2) {
           timeout(2) { // 2minutes
@@ -50,9 +47,6 @@ pipeline {
     }
     stage('App Production') {
       agent any
-      when {
-        branch 'master'
-      }
       steps {
         retry(2) {
           timeout(2) { // 2minutes
