@@ -12,40 +12,41 @@ pipeline {
         echo "Building ${BRANCH_NAME}"
         echo "Current workspace : ${workspace}"
 
-        // copy workspace => app directory
-        echo 'copy workspace diretory'
-        sh 'sudo cp -rf ./* /app'
-
-        // copy config => app directory
+        // copy config => workspace
         echo 'copy config diretory'
-        sh 'sudo cp -rf /config /app'
+        sh 'sudo cp -rf /config ./'
       }
     }
-    stage('App Build') {
+    stage('Build') {
       agent any
       steps {
-        retry(2) {
-          timeout(2) { // 2minutes
+        retry(3) {
+          timeout(3) { // 3minutes
             // npm install
             echo 'start module install'
-            sh 'sudo npm install --prefix /app install /app'
+            sh 'sudo npm install'
 
             // npm cache verify
             echo 'start cache verify'
-            sh 'npm cache verify'
+            sh 'sudo npm cache verify'
 
             // npm build
             echo 'start app build'
-            sh 'sudo npm --prefix /app run-script build /app'
+            sh 'sudo npm run-script build'
           }
         }
       }
     }
-    stage('App Production') {
+    stage('Product') {
       agent any
       steps {
-        retry(2) {
-          timeout(2) { // 2minutes
+        retry(3) {
+          timeout(3) { // 3minutes
+            // copy workspace => app directory
+            echo 'copy workspace diretory'
+            sh 'sudo cp -rf ./dist /app/'
+            sh 'sudo cp -rf ./server.js /app/'
+            
             // pm2 delete & start
             echo 'pm2 product delete & start'
             sh 'sudo npm --prefix /app run-script product'
