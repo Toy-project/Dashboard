@@ -4,15 +4,11 @@
 
 .ngx-charts {
   float: none !important;
+  max-width: 100% !important;
 }
 
 ngx-charts-number-card .cell {
   stroke: gray('200');
-}
-
-ngx-charts-number-card .cell .card {
-  rx: 0;
-  ry: 0;
 }
 
 ngx-charts-number-card .cell .trimmed-label {
@@ -27,6 +23,6 @@ ngx-charts-number-card .cell .trimmed-label p {
 }
 
 ngx-charts-number-card .cell .value-text {
-  fill: color('blue-dark') !important;
-  stroke: color('blue-dark');
+  fill:  gray('900') !important;
+  stroke: gray('900');
 }

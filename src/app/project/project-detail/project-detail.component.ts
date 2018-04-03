@@ -17,6 +17,7 @@ import { ProjectDeleteComponent } from '../project-delete/project-delete.compone
 export class ProjectDetailComponent implements OnInit {
 
   public key: string;
+  public projectRender: boolean = false;
   public project: object = null;
   public projectLang: Array<any> = [];
   public projectColor: Array<any> = [];
@@ -46,17 +47,12 @@ export class ProjectDetailComponent implements OnInit {
       this.project = res;
       this.projectLang = res.language ? res.language.split(',') : [];
       this.projectColor = res.color ? res.color.split(',') : [];
+      this.projectRender = true;
     })
   }
 
   // update project like
   public updateProjectLike(key: string): any {
-    // not login
-    if (!this.memberService.user.logined) {
-      // alert
-      this.snackBar.open(this.message.requiredLogin, 'CLOSE', {duration: 3000});
-      return false;
-    };
     if (this.cookieService.getCookie(`${key}Like`)) {
       // alert
       this.snackBar.open(this.message.alreadyClickLike, 'CLOSE', {duration: 3000});

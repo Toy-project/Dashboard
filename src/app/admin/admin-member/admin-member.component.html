@@ -1,0 +1,45 @@
+<section class="contents-container">
+  <div class="chart-number">
+    <!-- loading -->
+    <app-loading [loading]="!memberRender"></app-loading>
+    <!-- member card -->
+    <ngx-charts-number-card [results]="memberCard" cardColor="#ffffff" *ngIf="memberRender">
+    </ngx-charts-number-card>
+  </div>
+  <!-- member list -->
+  <div class="contents min-height">
+    <h4 class="contents-title">Member List</h4>
+    <!-- loading -->
+    <app-loading [loading]="!memberRender"></app-loading>
+    <!-- member list -->
+    <div class="table-container" *ngIf="memberRender">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Email</th>
+            <th>Created</th>
+            <th>LastLogin</th>
+            <th>Level</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let member of memberList; let ind = index;">
+            <td>{{ind + 1}}</td>
+            <td>{{member.data().email}}</td>
+            <td>{{member.data().createdAt | date: "yyyy-MM-dd"}}</td>
+            <td>{{member.data().lastLoginAt | date: "yyyy-MM-dd"}}</td>
+            <td>{{member.data().level}}</td>
+            <td>
+              <button type="button" class="btn-change-level" (click)="changeLevel(member.id)">
+                <i class="fas fa-sort-numeric-down" aria-label="change level icon"></i>
+                <i class="fas fa-sort-numeric-up" aria-label="change level icon"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

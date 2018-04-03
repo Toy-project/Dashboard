@@ -5,6 +5,7 @@
 // number chart
 
 .chart-number {
+  position: relative;
   width: calc(100% + 33px);
   height: 300px;
   margin: 0 -10px;
@@ -16,13 +17,15 @@
   @include media-breakpoint-up('md') {
     height: 150px;
   }
+
+  + .contents {
+    margin-top: 0;
+  }
 }
 
 // line chart
 
 .chart-area {
-  
-
   .chart-area-inner {
     height: 300px;
   }

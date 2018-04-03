@@ -14,6 +14,9 @@ import { Message } from '../../shared/message/message';
 })
 export class ProjectCreateComponent implements OnInit {
 
+  public access: boolean;
+  public accessFailedMessage: string;
+
   public createLoading: boolean = false;
   public createForm: FormGroup;
   public title: AbstractControl;
@@ -47,6 +50,9 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.memberService.loginConfirm();
+    this.access = this.memberService.user.logined ? this.memberService.user.emailVerified ? true : false : false;
+    this.accessFailedMessage = this.memberService.user.logined ? this.memberService.user.emailVerified ? '' : this.message.NotemailVerified : this.message.requiredLogin;
   }
 
   // create project form
@@ -55,7 +61,7 @@ export class ProjectCreateComponent implements OnInit {
       title: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       subTitle: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       thumbnail: ['', Validators.compose([])],
-      explain: ['', Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      explain: ['', Validators.compose([Validators.required, Validators.maxLength(2000)])],
       startDate: ['', Validators.compose([Validators.required])],
       endDate: ['', Validators.compose([Validators.required])],
       type: ['', Validators.compose([Validators.required])],

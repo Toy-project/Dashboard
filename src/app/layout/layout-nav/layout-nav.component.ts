@@ -1,9 +1,12 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
+import { NavigationService } from '../../shared/navigation/navigation.service';
 import { MemberService } from '../../member/member.service';
-import { MemberLoginComponent } from '../../member/member-login/member-login.component';
 import { Message } from '../../shared/message/message';
+
+import { MemberLoginComponent } from '../../member/member-login/member-login.component';
+import { MemberSignupComponent } from '../../member/member-signup/member-signup.component';
 
 @Component({
   selector: 'app-layout-nav',
@@ -12,23 +15,17 @@ import { Message } from '../../shared/message/message';
 })
 export class LayoutNavComponent implements OnInit {
 
-  @Input() public messageCount: number = 0;
-  @Input() public navStatus: boolean;
-  @Output() public navStatusChange = new EventEmitter<boolean>();
+  public messageCount: number;
 
   constructor(
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
+    public navigationService: NavigationService,
     public memberService: MemberService,
     public message: Message
   ) { }
 
   ngOnInit() {
-  }
-
-  // nav close event
-  public navClose() {
-    this.navStatusChange.emit(false);
   }
 
   // open & close login dialog event
@@ -41,16 +38,27 @@ export class LayoutNavComponent implements OnInit {
     });
   }
 
+  // open & close login dialog event
+  public openDialogSignup(): void {
+    // open event
+    let dialogRef = this.dialog.open(MemberSignupComponent, {
+      minWidth: 300,
+      maxWidth: 500,
+      disableClose: true
+    });
+  }
+
   // logout event
   public onLogout(): void {
     this.memberService.logout()
     .then(() => {
+      // reload
+      window.location.reload();
       // delete localStorage
       this.memberService.deleteLocalstorage();
-      // redirect
-      window.location.reload();
     })
     .catch((err) => {
+      // alert
       this.snackBar.open(this.message.failedLogout, 'CLOSE', {duration: 3000});
     });
   }

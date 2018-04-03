@@ -14,10 +14,6 @@ const routes: Routes = [
     loadChildren: 'app/home/home.module#HomeModule'
   },
   {
-    path: 'about',
-    loadChildren: 'app/about/about.module#AboutModule'
-  },
-  {
     path: 'project',
     loadChildren: 'app/project/project.module#ProjectModule'
   },
@@ -30,12 +26,12 @@ const routes: Routes = [
     loadChildren: 'app/contact/contact.module#ContactModule'
   },
   {
-    path: 'upload',
-    loadChildren: 'app/upload/upload.module#UploadModule'
+    path: 'about',
+    loadChildren: 'app/about/about.module#AboutModule'
   },
   {
-    path: 'setting',
-    loadChildren: 'app/setting/setting.module#SettingModule'
+    path: 'admin',
+    loadChildren: 'app/admin/admin.module#AdminModule'
   },
   {
     path: '**',

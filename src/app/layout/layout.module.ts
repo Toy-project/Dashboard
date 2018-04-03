@@ -16,8 +16,9 @@ import { MemberLoginComponent } from '../member/member-login/member-login.compon
 import { MemberSignupComponent } from '../member/member-signup/member-signup.component';
 import { MemberPasswordComponent } from '../member/member-password/member-password.component';
 import { MemberLevelComponent } from '../member/member-level/member-level.component';
-import { ContactDetailComponent } from '../contact/contact-detail/contact-detail.component';
-import { ContactReplyComponent } from '../contact/contact-reply/contact-reply.component';
+import { MessageDetailComponent } from '../message/message-detail/message-detail.component';
+import { MessageReplyComponent } from '../message/message-reply/message-reply.component';
+import { ProjectDeleteComponent } from '../project/project-delete/project-delete.component';
 
 @NgModule({
   imports: [
@@ -40,8 +41,9 @@ import { ContactReplyComponent } from '../contact/contact-reply/contact-reply.co
     MemberSignupComponent,
     MemberPasswordComponent,
     MemberLevelComponent,
-    ContactDetailComponent,
-    ContactReplyComponent
+    MessageDetailComponent,
+    MessageReplyComponent,
+    ProjectDeleteComponent
   ],
   declarations: [
     LayoutHeaderComponent,
@@ -55,11 +57,9 @@ import { ContactReplyComponent } from '../contact/contact-reply/contact-reply.co
     MemberSignupComponent,
     MemberPasswordComponent,
     MemberLevelComponent,
-    ContactDetailComponent,
-    ContactReplyComponent,
-    LayoutHeaderComponent,
-    LayoutFooterComponent,
-    LayoutNavComponent
+    MessageDetailComponent,
+    MessageReplyComponent,
+    ProjectDeleteComponent
   ]
 })
 export class LayoutModule { }

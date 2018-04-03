@@ -124,12 +124,12 @@ export class MemberService {
   }
 
   // get database user
-  public getDatabaseUser(key) {
+  public getDatabaseUser(key): any {
     return this.afs.firestore.collection('member').doc(key);
   }
 
   // get all database user
-  public getDatabaseUserList(limit: number) {
+  public getDatabaseUserList(limit: number): any {
     return this.afs.firestore.collection('member').orderBy('createdAt', 'desc').limit(limit);
   }
 

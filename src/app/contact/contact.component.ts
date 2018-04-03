@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { MemberService } from '../member/member.service';
-import { MessageService } from '../shared/message/message.service';
+import { MessageService } from '../message/message.service';
 import { Message } from '../shared/message/message';
 
 @Component({

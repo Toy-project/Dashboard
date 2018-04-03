@@ -1,0 +1,64 @@
+<section class="contents-container">
+  <div class="chart-number">
+    <!-- loading -->
+    <app-loading [loading]="!projectRender"></app-loading>
+    <!-- project card -->
+    <ngx-charts-number-card [results]="projectCard" cardColor="#ffffff" *ngIf="projectRender">
+    </ngx-charts-number-card>
+  </div>
+  <!-- project list -->
+  <div class="contents min-height">
+    <h4 class="contents-title">Project List</h4>
+    <!-- loading -->
+    <app-loading [loading]="!projectRender"></app-loading>
+    <!-- project list -->
+    <div class="table-container" *ngIf="projectRender">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Like</th>
+            <th>View</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projectList; let ind = index;">
+            <td>{{ind + 1}}</td>
+            <td>
+              <span [ngSwitch]="project.data().type" class="icons">
+                <i class="fab fa-edge text-blue" aria-label="web icon" *ngSwitchCase="'web'"></i>
+                <i class="fab fa-android text-green" aria-label="android icon" *ngSwitchCase="'android'"></i>
+                <i class="fab fa-apple" aria-label="apple icon" *ngSwitchCase="'ios'"></i>
+                <i class="fas fa-mobile-alt text-indigo" aria-label="hybrid icon" *ngSwitchCase="'hybrid'"></i>
+                <i class="fab fa-hubspot text-cyan" aria-label="api icon" *ngSwitchCase="'api'"></i>
+              </span>
+            </td>
+            <td>
+              <a [routerLink]="['/project', 'detail', project.id]">{{project.data().title}}</a>
+            </td>
+            <td>{{project.data().like}}</td>
+            <td>{{project.data().view}}</td>
+            <td>
+              <span [ngSwitch]="project.data().status" class="icons">
+                <i class="fas fa-circle text-green" aria-label="status icon" *ngSwitchCase="'on'"></i>
+                <i class="fas fa-circle text-red" aria-label="status icon" *ngSwitchCase="'off'"></i>
+                <i class="fas fa-circle text-yellow" aria-label="status icon" *ngSwitchCase="'pending'"></i>
+              </span>
+            </td>
+            <td>{{project.data().createdAt | date: "yyyy-MM-dd"}}</td>
+            <td>
+              <button type="button" class="btn-change-level" (click)="deleteProject(project.data(), project.id)">
+                <i class="far fa-trash-alt" aria-label="delete icon"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

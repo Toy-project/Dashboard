@@ -2,65 +2,12 @@
 // Navigation
 //
 
-.site-nav {
-  position: fixed;
-  top: 0;
-  right: -250px;
-  z-index: $zindex-modal;
-  width: 250px;
-  background-color: color('blue-dark');
-  height: 100%;
-  overflow-y: scroll;
-  padding-bottom: map-get($spacers, 4);
-  transition: $transition-base;
+.navigation-container {
+  position: fixed !important;
+}
 
-  &.site-nav-open {
-    right: 0;
-  }
-
-  .title {
-    font-size: $font-size-base;
-    line-height: $line-height-lg;
-    color: gray('300');
-    text-align: center;
-    padding: map-get($spacers, 5) 0 map-get($spacers, 3);
-
-    > span {
-      font-size: $font-size-lg;
-      color: theme-color('primary');
-    }
-  }
-
-  .btn-close {
-    position: absolute;
-    top: $font-size-sm;
-    right: $font-size-sm;
-    color: gray('600');
-    font-size: $font-size-lg;
-  }
-
-  @include media-breakpoint-up('xl') {
-    position: relative;
-    width: 100%;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    padding-bottom: 0;
-
-    .inner {
-      padding: map-get($spacers, 2) map-get($spacers, 3);
-      max-width: map-get($grid-breakpoints, 'xl');
-      margin: 0 auto;
-    }
-
-    .title {
-      display: none;
-    }
-
-    .btn-close {
-      display: none;
-    }
-  }
+.navigation-contents {
+  min-width: 250px;
 }
 
 .navigation {
@@ -93,10 +40,14 @@
         &:hover {
           color: gray('300');
         }
+
+        &:focus {
+          outline: 0;
+        }
         
         &.active {
           color: theme-color('primary');
-          background-color: darken(color('blue-dark'), 10%);
+          background-color: gray('900');
 
           &::before {
             content: '';
@@ -120,32 +71,13 @@
         position: relative;
         top: -2px;
         display: inline-block;
+        width: 30px;
+        text-align: center;
         vertical-align: middle;
-        padding-right: map-get($spacers, 2);
 
         &.fa-github {
           font-size: 1.3em;
         }
-      }
-    }
-  }
-
-  @include media-breakpoint-up('xl') {
-    display: inline-block;
-    padding-top: 0;
-
-    &:not(:first-of-type) {
-      padding-top: 0;
-    }
-
-    &.navigation-user,
-    &.navigation-sns {
-      display: none;
-    }
-
-    > ul {
-      > li {
-        display: inline-block;
       }
     }
   }

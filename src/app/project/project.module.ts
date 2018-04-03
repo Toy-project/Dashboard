@@ -7,7 +7,7 @@ import { LayoutModule } from '../layout/layout.module';
 import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectComponent } from './project.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { ProjectDeleteComponent } from './project-delete/project-delete.component';
+import { ProjectCreateComponent } from './project-create/project-create.component';
 
 @NgModule({
   imports: [
@@ -17,13 +17,10 @@ import { ProjectDeleteComponent } from './project-delete/project-delete.componen
     MaterialModule,
     LayoutModule
   ],
-  entryComponents: [
-    ProjectDeleteComponent
-  ],
   declarations: [
     ProjectComponent,
     ProjectDetailComponent,
-    ProjectDeleteComponent
+    ProjectCreateComponent
   ]
 })
 export class ProjectModule { }

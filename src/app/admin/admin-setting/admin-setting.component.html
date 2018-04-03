@@ -1,0 +1,31 @@
+<section class="contents-container">
+  <!-- setting -->
+  <mat-accordion>
+    <!-- member default image -->
+    <mat-expansion-panel>
+      <!-- loading -->
+      <app-loading [loading]="memberDefaultImageLoading"></app-loading>
+      <!-- header -->
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Member Default Image</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- image form -->
+      <form [formGroup]="memberDefaultImage" (ngSubmit)="memberDefaultImageUpload(memberDefaultImage.value)" class="form">
+        <!-- thumbnail -->
+        <div class="form-group">
+          <span class="form-group-title">Member Default Photo <span *ngIf="memberDefaultInfo">&nbsp;(Last Update: {{memberDefaultInfo.lastUpdatedAt | date: "yyyy-MM-dd h:mm a"}})</span></span>
+          <label class="form-control-file">
+            <input type="file" formControlName="src" accept=".jpg, .jpeg, .png, .gif" #file (change)="onChangeMemberDefaultImageFile(img, file)">
+          </label>
+          <div class="form-control-file-preview">
+            <img src="{{memberDefaultInfo ? memberDefaultInfo.src : ''}}" alt="preview image" #img>
+          </div>
+        </div>
+        <!-- button -->
+        <button type="submit" mat-raised-button class="btn-block">SAVE</button>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>

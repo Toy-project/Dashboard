@@ -1,10 +1,21 @@
-<section class="site-inner-contents">
-  <h2 class="site-title">Project</h2>
+<section class="contents-container">
   <!-- loading -->
-  <div class="contents no-border" *ngIf="projectLoading">
+  <div class="contents no-border transparent" *ngIf="projectLoading">
     <app-loading [loading]="projectLoading"></app-loading>
   </div>
+  <!-- project list -->
   <div *ngIf="!projectLoading">
+    <div class="list-project-header">
+      <p class="count"><span>{{projectList.length}}</span> Results</p>
+      <div class="filter">
+        <button type="button" class="btn-filter">
+          <i class="fas fa-filter" aria-label="search filter icon"></i>
+        </button>
+      </div>
+      <button type="button" class="btn-upload" (click)="goProjectUpload()">
+        <i class="fas fa-eject" aria-label="project upload icon"></i>
+      </button>
+    </div>
     <app-project-list *ngIf="projectList.length > 0" [projectList]="projectList"></app-project-list>
     <app-project-none *ngIf="projectList.length === 0"></app-project-none>
   </div>

@@ -4,27 +4,33 @@
 
 .site-container {
   min-height: 100%;
-  overflow-x: hidden;
 }
 
-.site-contents {
-  min-height: 500px;
+.drawer-container {
+  position: absolute !important;
+  width: 100%;
+  height: 100%;
+}
+
+.contents-container {
+  position: relative;
+  padding: map-get($spacers, 4) map-get($spacers, 3);
+  overflow: hidden;
+  max-width: map-get($grid-breakpoints, 'xl');
+  margin: 0 auto;
+  min-height: 400px;
 
   @include clearfix();
+  
+  @include media-breakpoint-up('md') {
+    min-height: 500px;
+  }
+
+  @include media-breakpoint-up('lg') {
+    min-height: 600px;
+  }
 
   @include media-breakpoint-up('xl') {
     min-height: 700px;
-  }
-}
-
-.site-inner-contents {
-  margin: 0 auto;
-  max-width: map-get($grid-breakpoints, 'xl');
-  padding: map-get($spacers, 3);
-
-  .site-title {
-    padding: 0 0 map-get($spacers, 2);
-    font-size: $font-size-lg;
-    color: gray('700');
   }
 }

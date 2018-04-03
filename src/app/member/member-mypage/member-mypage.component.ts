@@ -4,13 +4,11 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { AbstractControl, FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 
 import { MemberService } from '../member.service';
-import { SettingService } from '../../setting/setting.service';
+import { AdminSettingService } from '../../admin/admin-setting/admin-setting.service';
 import { CookieService } from '../../shared/cookie/cookie.service';
-import { MessageService } from '../../shared/message/message.service';
 import { Message } from '../../shared/message/message';
 
 import { MemberPasswordComponent } from '../member-password/member-password.component';
-import { ContactDetailComponent } from '../../contact/contact-detail/contact-detail.component';
 
 @Component({
   selector: 'app-member-mypage',
@@ -19,7 +17,8 @@ import { ContactDetailComponent } from '../../contact/contact-detail/contact-det
 })
 export class MemberMypageComponent implements OnInit {
 
-  public loadingFixed: boolean = true;
+  public access: boolean;
+  public accessFailedMessage: string;
   public defaultImage: string = this.cookieService.getCookie('defaultImage');
 
   public infoLoading: boolean = false;
@@ -35,7 +34,6 @@ export class MemberMypageComponent implements OnInit {
   public comparePassword: boolean = false;
   public passwordLoading: boolean = false;
 
-  public messageList: Array<any> = [];
   public deleteLoading: boolean = false;
 
   constructor(
@@ -44,9 +42,8 @@ export class MemberMypageComponent implements OnInit {
     public dialog: MatDialog,
     public fb: FormBuilder,
     public memberService: MemberService,
-    public settingService: SettingService,
+    public adminSettingService: AdminSettingService,
     public cookieService: CookieService,
-    public messageService: MessageService,
     public message: Message,
   ) {
     this.createInfoForm();
@@ -55,7 +52,8 @@ export class MemberMypageComponent implements OnInit {
 
   ngOnInit() {
     this.memberService.loginConfirm();
-    this.getMessageList(10);
+    this.access = this.memberService.user.logined ? true : false;
+    this.accessFailedMessage = this.memberService.user.logined ? '' : this.message.requiredLogin;
   }
 
   // create info form
@@ -74,38 +72,6 @@ export class MemberMypageComponent implements OnInit {
     });
     this.newPassword = this.changePasswordForm.controls['newPassword'];
     this.newPasswordConfirm = this.changePasswordForm.controls['newPasswordConfirm'];
-  }
-
-  // get message list
-  public getMessageList(limit: number): any {
-    // if not valid
-    if (!this.memberService.user.logined) {
-      return false;
-    }
-
-    // get message list
-    this.messageService.getAllMessage(this.memberService.user.uid, limit).onSnapshot((res) => {
-      this.messageList = res.docs;
-    });
-  }
-
-  // update message read
-  public readMessage(key: string, data: any): void {
-    // open dialog
-    let dialogRef = this.dialog.open(ContactDetailComponent, {
-      minWidth: 300,
-      maxWidth: 500,
-      data: data
-    });
-    
-    // update message read
-    this.messageService.updateMessageRead(key)
-    .then(() => {
-      // todo
-    })
-    .catch((err) => {
-      // todo
-    })
   }
 
   // compare password 

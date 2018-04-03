@@ -1,101 +1,107 @@
 <!-- nav -->
-<nav [class]="navStatus ? 'site-nav site-nav-open' : 'site-nav'">
-  <div class="inner">
-    <!-- close button -->
-    <button type="button" mat-icon-button class="btn-close" (click)="navClose()">
-      <i class="fa fa-times" aria-label="menu close icon"></i>
-    </button>
-    <!-- user -->
-    <div class="navigation navigation-user">
-      <p class="title">{{memberService.user.logined ? memberService.user.email : "Member"}}</p>
-      <ul (click)="navClose()">
-        <!-- not login -->
-        <li *ngIf="!memberService.user.logined">
-          <a (click)="openDialogLogin()">
-            <i class="fa fa-sign-in-alt icons" aria-label="login icon"></i>
-            Login
-          </a>
-        </li>
-        <!-- if login -->
-        <li *ngIf="memberService.user.logined">
-          <a [routerLink]="['member', 'mypage']" [routerLinkActive]="['active']">
-            <i class="fa fa-id-card icons" aria-label="profile icon"></i>
-            Profile <span class="count" *ngIf="messageCount">({{messageCount}})</span>
-          </a>
-        </li>
-        <li *ngIf="memberService.user.logined">
-          <a (click)="onLogout()">
-            <i class="fa fa-sign-out-alt icons" aria-label="logout icon"></i>
-            Logout
-          </a>
-        </li>
-      </ul>
-    </div>
-    <!-- navigation -->
-    <div class="navigation">
-      <p class="title">Navigation</p>
-      <ul (click)="navClose()">
-        <li>
-          <a [routerLink]="['/home']" [routerLinkActive]="['active']">
-            <i class="fa fa-home icons" aria-label="home icon"></i>
-            Home
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/about']" [routerLinkActive]="['active']">
-            <i class="fab fa-connectdevelop icons" aria-label="about icon"></i>
-            About
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/project']" [routerLinkActive]="['active']">
-            <i class="fa fa-th icons" aria-label="project icon"></i>
-            Projects
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/contact']" [routerLinkActive]="['active']">
-            <i class="fa fa-envelope icons" aria-label="contact icon"></i>
-            Contact
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/member']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fa fa-user icons" aria-label="member icon"></i>
-            Members
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/upload']" [routerLinkActive]="['active']">
-            <i class="fa fa-upload icons" aria-label="upload icon"></i>
-            Upload
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/setting']" [routerLinkActive]="['active']">
-            <i class="fa fa-cog icons" aria-label="setting icon"></i>
-            Setting
-          </a>
-        </li>
-      </ul>
-    </div>
-    <!-- Social -->
-    <div class="navigation navigation-sns">
-      <p class="title">Social</p>
-      <ul (click)="navClose()">
-        <li>
-          <a href="https://drive.google.com/drive/folders/1vyOow3bxPHOzDeisljdQf2ATueN6KtXS" target="_blank">
-            <i class="fa fa-cloud icons" aria-label="google cloud icon"></i>
-            Google Cloud
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/Toy-project" target="_blank">
-            <i class="fab fa-github fa-2x icons" aria-label="github icon"></i>
-            Github
-          </a>
-        </li>
-      </ul>
-    </div>
+<nav class="navigation-contents">
+  <!-- user -->
+  <div class="navigation navigation-user">
+    <p class="title">{{memberService.user.logined ? memberService.user.email.split('@')[0] : "Member"}}</p>
+    <ul (click)="navigationService.navToggle()">
+      <!-- not login -->
+      <li *ngIf="!memberService.user.logined">
+        <a (click)="openDialogLogin()">
+          <i class="fa fa-sign-in-alt icons" aria-label="login icon"></i>
+          Login
+        </a>
+      </li>
+      <li *ngIf="!memberService.user.logined">
+        <a (click)="openDialogSignup()">
+          <i class="fas fa-user-plus icons" aria-label="signup icon"></i>
+          SignUp
+        </a>
+      </li>
+      <!-- login -->
+      <li *ngIf="memberService.user.logined">
+        <a [routerLink]="['/member', 'mypage']" [routerLinkActive]="['active']">
+          <i class="fa fa-id-card icons" aria-label="profile icon"></i>
+          Profile
+        </a>
+      </li>
+      <li *ngIf="memberService.user.logined">
+        <a [routerLink]="['/member', 'message']" [routerLinkActive]="['active']">
+          <i class="far fa-comments icons" aria-label="message icon"></i>
+          Message <span class="count" *ngIf="messageCount">({{messageCount}})</span>
+        </a>
+      </li>
+      <li *ngIf="memberService.user.logined">
+        <a (click)="onLogout()">
+          <i class="fa fa-sign-out-alt icons" aria-label="logout icon"></i>
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- menu -->
+  <div class="navigation">
+    <p class="title">Menu</p>
+    <ul (click)="navigationService.navToggle()">
+      <li>
+        <a [routerLink]="['/home']" [routerLinkActive]="['active']">
+          <i class="fa fa-home icons" aria-label="home icon"></i>
+          Home
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/project']" [routerLinkActive]="['active']">
+          <i class="fa fa-th icons" aria-label="project icon"></i>
+          Projects
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- Admin -->
+  <div class="navigation navigation-admin">
+    <p class="title">Admin</p>
+    <ul (click)="navigationService.navToggle()">
+      <li>
+        <a [routerLink]="['/admin', 'visit']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-eye icons" aria-label="admin visit icon"></i>
+          Visit
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/admin', 'project']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-window-restore icons" aria-label="admin projects icon"></i>
+          Projects
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/admin', 'member']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fas fa-users icons" aria-label="admin members icon"></i>
+          Members
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/admin', 'setting']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i class="fa fa-cog icons" aria-label="admin setting icon"></i>
+          Setting
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- Social -->
+  <div class="navigation navigation-sns">
+    <p class="title">Social</p>
+    <ul (click)="navigationService.navToggle()">
+      <li>
+        <a href="https://drive.google.com/drive/folders/1vyOow3bxPHOzDeisljdQf2ATueN6KtXS" target="_blank">
+          <i class="fa fa-cloud icons" aria-label="google cloud icon"></i>
+          Google Cloud
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/Toy-project" target="_blank">
+          <i class="fab fa-github fa-2x icons" aria-label="github icon"></i>
+          Github
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>

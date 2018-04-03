@@ -16,7 +16,8 @@ import {
   MatCheckboxModule,
   MatSelectModule,
   MatMenuModule,
-  MatListModule
+  MatListModule,
+  MatSidenavModule
 } from '@angular/material';
 
 import 'hammerjs';
@@ -40,7 +41,8 @@ import 'hammerjs';
     MatCheckboxModule,
     MatSelectModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatSidenavModule
   ],
   declarations: []
 })

@@ -2,6 +2,30 @@
 // Contents
 //
 
+.contents-header {
+  position: relative;
+  min-height: auto;
+  padding-bottom: map-get($spacers, 4);
+  text-align: center;
+
+  .title {
+    font-size: $font-size-lg;
+    line-height: $line-height-base;
+    color: gray('500');
+  }
+  
+  .text {
+    padding-top: map-get($spacers, 2);
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: gray('600');
+
+    > span {
+      color: theme-color('primary');
+    }
+  }
+}
+
 .contents {
   position: relative;
   background-color: color('white');
@@ -13,7 +37,15 @@
     border: 0;
   }
 
-  &:not(:first-child) {
+  &.transparent {
+    background-color: transparent !important;
+
+    .loading {
+      background-color: transparent;
+    }
+  }
+
+  &:not(:first-of-type) {
     margin-top: map-get($spacers, 3);
   }
 
@@ -25,32 +57,9 @@
 
   @include media-breakpoint-up('sm') {
     min-height: 300px;
-  }
-}
 
-// responsive
-
-.contents {
-  &.project {
-    text-align: left;
-  }
-
-  @include media-breakpoint-up('sm') {
-    &.project,
-    &.github {
-      float: left;
-      width: calc(50% - 10px);
-      height: 300px;
-
-      .table-container {
-        max-height: 220px;
-        overflow: scroll;
-      }
-    }
-
-    &.github {
-      margin-top: 0;
-      margin-left: 20px;
+    &.min-height {
+      min-height: 150px;
     }
   }
 }

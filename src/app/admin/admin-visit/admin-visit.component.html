@@ -1,0 +1,43 @@
+<section class="contents-container">
+  <!-- visit card -->
+  <div class="chart-number">
+    <!-- loading -->
+    <app-loading [loading]="!visitRender"></app-loading>
+    <!-- member card -->
+    <ngx-charts-number-card [results]="visitCard" cardColor="#ffffff" *ngIf="visitRender">
+    </ngx-charts-number-card>
+  </div>
+  <!-- visit area chart -->
+  <div class="contents chart-area">
+    <h4 class="contents-title">Visits</h4>
+    <!-- loading -->
+    <app-loading [loading]="!visitRender"></app-loading>
+    <!-- chart -->
+    <div class="chart-area-inner" *ngIf="visitRender">
+      <ngx-charts-area-chart [results]="visitList" [xAxis]="true" [yAxis]="true" [xAxisLabel]="true">
+      </ngx-charts-area-chart>
+    </div>
+  </div>
+  <!-- visit pie grid -->
+  <div class="contents chart-pie-grid">
+    <h4 class="contents-title">Visits Type</h4>
+    <!-- loading -->
+    <app-loading [loading]="!visitRender"></app-loading>
+    <!-- chart -->
+    <div class="chart-pie-grid-inner" *ngIf="visitRender">
+        <ngx-charts-pie-grid [results]="visitType">
+        </ngx-charts-pie-grid>
+    </div>
+  </div>
+  <!-- visit pie -->
+  <div class="contents chart-pie">
+    <h4 class="contents-title">Visits Browser</h4>
+    <!-- loading -->
+    <app-loading [loading]="!visitRender"></app-loading>
+    <!-- chart -->
+    <div class="chart-pie-inner" *ngIf="visitRender">
+        <ngx-charts-pie-chart [results]="visitBrowser" [labels]="true">
+        </ngx-charts-pie-chart>
+    </div>
+  </div>
+</section>

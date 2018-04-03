@@ -1,12 +1,13 @@
-<section class="site-inner-contents">
+<section class="contents-container">
   <!-- access loading -->
-  <app-loading [loading]="memberService.access.loading" [message]="message.accessLoading" [fixed]="loadingFixed"></app-loading>
+  <app-loading [loading]="memberService.access.loading" [message]="message.accessLoading" [fixed]="true"></app-loading>
   <!-- access loading end -->
   <div *ngIf="!memberService.access.loading">
     <!-- failed access -->
-    <app-access *ngIf="!memberService.access.level" [message]="message.requiredLogin"></app-access>
+    <app-access *ngIf="!access" [message]="accessFailedMessage"></app-access>
+    
     <!-- success access -->
-    <div *ngIf="memberService.access.level">
+    <div *ngIf="access">
       <!-- header -->
       <header class="member-header">
         <div class="contents">
@@ -14,33 +15,9 @@
           <strong class="email">{{memberService.user.email}}</strong>
         </div>
       </header>
-      <!-- message -->
       <mat-accordion>
-        <mat-expansion-panel [expanded]="true">
-          <!-- header -->
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <h4>Message</h4>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <!-- message list -->
-          <div class="none-message" *ngIf="!messageList.length">
-            메세지가 없습니다.
-          </div>
-          <mat-list role="list" class="list-message" *ngIf="messageList.length">
-            <mat-list-item *ngFor="let message of messageList; let i = index;" role="listitem" (click)="readMessage(message.id, message)">
-              <span mat-list-icon [ngSwitch]="message.data().type" [class]="message.data().read ? 'text-success' : 'text-danger'">
-                <i class="fas fa-question-circle" *ngSwitchCase="'qna'"></i>
-                <i class="fas fa-exclamation-circle" *ngSwitchCase="'error'"></i>
-                <i class="fas fa-comment-alt" *ngSwitchCase="'etc'"></i>
-                <i class="fas fa-comments" *ngSwitchDefault></i>
-              </span>
-              <h5 mat-line class="title">{{message.data().title}}</h5>
-            </mat-list-item>
-          </mat-list>
-        </mat-expansion-panel>
         <!-- basic info -->
-        <mat-expansion-panel [expanded]="messageList ? 'false' : 'true'">
+        <mat-expansion-panel [expanded]="true">
           <!-- loading -->
           <app-loading [loading]="infoLoading"></app-loading>
           <!-- header -->
@@ -133,5 +110,7 @@
         </mat-expansion-panel>
       </mat-accordion>
     </div>
+    <!-- success access end -->
+
   </div>
 </section>

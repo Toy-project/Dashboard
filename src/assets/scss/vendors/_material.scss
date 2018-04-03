@@ -9,6 +9,13 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
+$custom-app-primary: mat-palette($mat-cyan, 500);
+$custom-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$custom-app-warn:    mat-palette($mat-red, 500);
+$custom-app-theme:   mat-light-theme($custom-app-primary, $custom-app-accent, $custom-app-warn);
+
+@include angular-material-theme($custom-app-theme);
+
 //
 // Form
 //
@@ -36,13 +43,33 @@ textarea.mat-input-element {
 .mat-radio-button {
   display: block !important;
   color: gray('600');
-  font-size: 0.7rem;
+  font-size: $font-size-base * 0.7;
   padding: map-get($spacers, 1);
+
+  .mat-radio-container {
+    width: $font-size-base;
+    height: $font-size-base;
+  }
 
   .mat-radio-outer-circle,
   .mat-radio-inner-circle {
     width: $font-size-base;
     height: $font-size-base;
+  }
+
+  .mat-radio-ripple {
+    width: $font-size-base * 2;
+    height: $font-size-base * 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .mat-ripple-element {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 
@@ -88,24 +115,18 @@ textarea.mat-input-element {
 }
 
 //
-// Card
-//
-
-.mat-card {
-  box-shadow: none !important;
-  border: 1px solid gray('200');
-}
-
-.mat-card-header-text {
-  width: 100%;
-  margin: 0;
-}
-
-//
-// slider toggle
+// Slider toggle
 //
 
 .mat-slide-toggle {
   margin-top: map-get($spacers, 1);
   margin-bottom: map-get($spacers, 2);
+}
+
+//
+// Icon
+// 
+
+.mat-icon {
+  vertical-align: middle;
 }

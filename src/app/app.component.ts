@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { VisitService } from './shared/visit/visit.service';
+import { AdminVisitService } from './admin/admin-visit/admin-visit.service';
+import { NavigationService } from './shared/navigation/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,16 @@ export class AppComponent {
   public date: Date = new Date();
 
   constructor(
-    public visitService: VisitService,
+    public adminVisitService: AdminVisitService,
+    public navigationService: NavigationService,
   ){ }
 
   ngOnInit() {
-    this.visitService.createAndUpdateVisit(this.date);
+    this.adminVisitService.createAndUpdateVisit(this.date);
+  }
+
+  public backdropClick() {
+    this.navigationService.navToggle();
   }
 
 }

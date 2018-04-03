@@ -1,8 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Material Import
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
 // Base Import
 @import './assets/scss/base/normalize';
 @import './assets/scss/base/common';
@@ -32,8 +29,8 @@
 @import './assets/scss/components/modal';
 @import './assets/scss/components/access';
 @import './assets/scss/components/button';
-@import './assets/scss/components/contact';
 @import './assets/scss/components/message';
+@import './assets/scss/components/visual';
 @import './assets/scss/components/notFound';
 
 // Vendors Import
