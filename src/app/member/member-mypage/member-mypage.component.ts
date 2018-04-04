@@ -8,7 +8,7 @@ import { AdminSettingService } from '../../admin/admin-setting/admin-setting.ser
 import { CookieService } from '../../shared/cookie/cookie.service';
 import { Message } from '../../shared/message/message';
 
-import { MemberPasswordComponent } from '../member-password/member-password.component';
+import { MemberPasswordConfirmComponent } from '../member-password-confirm/member-password-confirm.component';
 
 @Component({
   selector: 'app-member-mypage',
@@ -69,14 +69,26 @@ export class MemberMypageComponent implements OnInit {
     this.changePasswordForm = this.fb.group({
       newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       newPasswordConfirm: ['', Validators.compose([Validators.required])]
+    }, {
+      validator: this.comparePasswordEvent('newPassword', 'newPasswordConfirm')
     });
     this.newPassword = this.changePasswordForm.controls['newPassword'];
     this.newPasswordConfirm = this.changePasswordForm.controls['newPasswordConfirm'];
   }
 
   // compare password 
-  public comparePasswordEvent(event) {
-    this.comparePassword = event.target.value !== this.changePasswordForm.get('newPassword').value ? true : false;
+  public comparePasswordEvent(password: string, passwordConfirm: string): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} => {
+      const passwd = control.get(password).value;
+      const passwdConfirm = control.get(passwordConfirm).value;
+      if (!passwd || !passwdConfirm) {
+        return null;
+      } else if (passwd !== passwdConfirm) {
+        return null;
+      } else {
+        return {compare: true};
+      }
+    }
   }
 
   // password error message event
@@ -86,6 +98,7 @@ export class MemberMypageComponent implements OnInit {
 
   // passwrod confirm error message event
   public getPasswordConfrimErrorMessage(): string {
+    
     return this.newPasswordConfirm.hasError('required') ? this.message.requiredPassword : this.comparePassword ? this.message.validatorConfirmPassword : '';
   }
 
@@ -168,14 +181,14 @@ export class MemberMypageComponent implements OnInit {
   // change password
   public changePassword(value): any {
     // validator
-    if (this.changePasswordForm.invalid && (this.changePasswordForm.get('newPassword').value !== this.changePasswordForm.get('newPasswordConfirm').value)) {
+    if (this.changePasswordForm.invalid || (this.changePasswordForm.get('newPassword').value !== this.changePasswordForm.get('newPasswordConfirm').value)) {
       return false;
     }
 
     // open dialog event
-    let dialogRef = this.dialog.open(MemberPasswordComponent, {
+    let dialogRef = this.dialog.open(MemberPasswordConfirmComponent, {
       minWidth: 300,
-      maxWidth: 500,
+      maxWidth: 300,
       disableClose: true
     });
     // close event
@@ -222,13 +235,17 @@ export class MemberMypageComponent implements OnInit {
   // delete user
   public deleteUser(): void {
     // open dialog event
-    let dialogRef = this.dialog.open(MemberPasswordComponent, {
+    let dialogRef = this.dialog.open(MemberPasswordConfirmComponent, {
       minWidth: 300,
-      maxWidth: 500,
+      maxWidth: 300,
       disableClose: true
     });
     // close event
     dialogRef.afterClosed().subscribe((password) => {
+      // if password null
+      if (!password) {
+        return false;
+      }
       // loading start
       this.deleteLoading = true;
       // re-login

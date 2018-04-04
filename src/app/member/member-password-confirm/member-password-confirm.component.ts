@@ -5,11 +5,11 @@ import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/fo
 import { Message } from '../../shared/message/message';
 
 @Component({
-  selector: 'app-member-password',
-  templateUrl: './member-password.component.html',
-  styleUrls: ['./member-password.component.scss']
+  selector: 'app-member-password-confirm',
+  templateUrl: './member-password-confirm.component.html',
+  styleUrls: ['./member-password-confirm.component.scss']
 })
-export class MemberPasswordComponent implements OnInit {
+export class MemberPasswordConfirmComponent implements OnInit {
 
   public confirmForm: FormGroup;
   public password: AbstractControl;
@@ -17,7 +17,7 @@ export class MemberPasswordComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public message: Message,
-    public dialogRef: MatDialogRef<MemberPasswordComponent>
+    public dialogRef: MatDialogRef<MemberPasswordConfirmComponent>
   ) {
     this.createConfirmPasswordForm();
   }
