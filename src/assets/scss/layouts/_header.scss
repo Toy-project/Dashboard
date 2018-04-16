@@ -4,23 +4,35 @@
 
 .site-header {
   position: relative;
-  z-index: $zindex-header;
-  background-color: color('white');
-  border-bottom: 1px solid gray('200');
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  border-top: 3px solid theme-color('primary');
+  
+  .header-inner {
+    color: color('white');
+    background-color: theme-color('primary');
+    max-width: map-get($grid-breakpoints, 'xl');
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 
   .title {
     flex: auto;
     font-size: $font-size-base;
-    text-align: center;
+    padding: 0 map-get($spacers, 3);
   }
 
-  .btn-search {
+  .button {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn {
+    color: color('white');
     height: 100%;
-    padding: map-get($spacers, 3);
-    border-right: 1px solid gray('200');
+    padding: 0 map-get($spacers, 1);
+    font-size: $font-size-base;
 
     &:hover {
       cursor: pointer;
@@ -31,18 +43,8 @@
     }
   }
 
-  .btn-menu {
-    height: 100%;
-    position: relative;
+  .btn-project {
+    font-size: $font-size-sm;
     padding: map-get($spacers, 3);
-    border-left: 1px solid gray('200');
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    &:focus {
-      outline: 0;
-    }
   }
 }

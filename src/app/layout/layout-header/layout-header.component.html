@@ -1,13 +1,20 @@
 <!-- header -->
 <header class="site-header">
-  <!-- search button -->
-  <button type="button" class="btn-search">
-    <i class="fas fa-search" aria-label="search icon"></i>
-  </button>
-  <!-- title-->
-  <h1 class="title"><a [routerLink]="['/home']">TOY-PROJECT</a></h1>
-  <!-- nav button -->
-  <button type="button" (click)="navigationService.navToggle()" class="btn-menu">
-    <i class="fas fa-bars" aria-label="menu icon"></i>
-  </button>
+  <div class="header-inner">
+    <!-- title -->
+    <h1 class="title">
+      <a [routerLink]="['/home']">TOY-PROJECT</a>
+    </h1>
+    <!-- button -->
+    <div class="button">
+      <!-- search button -->
+      <button type="button" class="btn">
+        <i class="fas fa-search" aria-label="search icon"></i>
+      </button>
+      <!-- project button -->
+      <button type="button" class="btn btn-project">
+        <strong>REGISTER PROJECT</strong>
+      </button>
+    </div>
+  </div>
 </header>
