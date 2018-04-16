@@ -14,7 +14,7 @@ import { AccessComponent } from '../shared/access/access.component';
 
 import { MemberLoginComponent } from '../member/member-login/member-login.component';
 import { MemberSignupComponent } from '../member/member-signup/member-signup.component';
-import { MemberPasswordComponent } from '../member/member-password/member-password.component';
+import { MemberPasswordConfirmComponent } from '../member/member-password-confirm/member-password-confirm.component';
 import { MemberLevelComponent } from '../member/member-level/member-level.component';
 import { MessageDetailComponent } from '../message/message-detail/message-detail.component';
 import { MessageReplyComponent } from '../message/message-reply/message-reply.component';
@@ -39,7 +39,7 @@ import { ProjectDeleteComponent } from '../project/project-delete/project-delete
   entryComponents: [
     MemberLoginComponent,
     MemberSignupComponent,
-    MemberPasswordComponent,
+    MemberPasswordConfirmComponent,
     MemberLevelComponent,
     MessageDetailComponent,
     MessageReplyComponent,
@@ -55,7 +55,7 @@ import { ProjectDeleteComponent } from '../project/project-delete/project-delete
     AccessComponent,
     MemberLoginComponent,
     MemberSignupComponent,
-    MemberPasswordComponent,
+    MemberPasswordConfirmComponent,
     MemberLevelComponent,
     MessageDetailComponent,
     MessageReplyComponent,

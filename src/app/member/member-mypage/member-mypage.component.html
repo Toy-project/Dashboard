@@ -81,7 +81,7 @@
               <mat-error *ngIf="newPassword.invalid">{{getPasswordErrorMessage()}}</mat-error>
             </mat-form-field>
             <mat-form-field floatLabel="always">
-              <input matInput placeholder="New Password Confirm" required type="password" formControlName="newPasswordConfirm" (keyup)="comparePasswordEvent($event)">
+              <input matInput placeholder="New Password Confirm" required type="password" formControlName="newPasswordConfirm">
               <small *ngIf="comparePassword" class="form-error text-danger">{{getPasswordConfrimErrorMessage()}}</small>
             </mat-form-field>
             <!-- button -->

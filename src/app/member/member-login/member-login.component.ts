@@ -51,7 +51,7 @@ export class MemberLoginComponent implements OnInit {
     // open signup
     let dialogRef = this.dialog.open(MemberSignupComponent, {
       minWidth: 300,
-      maxWidth: 500,
+      maxWidth: 300,
       disableClose: true
     });
   }
