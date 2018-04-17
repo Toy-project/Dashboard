@@ -37,19 +37,4 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  // go upload page
-  public goProjectUpload(): any {
-    if (!this.memberService.user.logined) {
-      // alert
-      this.snackBar.open(this.message.requiredLogin, 'CLOSE', {duration: 3000});
-      return false;
-    } else if (!this.memberService.user.emailVerified) {
-      // alert
-      this.snackBar.open(this.message.NotemailVerified, 'CLOSE', {duration: 3000});
-      return false;
-    } else {
-      this.router.navigate(['/project', 'upload']);
-    }
-  }
-
 }

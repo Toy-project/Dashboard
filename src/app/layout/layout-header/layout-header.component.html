@@ -7,14 +7,32 @@
     </h1>
     <!-- button -->
     <div class="button">
-      <!-- search button -->
-      <button type="button" class="btn">
-        <i class="fas fa-search" aria-label="search icon"></i>
+      <!-- login button -->
+      <button type="button" class="btn" *ngIf="!memberService.user.logined" (click)="openDialogLogin()">
+        <i class="fa fa-sign-in-alt icons" aria-label="login icon"></i>
+      </button>
+      <!-- signup button -->
+      <button type="button" class="btn" *ngIf="!memberService.user.logined" (click)="openDialogSignup()">
+        <i class="fas fa-user-plus icons" aria-label="signup icon"></i>
+      </button>
+      <!-- logout button -->
+      <button type="button" class="btn" *ngIf="memberService.user.logined" (click)="onLogout()">
+        <i class="fa fa-sign-out-alt icons" aria-label="logout icon"></i>
+      </button>
+      <!-- message button -->
+      <button type="button" class="btn" *ngIf="memberService.user.logined" [routerLink]="['/member/message']">
+        <i class="far fa-comments icons" aria-label="message icon"></i>
+        <span class="count" *ngIf="messageCount">({{messageCount}})</span>
+      </button>
+      <!-- mypage button -->
+      <button type="button" class="btn" *ngIf="memberService.user.logined" [routerLink]="['/member/mypage']">
+        <i class="fa fa-id-card icons" aria-label="mypage icon"></i>
       </button>
       <!-- project button -->
-      <button type="button" class="btn btn-project">
+      <button type="button" class="btn btn-project" (click)="goProjectRegister()">
         <strong>REGISTER PROJECT</strong>
       </button>
     </div>
   </div>
 </header>
+<app-layout-nav [accessLevel]="memberService.access.level"></app-layout-nav>

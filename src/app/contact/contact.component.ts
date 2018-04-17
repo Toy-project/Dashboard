@@ -87,7 +87,7 @@ export class ContactComponent implements OnInit {
     };
     // if not emailVerified
     if (!this.memberService.user.emailVerified) {
-      this.snackBar.open(this.message.NotemailVerified, 'CLOSE', {duration: 3000});
+      this.snackBar.open(this.message.notEmailVerified, 'CLOSE', {duration: 3000});
       return false;
     };
     // loading start

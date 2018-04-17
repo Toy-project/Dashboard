@@ -70,7 +70,7 @@ export class AdminMemberComponent implements OnInit {
   public changeLevel(key: string): void {
     if (!this.memberService.user.emailVerified) {
       // alert
-      this.snackBar.open(this.message.NotemailVerified, 'CLOSE', {duration: 3000});
+      this.snackBar.open(this.message.notEmailVerified, 'CLOSE', {duration: 3000});
     } else {
       // open dialog
       let dialogRef = this.dialog.open(MemberLevelComponent, {

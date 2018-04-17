@@ -1,12 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-
-import { NavigationService } from '../../shared/navigation/navigation.service';
-import { MemberService } from '../../member/member.service';
-import { Message } from '../../shared/message/message';
-
-import { MemberLoginComponent } from '../../member/member-login/member-login.component';
-import { MemberSignupComponent } from '../../member/member-signup/member-signup.component';
+import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 
 @Component({
   selector: 'app-layout-nav',
@@ -15,52 +7,47 @@ import { MemberSignupComponent } from '../../member/member-signup/member-signup.
 })
 export class LayoutNavComponent implements OnInit {
 
-  public messageCount: number;
+  @Input() accessLevel: number; 
 
-  constructor(
-    public dialog: MatDialog,
-    public snackBar: MatSnackBar,
-    public navigationService: NavigationService,
-    public memberService: MemberService,
-    public message: Message
-  ) { }
+  public navPublicData: Array<any> = [
+    {
+      title: 'HOME',
+      icon: 'fa fa-home',
+      path: 'home'
+    },
+    {
+      title: 'PROJECT',
+      icon: 'fa fa-th',
+      path: 'project'
+    }
+  ];
+
+  public navAdminData: Array<any> = [
+    {
+      title: 'VISIT',
+      icon: 'fas fa-eye',
+      path: 'visit'
+    },
+    {
+      title: 'PROJECT',
+      icon: 'fas fa-window-restore',
+      path: 'project'
+    },
+    {
+      title: 'MEMBER',
+      icon: 'fas fa-users',
+      path: 'member'
+    },
+    {
+      title: 'SETTING',
+      icon: 'fa fa-cog',
+      path: 'setting'
+    }
+  ];
+
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  // open & close login dialog event
-  public openDialogLogin(): void {
-    // open event
-    let dialogRef = this.dialog.open(MemberLoginComponent, {
-      minWidth: 300,
-      maxWidth: 500,
-      disableClose: true
-    });
-  }
-
-  // open & close login dialog event
-  public openDialogSignup(): void {
-    // open event
-    let dialogRef = this.dialog.open(MemberSignupComponent, {
-      minWidth: 300,
-      maxWidth: 500,
-      disableClose: true
-    });
-  }
-
-  // logout event
-  public onLogout(): void {
-    this.memberService.logout()
-    .then(() => {
-      // reload
-      window.location.reload();
-      // delete localStorage
-      this.memberService.deleteLocalstorage();
-    })
-    .catch((err) => {
-      // alert
-      this.snackBar.open(this.message.failedLogout, 'CLOSE', {duration: 3000});
-    });
   }
 
 }

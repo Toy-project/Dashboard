@@ -3,36 +3,43 @@
 //
 
 .site-header {
-  position: relative;
-  border-top: 3px solid theme-color('primary');
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $font-size-base * 4;
+  background-color: theme-color('primary');
+  z-index: $zindex-layout;
   
   .header-inner {
     color: color('white');
-    background-color: theme-color('primary');
     max-width: map-get($grid-breakpoints, 'xl');
     margin: 0 auto;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
   .title {
+    height: 100%;
+    display: flex;
     flex: auto;
     font-size: $font-size-base;
+    align-items: center;
     padding: 0 map-get($spacers, 3);
   }
 
   .button {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    height: 100%;
   }
 
   .btn {
     color: color('white');
     height: 100%;
-    padding: 0 map-get($spacers, 1);
+    padding: 0 map-get($spacers, 2);
     font-size: $font-size-base;
+    vertical-align: middle;
 
     &:hover {
       cursor: pointer;
@@ -45,6 +52,6 @@
 
   .btn-project {
     font-size: $font-size-sm;
-    padding: map-get($spacers, 3);
+    padding: 0 map-get($spacers, 3);
   }
 }

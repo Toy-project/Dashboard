@@ -52,7 +52,7 @@ export class ProjectCreateComponent implements OnInit {
   ngOnInit() {
     this.memberService.loginConfirm();
     this.access = this.memberService.user.logined ? this.memberService.user.emailVerified ? true : false : false;
-    this.accessFailedMessage = this.memberService.user.logined ? this.memberService.user.emailVerified ? '' : this.message.NotemailVerified : this.message.requiredLogin;
+    this.accessFailedMessage = this.memberService.user.logined ? this.memberService.user.emailVerified ? '' : this.message.notEmailVerified : this.message.requiredLogin;
   }
 
   // create project form

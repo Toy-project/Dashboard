@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog, MatSnackBar } from '@angular/material';
+
+import { MemberService } from '../../member/member.service';
+import { Message } from '../../shared/message/message';
+
+import { MemberLoginComponent } from '../../member/member-login/member-login.component';
+import { MemberSignupComponent } from '../../member/member-signup/member-signup.component';
 
 @Component({
   selector: 'app-layout-header',
@@ -8,11 +15,65 @@ import { Router } from '@angular/router';
 })
 export class LayoutHeaderComponent implements OnInit {
 
+  public messageCount: number;
+
   constructor(
-    public router: Router
+    public router: Router,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+    public memberService: MemberService,
+    public message: Message
   ) { }
 
   ngOnInit() {
+  }
+
+  // open & close login dialog event
+  public openDialogLogin(): void {
+    // open event
+    let dialogRef = this.dialog.open(MemberLoginComponent, {
+      minWidth: 300,
+      maxWidth: 300,
+      disableClose: true
+    });
+  }
+
+  // open & close login dialog event
+  public openDialogSignup(): void {
+    // open event
+    let dialogRef = this.dialog.open(MemberSignupComponent, {
+      minWidth: 300,
+      maxWidth: 300,
+      disableClose: true
+    });
+  }
+
+  // logout event
+  public async onLogout() {
+    try {
+      // logout
+      await this.memberService.logout();
+      // reload
+      window.location.reload();
+    } catch(err) {
+      // alert
+      this.snackBar.open(this.message.failedLogout, 'CLOSE', {duration: 3000});
+    }
+  }
+
+  // go project register page
+  public goProjectRegister(): any {
+    if (!this.memberService.user.logined) {
+      // alert
+      this.snackBar.open(this.message.requiredLogin, 'CLOSE', {duration: 3000});
+      return false;
+    } else if (!this.memberService.user.emailVerified) {
+      // alert
+      this.snackBar.open(this.message.notEmailVerified, 'CLOSE', {duration: 3000});
+      return false;
+    } else {
+      this.router.navigate(['/project', 'upload']);
+    }
   }
 
 }

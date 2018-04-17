@@ -28,7 +28,7 @@ $grays: map-merge((
 ), $grays);
 
 $blue:      #007bff !default;
-$blue-light:#62a3ff !default; 
+$blue-light:#4192C0 !default; 
 $blue-dark: #485360 !default;
 $indigo:    #6610f2 !default;
 $purple:    #6f42c1 !default;
@@ -60,7 +60,7 @@ $colors: map-merge((
   "black":      $black
 ), $colors);
 
-$primary:       $cyan !default;
+$primary:       $blue-light !default;
 $secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          $blue !default;
@@ -126,7 +126,7 @@ $grid-breakpoints: (
   sm: 618px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
 ) !default;
 
 //
@@ -185,6 +185,7 @@ $transition-collapse:         height .35s ease !default;
 // Z-index
 //
 
+$zindex-layout:               900 !default;
 $zindex-button:               900 !default;
 $zindex-header:               910 !default;
 $zindex-modal:                920 !default;

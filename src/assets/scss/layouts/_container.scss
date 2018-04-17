@@ -4,28 +4,15 @@
 
 .site-container {
   min-height: 100%;
-  background-color: gray('100');
+  margin-top: $font-size-base * 7;
 }
 
 .contents-container {
   position: relative;
   padding: map-get($spacers, 4) map-get($spacers, 3);
-  overflow: hidden;
   max-width: map-get($grid-breakpoints, 'xl');
   margin: 0 auto;
   min-height: 400px;
 
   @include clearfix();
-  
-  @include media-breakpoint-up('md') {
-    min-height: 500px;
-  }
-
-  @include media-breakpoint-up('lg') {
-    min-height: 600px;
-  }
-
-  @include media-breakpoint-up('xl') {
-    min-height: 700px;
-  }
 }

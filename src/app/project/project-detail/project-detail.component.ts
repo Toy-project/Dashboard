@@ -78,7 +78,7 @@ export class ProjectDetailComponent implements OnInit {
   public deleteProject(): void {
     if (!this.memberService.user.emailVerified) {
       // alert
-      this.snackBar.open(this.message.NotemailVerified, 'CLOSE', {duration: 3000});
+      this.snackBar.open(this.message.notEmailVerified, 'CLOSE', {duration: 3000});
     } else {
       // key
       this.project['key'] = this.key;

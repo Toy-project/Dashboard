@@ -68,7 +68,7 @@ export class AdminProjectComponent implements OnInit {
   public deleteProject(value: any, key: string): void {
     if (!this.memberService.user.emailVerified) {
       // alert
-      this.snackBar.open(this.message.NotemailVerified, 'CLOSE', {duration: 3000});
+      this.snackBar.open(this.message.notEmailVerified, 'CLOSE', {duration: 3000});
     } else {
       // key set
       value['key'] = key;

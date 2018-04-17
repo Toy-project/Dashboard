@@ -93,6 +93,6 @@ export class Message {
   public failedUploadDefaultImage = '기본 이미지 등록에 실패하였습니다.';
 
   // 이메일 미인증시 출력 메세지
-  public NotemailVerified = '이메일 인증이 필요합니다.';
+  public notEmailVerified = '이메일 인증이 필요합니다.';
 
 }
