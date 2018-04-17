@@ -39,17 +39,17 @@ export class MemberMessageComponent implements OnInit {
     // if not valid
     if (!this.memberService.user.logined) {
       return false;
+    } else {
+      // get message list
+      this.messageService.getAllMessage(this.memberService.user.uid, limit).onSnapshot((res) => {
+        this.messageList = res.docs;
+        this.messageRender = true;
+      });
     }
-
-    // get message list
-    this.messageService.getAllMessage(this.memberService.user.uid, limit).onSnapshot((res) => {
-      this.messageList = res.docs;
-      this.messageRender = true;
-    });
   }
 
   // update message read
-  public readMessage(key: string, data: any): void {
+  public async readMessage(key: string, data: any) {
     // open dialog
     let dialogRef = this.dialog.open(MessageDetailComponent, {
       minWidth: 300,
@@ -58,13 +58,11 @@ export class MemberMessageComponent implements OnInit {
     });
     
     // update message read
-    this.messageService.updateMessageRead(key)
-    .then(() => {
+    try {
+      await this.messageService.updateMessageRead(key);
+    } catch(err) {
       // todo
-    })
-    .catch((err) => {
-      // todo
-    })
+    }
   }
 
 }

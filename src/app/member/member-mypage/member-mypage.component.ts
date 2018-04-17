@@ -98,7 +98,6 @@ export class MemberMypageComponent implements OnInit {
 
   // passwrod confirm error message event
   public getPasswordConfrimErrorMessage(): string {
-    
     return this.newPasswordConfirm.hasError('required') ? this.message.requiredPassword : this.comparePassword ? this.message.validatorConfirmPassword : '';
   }
 
@@ -165,9 +164,6 @@ export class MemberMypageComponent implements OnInit {
         this.infoLoading = !this.infoLoading;
         // modified
         this.modified = !this.modified;
-      })
-      .catch((err) => {
-        throw new Error(err);
       });
     })
     .catch((err) => {

@@ -57,22 +57,20 @@ export class MemberSignupComponent implements OnInit {
   }
 
   // signupForm submit event
-  public onSubmit(value): any {
+  public async onSubmit(value): Promise<any> {
     // if not valid
     if (this.signupForm.invalid) {
       return false;
-    }
-
-    // loading start
-    this.signupLoading = true;
-    // singup
-    this.memberService.signUp(value)
-    .then(() => {
-      // login confirm
-      this.memberService.loginConfirm();
-      // signup database
-      this.memberService.signUpDatabase(this.memberService.user)
-      .then(() => {
+    } else {
+      try {
+        // loading start
+        this.signupLoading = true;
+        // signup
+        await this.memberService.signUp(value);
+        // login confirm
+        this.memberService.loginConfirm();
+        // signup database
+        await this.memberService.signUpDatabase(this.memberService.user);
         // send verify mail
         this.memberService.emailVerified();
         // loading end
@@ -81,22 +79,19 @@ export class MemberSignupComponent implements OnInit {
         this.snackBar.open(this.message.successSignup, 'CLOSE');
         // dialog close
         this.onClose();
-      })
-      .catch((err) => {
-        // rollback
-        this.memberService.signOut();
-        this.memberService.signOutDatabase(this.memberService.user.uid);
-        this.memberService.deleteLocalstorage();
-        // throw err
-        throw new Error(err);
-      })
-    })
-    .catch((err) => {
-      // alert
-      this.snackBar.open(this.message.failedSignup, 'CLOSE', {duration: 3000});
-      // loading end
-      this.signupLoading = false;
-    });
+      } catch(err) {
+        if(this.memberService.user) {
+          // rollback
+          this.memberService.signOut();
+          this.memberService.signOutDatabase(this.memberService.user.uid);
+          this.memberService.deleteLocalstorage();
+        };
+        // alert
+        this.snackBar.open(this.message.failedSignup, 'CLOSE', {duration: 3000});
+        // loading end
+        this.signupLoading = false;
+      }
+    }
   }
 
 }
