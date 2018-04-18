@@ -22,7 +22,7 @@
       <!-- message button -->
       <button type="button" class="btn" *ngIf="memberService.user.logined" [routerLink]="['/member/message']">
         <i class="far fa-comments icons" aria-label="message icon"></i>
-        <span class="count" *ngIf="messageCount">({{messageCount}})</span>
+        <span class="count" *ngIf="messageCount">{{messageCount}}</span>
       </button>
       <!-- mypage button -->
       <button type="button" class="btn" *ngIf="memberService.user.logined" [routerLink]="['/member/mypage']">

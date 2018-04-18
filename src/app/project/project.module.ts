@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../shared/material/material.module';
 import { LayoutModule } from '../layout/layout.module';
 
@@ -13,6 +13,7 @@ import { ProjectCreateComponent } from './project-create/project-create.componen
   imports: [
     CommonModule,
     ProjectRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     LayoutModule

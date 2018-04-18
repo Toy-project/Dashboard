@@ -20,12 +20,6 @@ export class ContactComponent implements OnInit {
   public messageTitle: AbstractControl;
   public messageText: AbstractControl;
 
-  public emailLoading: boolean = false;
-  public emailForm: FormGroup;
-  public email: AbstractControl;
-  public emailTitle: AbstractControl;
-  public emailText: AbstractControl;
-
   constructor(
     public router: Router,
     public snackBar: MatSnackBar,
@@ -35,7 +29,6 @@ export class ContactComponent implements OnInit {
     public message: Message
   ) {
     this.createMessageForm();
-    this.createEmailForm(); 
   }
 
   ngOnInit() {
@@ -58,21 +51,9 @@ export class ContactComponent implements OnInit {
     this.messageTitle = this.messageForm.controls['title'];
     this.messageText = this.messageForm.controls['text'];
   }
-  
-  // create email form
-  public createEmailForm(): void {
-    this.emailForm = this.fb.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      title: ['', Validators.compose([Validators.required])],
-      text: ['', Validators.compose([Validators.required])]
-    });
-    this.email = this.emailForm.controls['email'];
-    this.emailTitle = this.emailForm.controls['title'];
-    this.emailText = this.emailForm.controls['text'];
-  }
 
   // send message
-  public onSendMessage(value): any {
+  public async onSendMessage(value): Promise<any> {
     // login confirm
     this.memberService.loginConfirm();
     // not valid
@@ -90,6 +71,7 @@ export class ContactComponent implements OnInit {
       this.snackBar.open(this.message.notEmailVerified, 'CLOSE', {duration: 3000});
       return false;
     };
+
     // loading start
     this.messageLoading = true;
     // value set
@@ -115,10 +97,7 @@ export class ContactComponent implements OnInit {
           } else {
             // continue
           }
-        })
-        .catch((err) => {
-          throw new Error(err);
-        })
+        });
       });
     })
     .catch((err) => {
@@ -128,11 +107,6 @@ export class ContactComponent implements OnInit {
       // alert 
       this.snackBar.open(this.message.failedSendMessage, 'CLOSE', {duration: 3000});
     })
-  }
-
-  // send email
-  public onSendEmail(value): void {
-    alert('준비 중 입니다.');
   }
 
 }

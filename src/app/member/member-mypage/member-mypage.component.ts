@@ -141,37 +141,33 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // update user info
-  public updateUserProfile(value): any {
+  public async updateUserProfile(value): Promise<any> {
     // in not file
     if (!this.file) {
       return false;
-    };
-
-    // loading
-    this.infoLoading = !this.infoLoading;
-    // upload file
-    this.memberService.updateUserPhoto(this.memberService.user, this.file).then((res) => {
-      // success file upload
-      this.memberService.updateUserProfile({
-        photoURL: res
-      })
-      .then(() => {
+    } else {
+      try {
+        // loading
+        this.infoLoading = true;
+        // photo upload
+        const photoUrl = await this.memberService.updateUserPhoto(this.memberService.user, this.file);
+        // update photoURL
+        await this.memberService.updateUserProfile({photoURL: photoUrl});
         // getUser
         this.memberService.loginConfirm();
         // success update info
         this.snackBar.open(this.message.successUpdateInfo, 'CLOSE', {duration: 3000});
         // loading 
-        this.infoLoading = !this.infoLoading;
+        this.infoLoading = false;
         // modified
         this.modified = !this.modified;
-      });
-    })
-    .catch((err) => {
-      // failed file upload
-      this.snackBar.open(this.message.failedUpdateFile, 'CLOSE', {duration: 3000});
-      // loading 
-      this.infoLoading = !this.infoLoading;
-    });
+      } catch(err) {
+        // failed file upload
+        this.snackBar.open(this.message.failedUpdateFile, 'CLOSE', {duration: 3000});
+        // loading 
+        this.infoLoading = false;
+      }
+    }
   }
 
   // change password

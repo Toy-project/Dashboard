@@ -5,25 +5,27 @@
   </div>
   <!-- loading end -->
   <article class="contents no-border transparent project" *ngIf="projectRender">
-    
-    
-    <!-- info -->
-    <div class="project-info">
+    <!-- thumbnail -->
+    <div class="project-thumb">
+      <img src="{{project.thumbnail}}" alt="{{project.title}} thumbnail">
       <!-- button -->
       <div class="project-btn">
-        <button type="button" disabled>
+        <div class="btn">
           <span class="icons"><i class="fa fa-eye" aira-label="view icon"></i></span>
           <span class="number">{{project.view}}</span>
-        </button>
-        <button type="button">
+        </div>
+        <button type="button" class="btn">
           <span class="icons"><i class="fa fa-share-alt" aira-label="share icon"></i></span>
           <span class="number">{{project.share}}</span>
         </button>
-        <button type="button" (click)="updateProjectLike(key)">
+        <button type="button" class="btn" (click)="updateProjectLike(key)">
           <span class="icons"><i class="fab fa-gratipay" aira-label="like icon"></i></span>
           <span class="number">{{project.like}}</span>
         </button>
       </div>
+    </div>
+    <!-- info -->
+    <div class="project-info">
       <!-- title -->
       <h2 class="project-title">
         {{project.title}}
@@ -40,36 +42,14 @@
       <div class="project-etc">
         <span class="lang" *ngFor="let lang of projectLang">{{lang}}</span>
         <span class="color" *ngFor="let color of projectColor" [style.backgroundColor]="color"></span>
+        <a href="{{project.git}}" target="_blank" class="link"><i class="fab fa-github" aria-label="github icon"></i></a>
+        <a href="{{project.url}}" target="_blank" class="link" *ngIf="project.url"><i class="fas fa-link" aria-label="link icon"></i></a>
       </div>
       <!-- type -->
       <p class="project-type">{{project.type}} made by {{project.email.split('@')[0]}}</p>
       <!-- date -->
       <p class="project-date">{{project.startDate | date: "yyyy-MM-dd"}} ~ {{project.endDate | date: "yyyy-MM-dd"}}</p>
-      <!-- link -->
-      <div class="project-link">
-        <ul>
-          <li>
-            <a href="{{project.git}}" target="_blank" class="link">
-              <i class="fab fa-github" aria-label="github icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="{{project.url}}" target="_blank" class="link" *ngIf="project.url">
-              <i class="fas fa-link" aria-label="link icon"></i>
-            </a>
-          </li>
-          <li *ngIf="memberService.user.email === project.email">
-            <button class="link link-control" *ngIf="project.url" (click)="deleteProject()">
-              <i class="fas fa-trash-alt" aria-label="delete icon"></i>
-            </button>
-          </li>
-          <li *ngIf="memberService.user.email === project.email">
-            <a href="{{project.url}}" target="_blank" class="link link-control" *ngIf="project.url">
-              <i class="far fa-edit" aria-label="modify icon"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
+      
     </div>
     <!-- photo -->
     <div class="project-photo" *ngIf="project.photo">

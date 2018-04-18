@@ -1,6 +1,14 @@
 <section class="contents-container">
   <!-- contact form -->
   <article class="contact">
+    <!-- intro -->
+    <div class="contents contents-intro min-height">
+      <i class="far fa-envelope icon"></i>
+      <p class="text">
+        TOY-PROJECT를 찾아주셔서 감사합니다.<br>
+        서비스를 이용하시면서 궁금하거나 불편한 사항은 아래 메세지를 보내주세요.<br>
+      </p>
+    </div>
     <!-- message -->
     <div class="contents">
       <h4 class="contents-title">Send Message</h4>
@@ -27,29 +35,6 @@
           <mat-hint align="end">{{messageTextarea.value.length}} / 1000</mat-hint>
         </mat-form-field>
         <button type="submit" mat-raised-button class="btn-block">Send Message</button>
-      </form>
-    </div>
-    <!-- email -->
-    <div class="contents">
-      <h4 class="contents-title">Send Email</h4>
-      <!-- loading -->
-      <app-loading [loading]="emailLoading"></app-loading>
-      <!-- email form -->
-      <form [formGroup]="emailForm" (ngSubmit)="onSendEmail(emailForm.value)" class="form">
-        <mat-form-field floatLabel="always">
-          <input matInput placeholder="Yout Email" required formControlName="email">
-          <mat-error *ngIf="email.invalid">{{message.validatorEmail}}</mat-error>
-        </mat-form-field>
-        <mat-form-field floatLabel="always">
-          <input matInput placeholder="Email Title" required formControlName="title">
-          <mat-error *ngIf="emailTitle.invalid">{{message.requiredMessage}}</mat-error>
-        </mat-form-field>
-        <mat-form-field floatLabel="always">
-          <textarea matInput #emailTextarea maxlength="2000" placeholder="Email Text" required formControlName="text"></textarea>
-          <mat-error *ngIf="emailText.invalid">{{message.requiredMessage}}</mat-error>
-          <mat-hint align="end">{{emailTextarea.value.length}} / 2000</mat-hint>
-        </mat-form-field>
-        <button type="submit" mat-raised-button class="btn-block">Send Email</button>
       </form>
     </div>
   </article>

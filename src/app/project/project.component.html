@@ -6,15 +6,14 @@
   <!-- project list -->
   <div *ngIf="!projectLoading">
     <div class="list-project-header">
-      <p class="count"><span>{{projectList.length}}</span> Results</p>
+      <p class="count"><strong class="text-primary">{{projectList.length}}</strong> Results</p>
       <div class="filter">
-        <button type="button" class="btn-filter">
-          <i class="fas fa-filter" aria-label="search filter icon"></i>
-        </button>
+        <mat-radio-group [(ngModel)]="projectSort" (change)="onChangeSort()">
+          <mat-radio-button color="primary" [value]="'createdAt'">최신순</mat-radio-button>
+          <mat-radio-button color="primary" [value]="'view'">조회순</mat-radio-button>
+          <mat-radio-button color="primary" [value]="'like'">좋아요순</mat-radio-button>
+        </mat-radio-group>
       </div>
-      <button type="button" class="btn-upload" (click)="goProjectUpload()">
-        <i class="fas fa-eject" aria-label="project upload icon"></i>
-      </button>
     </div>
     <app-project-list *ngIf="projectList.length > 0" [projectList]="projectList"></app-project-list>
     <app-project-none *ngIf="projectList.length === 0"></app-project-none>

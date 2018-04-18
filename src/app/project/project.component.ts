@@ -14,6 +14,7 @@ import { Message } from '../shared/message/message';
 export class ProjectComponent implements OnInit {
 
   public projectList: Array<any> = [];
+  public projectSort: string = 'createdAt';
   public projectLoading: boolean = true;
 
   constructor(
@@ -26,7 +27,7 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit() {
     this.memberService.loginConfirm();
-    this.getProjectList('createdAt', 12);
+    this.getProjectList(this.projectSort, 12);
   }
 
   // get project list
@@ -35,6 +36,11 @@ export class ProjectComponent implements OnInit {
       this.projectList = res.docs;
       this.projectLoading = false;
     });
+  }
+
+  // change sort
+  public onChangeSort(value) {
+    console.log(this.projectSort);
   }
 
 }

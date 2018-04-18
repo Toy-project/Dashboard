@@ -64,6 +64,31 @@
   }
 }
 
+.contents-intro {
+  text-align: center;
+  letter-spacing: -0.05rem;
+
+  .icon {
+    font-size: $font-size-base * 5;
+    color: color('blue-dark');
+    padding-bottom: map-get($spacers, 3);
+  }
+  
+  .title {
+    color: color('blue-dark');
+    font-weight: $font-weight-bold;
+    font-size: $font-size-base * 1.5;
+    line-height: $line-height-lg;
+    padding-bottom: map-get($spacers, 3);
+  }
+
+  .text {
+    font-size: $font-size-base;
+    line-height: $line-height-lg;
+    padding-bottom: map-get($spacers, 3);
+  }
+}
+
 .clearfix {
   @include clearfix();
 }

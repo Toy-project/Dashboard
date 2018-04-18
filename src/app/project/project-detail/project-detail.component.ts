@@ -85,7 +85,7 @@ export class ProjectDetailComponent implements OnInit {
       // open dialog
       let dialog = this.dialog.open(ProjectDeleteComponent, {
         minWidth: 300,
-        maxWidth: 500,
+        maxWidth: 300,
         disableClose: true,
         data: this.project
       });

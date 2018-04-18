@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
+import { MessageService } from '../../message/message.service';
 import { MemberService } from '../../member/member.service';
 import { Message } from '../../shared/message/message';
 
@@ -21,11 +22,14 @@ export class LayoutHeaderComponent implements OnInit {
     public router: Router,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
+    public messageService: MessageService,
     public memberService: MemberService,
     public message: Message
   ) { }
 
   ngOnInit() {
+    this.memberService.loginConfirm();
+    this.getMessage();
   }
 
   // open & close login dialog event
@@ -73,6 +77,19 @@ export class LayoutHeaderComponent implements OnInit {
       return false;
     } else {
       this.router.navigate(['/project', 'upload']);
+    }
+  }
+
+  // get not read message
+  public getMessage() {
+    if (this.memberService.user.logined) {
+      this.messageService.getAllMessageNotRead(this.memberService.user.uid).onSnapshot((res) => {
+        this.messageCount = res.docs.length;
+      }, (err) => {
+        // todo
+      })
+    } else {
+      // todo
     }
   }
 
