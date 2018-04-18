@@ -5,137 +5,17 @@
 .visual {
   position: relative;
   padding: 0;
-  height: 300px;
-  background-color: gray('500');
+  height: 400px;
   max-width: 100%;
+  background: gray('200') url('https://firebasestorage.googleapis.com/v0/b/dashboard-b3839.appspot.com/o/default%2Fvisual.jpg?alt=media&token=cc1e4b84-15ef-4203-b868-275049a42756');
+  background-position: center center;
 
   .visual-text {
+    color: color('white');
+    font-size: $font-size-base * 2.5;
     position: absolute;
-    top: 55%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    overflow: hidden;
-    font-size: $font-size-base * 1.5;
-    height: $font-size-base * 8;
-    line-height: $font-size-base * 2;
-    color: color('blue-dark');
-    font-weight: $font-weight-bold;
   }
-
-  .visual-text-inner {
-    position: relative;
-    height: $font-size-base * 2;
-    overflow: hidden;
-    padding: 0 map-get($spacers, 2);
-
-    &::before {
-      content: '[';
-      left: 0;
-    }
-
-    &::after {
-      content: ']';
-      right: 0;
-    }
-
-    &::before,
-    &::after {
-      position: absolute;
-      top: 48%;
-      transform: translateY(-50%);
-      color: gray('800');
-      animation-name: opacity;
-      animation-duration: 2s;
-      animation-iteration-count: infinite;
-    }
-
-    .text {
-      position: absolute;
-      min-width: 80px;
-      text-align: center;
-    }
-
-    .list-text {
-      padding-left: 80px;
-      padding-right: map-get($spacers, 2);
-      display: inline-block;
-      animation-name: change;
-      animation-duration: 10s;
-      animation-iteration-count: infinite;
-
-      > li {
-        flex: none;
-        line-height: $font-size-base * 2;
-      }
-    }
-  }
-
-  .visual-arrow {
-    position: absolute;
-    bottom: 40%;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-
-    .chevron {
-      position: absolute;
-      width: $font-size-base * 1.2;
-      height: $font-size-base * 0.4;
-      opacity: 0;
-      transform: scale(0.3);
-      animation: move-chevron 3s ease-out infinite;
-
-      &:first-child {
-        animation: move-chevron 3s ease-out 1s infinite;
-      }
-
-      &:nth-child(2) {
-        animation: move-chevron 3s ease-out 2s infinite;
-      }
-
-      &::before {
-        left: 0;
-        transform: skewY(30deg);
-      }
-
-      &::after {
-        right: 0;
-        width: 50%;
-        transform: skewY(-30deg);
-      }
-
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        height: 100%;
-        width: 50%;
-        background-color: color('blue-dark');
-      }
-    }
-  }
-
-  @keyframes opacity {
-    0%, 100% {opacity:0;}
-    50% {opacity:1;}
-  }
-  
-  @keyframes change {
-    0%, 12.66%, 100% {transform:translate3d(0,0,0);}
-    16.66%, 29.32% {transform:translate3d(0,-25%,0);}
-    33.32%,45.98% {transform:translate3d(0,-50%,0);}
-    49.98%,62.64% {transform:translate3d(0,-75%,0);}
-    66.64%,79.3% {transform:translate3d(0,-50%,0);}
-    83.3%,95.96% {transform:translate3d(0,-25%,0);}
-  }
-
-  @keyframes move-chevron {
-    25% {opacity: 1;}
-    33.3% {opacity: 1; transform: translateY($font-size-base * 1.2);}
-    66.6% {opacity: 1; transform: translateY($font-size-base * 3);}
-    100% {opacity: 0; transform: translateY($font-size-base * 4.8) scale(0.5);}
-   }
 }

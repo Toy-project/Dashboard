@@ -1,0 +1,16 @@
+//
+// Carousel
+//
+
+.ngxcarousel {
+  position: relative;
+
+  .leftRs,
+  .rightRs {
+    display: none !important;
+  }
+}
+
+.ngxcarouselPointDefault {
+  position: relative !important;
+}

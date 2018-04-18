@@ -1,5 +1,46 @@
+<!-- visual -->
+<section class="visual">
+  <p class="visual-text">Make And Grow</p>
+</section>
 <!-- contents -->
 <section class="contents-container">
-  <!-- project -->
-  <h2 class="contents-title text-center">Project</h2>
+  <div class="contents min-height transparent no-border">
+    <ngx-carousel [inputs]="carousel">
+      <ngx-tile NgxCarouselItem *ngFor="let project of projectList; let ind = index;">
+        <div class="list-project list-project-carousel">
+          <!-- thumbnail -->
+          <a [routerLink]="['/project', 'detail', project.id]" class="thumbnail">
+            <img src="{{project.data().thumbnail}}" alt="{{project.data().title}}">
+          </a>
+          <!-- info -->
+          <div class="info">
+            <div class="left">
+              <!-- title -->
+              <h4 class="title">{{project.data().title}}</h4>
+              <!-- author -->
+              <p class="author">
+                {{project.data().type}} made by {{project.data().email.split('@')[0]}}
+              </p>
+              <p class="date">
+                <span>{{project.data().startDate | date: "yyyy-MM-dd"}}</span> ~ 
+                <span>{{project.data().endDate | date: "yyyy-MM-dd"}}</span>
+              </p>
+            </div>
+            <!-- like button -->
+            <button type="button" mat-icon-button disableRipple class="btn-like" (click)="updateProjectLike(project.id)">
+              <i class="fab fa-gratipay" aria-label="like icon"></i>
+              <span class="count">{{project.data().like}}</span>
+            </button>
+          </div>
+        </div>
+      </ngx-tile>
+      <button NgxCarouselPrev class='leftRs'>&lt;</button>
+      <button NgxCarouselNext class='rightRs'>&gt;</button>
+    </ngx-carousel>
+  </div>
 </section>
+<!-- chart -->
+<section>
+
+</section>
+
