@@ -4,7 +4,11 @@
     <!-- public -->
     <ul class="navigation">
       <li *ngFor="let nav of navPublicData; let ind = index;">
-        <a [routerLink]="['/' + nav.path]" [routerLinkActive]="['active']">
+        <a [routerLink]="['/' + nav.path]" [routerLinkActive]="['active']" *ngIf="!nav.param">
+          <i class="{{nav.icon}} icon" aria-label="icon"></i>
+          {{nav.title}}
+        </a>
+        <a [routerLink]="['/' + nav.path, nav.param ? nav.param : '']" [routerLinkActive]="['active']" *ngIf="nav.param">
           <i class="{{nav.icon}} icon" aria-label="icon"></i>
           {{nav.title}}
         </a>

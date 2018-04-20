@@ -15,6 +15,7 @@ import { Message } from '../../shared/message/message';
 export class ProjectListComponent implements OnInit {
 
   @Input() public projectList: Array<any>;
+  @Input() public projectLimit: number;
 
   constructor(
     public router: Router,

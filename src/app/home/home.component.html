@@ -5,7 +5,8 @@
 <!-- contents -->
 <section class="contents-container">
   <div class="contents min-height transparent no-border">
-    <ngx-carousel [inputs]="carousel">
+    <app-loading [loading]="projectLoading"></app-loading>
+    <ngx-carousel [inputs]="carousel" *ngIf="!projectLoading">
       <ngx-tile NgxCarouselItem *ngFor="let project of projectList; let ind = index;">
         <div class="list-project list-project-carousel">
           <!-- thumbnail -->
@@ -34,8 +35,8 @@
           </div>
         </div>
       </ngx-tile>
-      <button NgxCarouselPrev class='leftRs'>&lt;</button>
-      <button NgxCarouselNext class='rightRs'>&gt;</button>
+      <button NgxCarouselPrev class='leftRs'></button>
+      <button NgxCarouselNext class='rightRs'></button>
     </ngx-carousel>
   </div>
 </section>

@@ -20,8 +20,13 @@ export class ProjectService {
     return this.storage.upload(uploadPath, file).downloadURL().toPromise();
   }
 
+  // get all project list count
+  public getProjectAllCount(): any {
+    return this.afs.firestore.collection('project');
+  }
+
   // get project Sort limit list
-  public getProjectSortLimit(field: string, limit: number) {
+  public getProjectSortLimit(field: string, limit: number): any {
     return this.afs.firestore.collection('project').orderBy(field, 'desc').limit(limit);
   }
 

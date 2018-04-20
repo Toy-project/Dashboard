@@ -6,7 +6,7 @@
   <!-- project list -->
   <div *ngIf="!projectLoading">
     <div class="list-project-header">
-      <p class="count"><strong class="text-primary">{{projectList.length}}</strong> Results</p>
+      <p class="count"><strong class="text-primary">{{projectList.length}} / {{projectAllCount}}</strong> Results</p>
       <div class="filter">
         <mat-radio-group [(ngModel)]="projectSort" (change)="onChangeSort()">
           <mat-radio-button color="primary" [value]="'createdAt'">최신순</mat-radio-button>
@@ -15,7 +15,10 @@
         </mat-radio-group>
       </div>
     </div>
-    <app-project-list *ngIf="projectList.length > 0" [projectList]="projectList"></app-project-list>
+    <app-project-list *ngIf="projectList.length > 0" [projectList]="projectList" [projectLimit]="projectLimit"></app-project-list>
     <app-project-none *ngIf="projectList.length === 0"></app-project-none>
+    <div class="pt-4 pb-3 text-center" *ngIf="projectList.length < projectAllCount">
+      <button type="button" mat-raised-button (click)="projectMore()">MORE</button>
+    </div>
   </div>
 </section>

@@ -5,12 +5,52 @@
 .ngxcarousel {
   position: relative;
 
+  .tile {
+    box-shadow: none !important;
+    border: 1px solid gray('200');
+  }
+
   .leftRs,
   .rightRs {
-    display: none !important;
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+    background-color: color('white');
+    border: 1px solid gray('200');
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 15px;
+      height: 15px;
+      transform: translate(-30%, -50%) rotate(-45deg);
+      border-left: 1px solid gray('900');
+      border-top: 1px solid gray('900');
+    }
+  }
+
+  .rightRs {
+    left: auto;
+    right: -15px;
+    
+    &::after {
+      border: 0;
+      border-right: 1px solid gray('900');
+      border-bottom: 1px solid gray('900');
+      transform: translate(-70%, -50%) rotate(-45deg);
+    }
   }
 }
 
 .ngxcarouselPointDefault {
-  position: relative !important;
+  display: none;
 }

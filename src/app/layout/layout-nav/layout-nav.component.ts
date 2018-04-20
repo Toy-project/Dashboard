@@ -18,7 +18,11 @@ export class LayoutNavComponent implements OnInit {
     {
       title: 'PROJECT',
       icon: 'fa fa-th',
-      path: 'project'
+      path: 'project',
+      param: {
+        sort: 'createdAt',
+        page: 1
+      }
     }
   ];
 
