@@ -1,31 +1,35 @@
 export class Message {
 
+  // 로그인 출력 메세지
+  public wrongEmail = '이메일이 다르거나, 형식이 잘못되었습니다.';
+  public wrongPassword = '비밀번호가 잘못되었습니다.';
+
+  // 네트워크 오류 메세지
+  public networkError = '네트워크 확인 후 이용하여주세요.';
+
+  // 회원가입 출력 메세지
+  public alreadyEmail = '등록된 이메일입니다.';
+
   // loading
   public loading = '페이지를 준비중입니다.';
   
   // 로그아웃 출력 메세지 
   public failedLogout = '로그아웃에 실패하였어요!';
 
-  // 로그인 출력 메세지
-  public failedLogin = '이메일 혹은 비밀번호를 확인하여주세요.';
-
   // 로그인 필요시 출력 메세지
-  public requiredLogin = '로그인이 필요합니다.';
+  public requiredLogin = '로그인후 이용하여주세요.';
   
   // URL 진입시 인증 및 권한 여부 출력 메세지
   public accessLoading = '접근 권한을 확인중입니다.';
   public failedAccess = '접근 권한이 없습니다.';
 
   // 이메일 유효성 검증 출력 메세지
-  public requiredEmail = '이메일은 필수입니다.';
+  public requiredEmail = '이메일을 입력하여주세요.';
   public validatorEmail = '이메일 형식이 올바르지 않습니다.';
 
   // 비밀번호 유효성 검증 출력 메세지
-  public requiredPassword = '비밀번호는 필수입니다.';
+  public requiredPassword = '비밀번호를 입력하여주세요.';
   public validatorPassword = '비밀번호는 최소 8자리 이상입니다.';
-
-  // 비밀번호 오류시 출력 메세지
-  public wrongPassword = '비밀번호가 잘못되었습니다.';
 
   // 비밀번호 변경시 출력 메세지
   public validatorConfirmPassword = '비밀번호가 동일하지 않습니다.';

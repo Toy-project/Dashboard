@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import { Observable } from 'rxjs/Observable';
 
 import { CookieService } from '../../shared/cookie/cookie.service';
-import { UserAgent } from '../../shared/userAgent/user-agent';
+import { UserAgent } from '../../shared/user-agent/user-agent';
 
 @Injectable()
 export class AdminVisitService {

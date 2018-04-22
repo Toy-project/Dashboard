@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { MemberService } from '../member.service';
 import { MessageService } from '../../message/message.service';
@@ -14,13 +14,11 @@ import { MessageDetailComponent } from '../../message/message-detail/message-det
 })
 export class MemberMessageComponent implements OnInit {
 
-  public access: boolean;
-  public accessFailedMessage: string;
-
   public messageList: Array<any> = [];
   public messageRender: boolean = false;
 
   constructor(
+    public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public memberService: MemberService,
     public messageService: MessageService,
@@ -29,23 +27,15 @@ export class MemberMessageComponent implements OnInit {
 
   ngOnInit() {
     this.memberService.loginConfirm();
-    this.access = this.memberService.user.logined ? true : false;
-    this.accessFailedMessage = this.memberService.user.logined ? '' : this.message.requiredLogin;
     this.getMessageList(20);
   }
 
   // get message list
   public getMessageList(limit: number): any {
-    // if not valid
-    if (!this.memberService.user.logined) {
-      return false;
-    } else {
-      // get message list
-      this.messageService.getAllMessage(this.memberService.user.uid, limit).onSnapshot((res) => {
-        this.messageList = res.docs;
-        this.messageRender = true;
-      });
-    }
+    this.messageService.getAllMessage(this.memberService.user.uid, limit).onSnapshot((res) => {
+      this.messageList = res.docs;
+      this.messageRender = true;
+    });
   }
 
   // update message read
@@ -61,7 +51,7 @@ export class MemberMessageComponent implements OnInit {
     try {
       await this.messageService.updateMessageRead(key);
     } catch(err) {
-      // todo
+      this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
     }
   }
 

@@ -4,6 +4,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { Observable } from 'rxjs/Observable';
 
+import { Message } from '../shared/message/message';
+
 @Injectable()
 export class MemberService {
 
@@ -13,46 +15,47 @@ export class MemberService {
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
-    public storage: AngularFireStorage
+    public storage: AngularFireStorage,
+    public message: Message
   ) { }
 
   // login
-  public login(email: string, password: string): Promise<any> {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+  public async login(email: string, password: string): Promise<any> {
+    const user = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    await this.updateDatabaseUserLogin(user.uid, new Date(user.metadata.lastSignInTime).getTime());
+    this.loginConfirm();
+  }
+
+  // update user lastlogin
+  public updateDatabaseUserLogin(key: string, date: number): Promise<any> {
+    return this.afs.firestore.collection('member').doc(key).update({
+      lastLoginAt: date
+    });
+  }
+
+  // logout
+  public async logout(): Promise<any> {
+    await this.afAuth.auth.signOut();
+    this.loginConfirm();
   }
 
   // login confirm
   public loginConfirm(): void {
-    // key index
-    const keyIndex = this.getAuthUserKeyIndex();
-    if (keyIndex > -1) {
-      // set user
-      this.user = JSON.parse(localStorage.getItem(localStorage.key(keyIndex)));
-      this.user.logined = true;
-      // get level
-      this.getDatabaseUser(this.user.uid).onSnapshot((res) => {
-        this.access.level = res.data().level;
-        this.access.loading = false;
-      });
-    } else {
-      this.user = {};
-      this.access = {level: 0, loading: false};
-    }
-  }
-
-  // logout
-  public logout(): Promise<any> {
-    return this.afAuth.auth.signOut();
-  }
-
-  // logout delete localstorage
-  public deleteLocalstorage(): void {
-    localStorage.clear();
+    this.afAuth.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.user = Object.assign({logined: true}, user);
+      } else {
+        this.user = {logined: false};
+      }
+    });
   }
 
   // sign-up (create user)
-  public signUp(value): Promise<any> {
-    return this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
+  public async signUp(value): Promise<any> {
+    const user = await this.afAuth.auth.createUserWithEmailAndPassword(value.email, value.password);
+    await this.signUpDatabase(user);
+    await this.emailVerified();
+    this.loginConfirm();
   }
 
   // sign-up (create database user)
@@ -61,19 +64,52 @@ export class MemberService {
       email: value.email,
       uid: value.uid,
       level: 1,
-      createdAt: value.createdAt,
-      lastLoginAt: value.lastLoginAt
+      createdAt: new Date(value.metadata.creationTime).getTime(),
+      lastLoginAt: new Date(value.metadata.lastSignInTime).getTime()
     });
   }
 
   // sign-out (delete user)
-  public signOut(): Promise<any> {
-    return this.afAuth.auth.currentUser.delete();
+  public async signOut(): Promise<any> {
+    await this.signOutDatabase(this.user.uid);
+    this.afAuth.auth.currentUser.delete();
   }
 
   // sign-out database user (delete database user)
   public signOutDatabase(key: string): Promise<any> {
     return this.afs.firestore.collection('member').doc(key).delete();
+  }
+
+  // auth error handler
+  public authErrorHandler(err): string {
+    // define message
+    let msg: string = '';
+
+    // set message
+    switch (err.code) {
+      case 'auth/invalid-email':
+      case 'auth/user-not-found':
+        msg = this.message.wrongEmail;
+        break;
+
+      case 'auth/wrong-password':
+        msg = this.message.wrongPassword;
+        break;
+
+      case 'auth/network-request-failed':
+        msg = this.message.networkError;
+        break;
+
+      case 'auth/email-already-in-use':
+        msg = this.message.alreadyEmail;
+        break;
+
+      default:
+        break;
+    }
+
+    // return message
+    return msg;
   }
 
   // update user profile photo
@@ -111,18 +147,6 @@ export class MemberService {
     });
   }
 
-  // update user lastlogin
-  public updateDatabaseUserLogin(key: string, date: number): Promise<any> {
-    return this.afs.firestore.collection('member').doc(key).update({
-      lastLoginAt: date
-    });
-  }
-
-  // get current user
-  public currentUser(): object {
-    return this.afAuth.auth.currentUser;
-  }
-
   // get database user
   public getDatabaseUser(key): any {
     return this.afs.firestore.collection('member').doc(key);
@@ -141,20 +165,6 @@ export class MemberService {
   // email verify
   public emailVerified(): Promise<any> {
     return this.afAuth.auth.currentUser.sendEmailVerification();
-  }
-
-  // get auth user data
-  public getAuthUserKeyIndex(): number {
-    let key: number = -1;
-    for (let i = 0; i < localStorage.length; i++) {
-      if (localStorage.key(i).search('firebase:authUser') > -1) {
-        key = i;
-        break;
-      } else {
-        continue;
-      }
-    }
-    return key;
   }
 
 }

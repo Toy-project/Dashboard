@@ -13,6 +13,11 @@
     <input matInput placeholder="Password" required minlength="8" type="password" formControlName="password">
     <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
   </mat-form-field>
+  <!-- password -->
+  <mat-form-field floatLabel="always">
+    <input matInput placeholder="Password Confirm" required type="password" formControlName="passwordConfirm">
+    <mat-error *ngIf="passwordConfirm.invalid">{{getPasswordConfrimErrorMessage()}}</mat-error>
+  </mat-form-field>
   <!-- close button -->
   <button type="button" mat-icon-button class="btn-close" (click)="onClose()" disableRipple>
     <i class="fa fa-times icons" aria-label="modal close icon"></i>

@@ -63,29 +63,25 @@ export class MemberLoginComponent implements OnInit {
 
   // loginForm submit event
   public async onSubmit(value) {
-    // if not valid
-    if (this.loginForm.invalid) {
+    if (this.loginForm.invalid) { 
+      // if invalid
       return false;
     } else {
       // valid
+      // loading start
+      this.loginLoading = true;
       try {
-        // loading start
-        this.loginLoading = true;
-        // login
+        // login service
         await this.memberService.login(value.email, value.password);
-        // login confirm
-        this.memberService.loginConfirm();
-        // reload
-        window.location.reload();
+        // loading end
+        this.loginLoading = false;
+        // close modal
+        this.onClose();
       } catch(err) {
         // loading end
         this.loginLoading = false;
-        // if login
-        this.memberService.logout();
-        // clear localstorage
-        this.memberService.deleteLocalstorage();
-        // alert
-        this.snackBar.open(this.message.failedLogin, 'CLOSE', {duration: 3000});
+        // error handling
+        this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
       }
     }
   }

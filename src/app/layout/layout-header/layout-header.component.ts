@@ -28,7 +28,6 @@ export class LayoutHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.memberService.loginConfirm();
     this.getMessage();
   }
 
@@ -53,15 +52,13 @@ export class LayoutHeaderComponent implements OnInit {
   }
 
   // logout event
-  public async onLogout() {
+  public onLogout(): void {
     try {
       // logout
-      await this.memberService.logout();
-      // reload
-      window.location.reload();
+      this.memberService.logout();
     } catch(err) {
-      // alert
-      this.snackBar.open(this.message.failedLogout, 'CLOSE', {duration: 3000});
+      // error handling
+      this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
     }
   }
 

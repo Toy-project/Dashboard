@@ -1,34 +1,21 @@
 <section class="contents-container">
-  <!-- access loading -->
-  <app-loading [loading]="memberService.access.loading" [message]="message.accessLoading" [fixed]="true"></app-loading>
-  <!-- access loading end -->
-  <div *ngIf="!memberService.access.loading">
-    <!-- failed access -->
-    <app-access *ngIf="!access" [message]="accessFailedMessage"></app-access>
-    
-    <!-- success access -->
-    <div *ngIf="access">
-      <!-- loading -->
-      <app-loading [loading]="!messageRender"></app-loading>
-      <!-- loading end -->
-      <div class="contents">
-        <mat-list>
-          <mat-list-item *ngFor="let message of messageList; let ind = index;" (click)="readMessage(message.id, message)">
-            <span mat-list-icon [ngSwitch]="message.data().type">
-              <span [class]="message.data().read ? 'text-success' : 'text-danger'">
-                <i class="fas fa-question-circle" *ngSwitchCase="'qna'"></i>
-                <i class="fas fa-exclamation-circle" *ngSwitchCase="'error'"></i>
-                <i class="fas fa-comment-alt" *ngSwitchCase="'etc'"></i>
-                <i class="fas fa-comments" *ngSwitchDefault></i>
-              </span>
-            </span>
-            <h4 mat-line>{{message.data().title}}</h4>
-            <p mat-line>{{message.data().createdAt | date: "yyyy-MM-dd h:mm:ss a"}}</p>
-          </mat-list-item>
-        </mat-list>
-      </div>
-    </div>
-    <!-- success access end -->
-
+  <div class="contents">
+    <!-- loading -->
+    <app-loading [loading]="!messageRender"></app-loading>
+    <!-- loading end -->
+    <mat-list *ngIf="messageRender">
+      <mat-list-item *ngFor="let message of messageList; let ind = index;" (click)="readMessage(message.id, message)">
+        <span mat-list-icon [ngSwitch]="message.data().type">
+          <span [class]="message.data().read ? 'text-success' : 'text-danger'">
+            <i class="fas fa-question-circle" *ngSwitchCase="'qna'"></i>
+            <i class="fas fa-exclamation-circle" *ngSwitchCase="'error'"></i>
+            <i class="fas fa-comment-alt" *ngSwitchCase="'etc'"></i>
+            <i class="fas fa-comments" *ngSwitchDefault></i>
+          </span>
+        </span>
+        <h4 mat-line>{{message.data().title}}</h4>
+        <p mat-line>{{message.data().createdAt | date: "yyyy-MM-dd h:mm:ss a"}}</p>
+      </mat-list-item>
+    </mat-list>
   </div>
 </section>

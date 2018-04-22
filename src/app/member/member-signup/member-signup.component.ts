@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 
 import { MemberService } from '../member.service';
 import { Message } from '../../shared/message/message';
+import { Compare } from '../../shared/compare/compare';
 
 @Component({
   selector: 'app-member-signup',
@@ -17,6 +18,7 @@ export class MemberSignupComponent implements OnInit {
   public signupForm: FormGroup;
   public email: AbstractControl;
   public password: AbstractControl;
+  public passwordConfirm: AbstractControl;
 
   constructor(
     public snackBar: MatSnackBar,
@@ -24,10 +26,12 @@ export class MemberSignupComponent implements OnInit {
     public router: Router,
     public memberService: MemberService,
     public fb: FormBuilder,
-    public message: Message
+    public message: Message,
+    public compare: Compare
   ) { }
 
   ngOnInit() {
+    this.memberService.loginConfirm();
     this.createSignUpForm(); 
   }
 
@@ -35,10 +39,14 @@ export class MemberSignupComponent implements OnInit {
   public createSignUpForm() {
     this.signupForm = this.fb.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+      passwordConfirm: ['', Validators.compose([Validators.required])],
+    }, {
+      validator: this.compare.comparePassword('password', 'passwordConfirm')
     });
     this.email = this.signupForm.controls['email'];
     this.password = this.signupForm.controls['password'];
+    this.passwordConfirm = this.signupForm.controls['passwordConfirm'];
   }
 
   // email error message event
@@ -49,6 +57,11 @@ export class MemberSignupComponent implements OnInit {
   // password error message event
   public getPasswordErrorMessage(): string {
     return this.password.hasError('required') ? this.message.requiredPassword : this.password.hasError('minlength') ? this.message.validatorPassword : '';
+  }
+
+  // passwrod confirm error message event
+  public getPasswordConfrimErrorMessage(): string {
+    return this.passwordConfirm.hasError('required') ? this.message.requiredPassword : this.passwordConfirm.hasError('compare') ? this.message.validatorConfirmPassword : '';
   }
 
   // dialog close event
@@ -67,12 +80,6 @@ export class MemberSignupComponent implements OnInit {
         this.signupLoading = true;
         // signup
         await this.memberService.signUp(value);
-        // login confirm
-        this.memberService.loginConfirm();
-        // signup database
-        await this.memberService.signUpDatabase(this.memberService.user);
-        // send verify mail
-        this.memberService.emailVerified();
         // loading end
         this.signupLoading = false;
         // alert
@@ -80,14 +87,12 @@ export class MemberSignupComponent implements OnInit {
         // dialog close
         this.onClose();
       } catch(err) {
-        if(this.memberService.user) {
-          // rollback
+        // rollback
+        if(this.memberService.user.logined) {
           this.memberService.signOut();
-          this.memberService.signOutDatabase(this.memberService.user.uid);
-          this.memberService.deleteLocalstorage();
         };
         // alert
-        this.snackBar.open(this.message.failedSignup, 'CLOSE', {duration: 3000});
+        this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
         // loading end
         this.signupLoading = false;
       }

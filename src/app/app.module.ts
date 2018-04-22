@@ -14,7 +14,7 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { AdminVisitService } from './admin/admin-visit/admin-visit.service';
 import { AdminSettingService } from './admin/admin-setting/admin-setting.service';
@@ -23,8 +23,10 @@ import { ProjectService } from './project/project.service';
 import { CookieService } from './shared/cookie/cookie.service';
 import { MessageService } from './message/message.service';
 import { NavigationService } from './shared/navigation/navigation.service';
-import { UserAgent } from './shared/userAgent/user-agent';
+import { AuthGuardService } from './shared/auth-guard/auth-guard.service';
+import { UserAgent } from './shared/user-agent/user-agent';
 import { Message } from './shared/message/message';
+import { Compare } from './shared/compare/compare';
 
 @NgModule({
   declarations: [
@@ -52,8 +54,10 @@ import { Message } from './shared/message/message';
     CookieService,
     MessageService,
     NavigationService,
+    AuthGuardService,
     UserAgent,
     Message,
+    Compare
   ],
   bootstrap: [AppComponent]
 })

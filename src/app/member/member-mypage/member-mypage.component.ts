@@ -7,6 +7,7 @@ import { MemberService } from '../member.service';
 import { AdminSettingService } from '../../admin/admin-setting/admin-setting.service';
 import { CookieService } from '../../shared/cookie/cookie.service';
 import { Message } from '../../shared/message/message';
+import { Compare } from '../../shared/compare/compare';
 
 import { MemberPasswordConfirmComponent } from '../member-password-confirm/member-password-confirm.component';
 
@@ -17,8 +18,6 @@ import { MemberPasswordConfirmComponent } from '../member-password-confirm/membe
 })
 export class MemberMypageComponent implements OnInit {
 
-  public access: boolean;
-  public accessFailedMessage: string;
   public defaultImage: string = this.cookieService.getCookie('defaultImage');
 
   public infoLoading: boolean = false;
@@ -45,6 +44,7 @@ export class MemberMypageComponent implements OnInit {
     public adminSettingService: AdminSettingService,
     public cookieService: CookieService,
     public message: Message,
+    public compare: Compare
   ) {
     this.createInfoForm();
     this.createChangePasswordForm();
@@ -52,8 +52,6 @@ export class MemberMypageComponent implements OnInit {
 
   ngOnInit() {
     this.memberService.loginConfirm();
-    this.access = this.memberService.user.logined ? true : false;
-    this.accessFailedMessage = this.memberService.user.logined ? '' : this.message.requiredLogin;
   }
 
   // create info form
@@ -70,25 +68,10 @@ export class MemberMypageComponent implements OnInit {
       newPassword: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       newPasswordConfirm: ['', Validators.compose([Validators.required])]
     }, {
-      validator: this.comparePasswordEvent('newPassword', 'newPasswordConfirm')
+      validator: this.compare.comparePassword('newPassword', 'newPasswordConfirm')
     });
     this.newPassword = this.changePasswordForm.controls['newPassword'];
     this.newPasswordConfirm = this.changePasswordForm.controls['newPasswordConfirm'];
-  }
-
-  // compare password 
-  public comparePasswordEvent(password: string, passwordConfirm: string): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} => {
-      const passwd = control.get(password).value;
-      const passwdConfirm = control.get(passwordConfirm).value;
-      if (!passwd || !passwdConfirm) {
-        return null;
-      } else if (passwd !== passwdConfirm) {
-        return null;
-      } else {
-        return {compare: true};
-      }
-    }
   }
 
   // password error message event
@@ -98,20 +81,17 @@ export class MemberMypageComponent implements OnInit {
 
   // passwrod confirm error message event
   public getPasswordConfrimErrorMessage(): string {
-    return this.newPasswordConfirm.hasError('required') ? this.message.requiredPassword : this.comparePassword ? this.message.validatorConfirmPassword : '';
+    return this.newPasswordConfirm.hasError('required') ? this.message.requiredPassword : this.newPasswordConfirm.hasError('compare') ? this.message.validatorConfirmPassword : '';
   }
 
   // send verify email
-  public sendVerifyEmail(): void {
-    this.memberService.emailVerified()
-    .then(() => {
-      // alert
+  public async sendVerifyEmail(): Promise<any> {
+    try {
+      await this.memberService.emailVerified();
       this.snackBar.open(this.message.successSendEmail, 'CLOSE', {duration: 3000});
-    })
-    .catch((err) => {
-      // alert
-      this.snackBar.open(this.message.failedSendEmail, 'CLOSE', {duration: 3000});
-    });
+    } catch(err) {
+      this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
+    }
   }
 
   // image preview event
