@@ -43,6 +43,7 @@ export class MemberService {
   public loginConfirm(): void {
     this.afAuth.auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         this.user = Object.assign({logined: true}, user);
       } else {
         this.user = {logined: false};

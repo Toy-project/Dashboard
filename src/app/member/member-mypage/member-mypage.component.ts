@@ -109,10 +109,8 @@ export class MemberMypageComponent implements OnInit {
   public onUploadOutput(output: UploadOutput): void {
     if (output.type === 'allAddedToQueue') {
       // todo
-    } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
-      this.file = output.file;
-      this.onChangeFileSingle()
-      console.log(this.file);
+    } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') {
+      this.onChangeFileSingle(output.file);
     } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
       // todo
     } else if (output.type === 'removed') {
@@ -127,23 +125,25 @@ export class MemberMypageComponent implements OnInit {
   }
 
   // image preview event
-  public onChangeFileSingle(): void {
+  public onChangeFileSingle(file): void {
     // type
-    const type = this.file.type.split('/')[1];
-    const size = this.file.size;
+    const type = file.type.split('/')[0];
+    const size = file.size;
     
-    if (type === 'png' || type === 'gif' || type === 'jpg' || type === 'jpeg' || size <= this.fileSize) {
+    if (type === 'image' && size <= this.fileSize) {
+      this.file = file;
       const fileReader = new FileReader();
 
       fileReader.addEventListener('load', () => {
         this.preview.nativeElement.src = fileReader.result;
       }, false);
 
-      if (this.file) {
-        fileReader.readAsDataURL(this.file.nativeFile);
+      if (file) {
+        fileReader.readAsDataURL(file.nativeFile);
       }
     } else {
-      this.file = null;
+      // alert
+      this.snackBar.open(this.message.validatorFile, 'CLOSE', {duration: 3000});
     }
   }
 
@@ -158,8 +158,16 @@ export class MemberMypageComponent implements OnInit {
         this.infoLoading = true;
         // photo upload
         const photoUrl = await this.memberService.updateUserPhoto(this.memberService.user, this.file.nativeFile);
+        const uploadPhoto = photoUrl.split('.');
+        const uploadPhotoType = uploadPhoto[uploadPhoto.length - 1].split('?')[0];
+        const memberPhoto = this.memberService.user.photoURL.split('.');
+        const memberPhotoType = memberPhoto[memberPhoto.length - 1].split('?')[0];
         // update photoURL
+        if (uploadPhotoType !== memberPhotoType) {
+          await this.memberService.deleteUserPhoto(this.memberService.user);
+        }
         await this.memberService.updateUserProfile({photoURL: photoUrl});
+        await this.memberService.loginConfirm();
         // success update info
         this.snackBar.open(this.message.successUpdateInfo, 'CLOSE', {duration: 3000});
         // loading 
