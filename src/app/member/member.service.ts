@@ -72,44 +72,13 @@ export class MemberService {
   // sign-out (delete user)
   public async signOut(): Promise<any> {
     await this.signOutDatabase(this.user.uid);
+    await this.deleteUserPhoto(this.user);
     this.afAuth.auth.currentUser.delete();
   }
 
   // sign-out database user (delete database user)
   public signOutDatabase(key: string): Promise<any> {
     return this.afs.firestore.collection('member').doc(key).delete();
-  }
-
-  // auth error handler
-  public authErrorHandler(err): string {
-    // define message
-    let msg: string = '';
-
-    // set message
-    switch (err.code) {
-      case 'auth/invalid-email':
-      case 'auth/user-not-found':
-        msg = this.message.wrongEmail;
-        break;
-
-      case 'auth/wrong-password':
-        msg = this.message.wrongPassword;
-        break;
-
-      case 'auth/network-request-failed':
-        msg = this.message.networkError;
-        break;
-
-      case 'auth/email-already-in-use':
-        msg = this.message.alreadyEmail;
-        break;
-
-      default:
-        break;
-    }
-
-    // return message
-    return msg;
   }
 
   // update user profile photo
@@ -165,6 +134,39 @@ export class MemberService {
   // email verify
   public emailVerified(): Promise<any> {
     return this.afAuth.auth.currentUser.sendEmailVerification();
+  }
+
+  // auth error handler
+  public authErrorHandler(err): string {
+    console.log(err);
+    // define message
+    let msg: string = '';
+
+    // set message
+    switch (err.code) {
+      case 'auth/invalid-email':
+      case 'auth/user-not-found':
+        msg = this.message.wrongEmail;
+        break;
+
+      case 'auth/wrong-password':
+        msg = this.message.wrongPassword;
+        break;
+
+      case 'auth/network-request-failed':
+        msg = this.message.networkError;
+        break;
+
+      case 'auth/email-already-in-use':
+        msg = this.message.alreadyEmail;
+        break;
+
+      default:
+        break;
+    }
+
+    // return message
+    return msg;
   }
 
 }

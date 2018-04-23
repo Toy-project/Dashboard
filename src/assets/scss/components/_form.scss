@@ -69,11 +69,12 @@
   margin: map-get($spacers, 1) 0;
   font-size: 0.7rem;
   color: gray('600');
-  padding: map-get($spacers, 2);
   text-align: center;
 
   &::before {
-    content: 'IMAGE UPLOAD';
+    content: 'IMAGE UPLOAD (Click or Drag & Drop)';
+    display: block;
+    padding: map-get($spacers, 1) map-get($spacers, 2);
   }
 
   > input {
@@ -85,11 +86,11 @@
     height: 0;
   }
 
-  + .form-control-file-preview {
-    padding: map-get($spacers, 1);
+  .form-control-file-preview {
+    padding: map-get($spacers, 2);
     min-height: 150px;
     text-align: center;
-    border: 1px solid gray('200');
+    border-TOP: 1px solid gray('200');
     
     > img {
       max-height: 150px;

@@ -34,12 +34,12 @@
         <!-- modify -->
         <div class="form-group" *ngIf="modified">
           <span class="form-group-title">Profile Photo Upload</span>
-          <label class="form-control-file">
-            <input formControlName="photo" type="file" accept=".jpg, .jpeg, .png, .gif" #file (change)="onChangeFile(img, file)">
+          <label class="form-control-file" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+            <input formControlName="photo" type="file" accept=".jpg, .jpeg, .png, .gif" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+            <div class="form-control-file-preview">
+              <img src="{{memberService.user.photoURL ? memberService.user.photoURL : defaultImage.data()}}" alt="preview image" #preview>
+            </div>
           </label>
-          <div class="form-control-file-preview">
-            <img src="{{memberService.user.photoURL ? memberService.user.photoURL : defaultImage}}" alt="preview image" #img>
-          </div>
         </div>
         <!-- etc info -->
         <mat-form-field floatLabel="always">

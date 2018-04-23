@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { AbstractControl, FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 
 import { MemberService } from '../member.service';
 import { AdminSettingService } from '../../admin/admin-setting/admin-setting.service';
@@ -10,6 +11,7 @@ import { Message } from '../../shared/message/message';
 import { Compare } from '../../shared/compare/compare';
 
 import { MemberPasswordConfirmComponent } from '../member-password-confirm/member-password-confirm.component';
+import { detachProjectedView } from '@angular/core/src/view/view_attach';
 
 @Component({
   selector: 'app-member-mypage',
@@ -18,22 +20,27 @@ import { MemberPasswordConfirmComponent } from '../member-password-confirm/membe
 })
 export class MemberMypageComponent implements OnInit {
 
-  public defaultImage: string = this.cookieService.getCookie('defaultImage');
+  public memberDefaultInfo: string;
 
   public infoLoading: boolean = false;
   public infoForm: FormGroup;
   public photo: AbstractControl;
   public modified: boolean = false;
-  public file: any;
   public fileSize: number = 1 * 1024 * 1024;
 
   public changePasswordForm: FormGroup;
   public newPassword: AbstractControl;
   public newPasswordConfirm: AbstractControl;
-  public comparePassword: boolean = false;
   public passwordLoading: boolean = false;
 
   public deleteLoading: boolean = false;
+
+  public file: UploadFile;
+  public options: UploaderOptions;
+  public uploadInput: EventEmitter<UploadInput> =  new EventEmitter<UploadInput>();
+  public humanizeBytes: Function = humanizeBytes;
+  public dragOver: boolean;
+  @ViewChild('preview') preview: ElementRef
 
   constructor(
     public router: Router,
@@ -45,13 +52,12 @@ export class MemberMypageComponent implements OnInit {
     public cookieService: CookieService,
     public message: Message,
     public compare: Compare
-  ) {
-    this.createInfoForm();
-    this.createChangePasswordForm();
-  }
+  ) { }
 
   ngOnInit() {
     this.memberService.loginConfirm();
+    this.createInfoForm();
+    this.createChangePasswordForm();
   }
 
   // create info form
@@ -84,40 +90,61 @@ export class MemberMypageComponent implements OnInit {
     return this.newPasswordConfirm.hasError('required') ? this.message.requiredPassword : this.newPasswordConfirm.hasError('compare') ? this.message.validatorConfirmPassword : '';
   }
 
+  // get default image
+  public async getDefaultImage(doc: string): Promise<any> {
+    this.memberDefaultInfo = await this.adminSettingService.getDefaultImage(doc)
+  }
+
   // send verify email
   public async sendVerifyEmail(): Promise<any> {
     try {
       await this.memberService.emailVerified();
       this.snackBar.open(this.message.successSendEmail, 'CLOSE', {duration: 3000});
-    } catch(err) {
+    } catch (err) {
       this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
     }
   }
 
+  // drag & drop upload 
+  public onUploadOutput(output: UploadOutput): void {
+    if (output.type === 'allAddedToQueue') {
+      // todo
+    } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
+      this.file = output.file;
+      this.onChangeFileSingle()
+      console.log(this.file);
+    } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
+      // todo
+    } else if (output.type === 'removed') {
+      // todo
+    } else if (output.type === 'dragOver') {
+      this.dragOver = true;
+    } else if (output.type === 'dragOut') {
+      this.dragOver = false;
+    } else if (output.type === 'drop') {
+      this.dragOver = false;
+    }
+  }
+
   // image preview event
-  public onChangeFile(img, fileData): void {
+  public onChangeFileSingle(): void {
     // type
-    const type = fileData.files.length ? fileData.files[0].type.split('/')[1] : null;
-    // validator
-    if (type === 'png' || type === 'gif' || type === 'jpg' || type === 'jpeg' || fileData.files[0].size <= this.fileSize) {
-      this.file = fileData.files[0];
+    const type = this.file.type.split('/')[1];
+    const size = this.file.size;
+    
+    if (type === 'png' || type === 'gif' || type === 'jpg' || type === 'jpeg' || size <= this.fileSize) {
       const fileReader = new FileReader();
 
-      // file reader load event
       fileReader.addEventListener('load', () => {
-        img.src = fileReader.result;
+        this.preview.nativeElement.src = fileReader.result;
       }, false);
 
       if (this.file) {
-        fileReader.readAsDataURL(this.file);
-      };
-    } else if(fileData.files.length) {
-      // failed validator
-      this.snackBar.open(this.message.validatorFile, 'CLOSE', {duration: 3000});
+        fileReader.readAsDataURL(this.file.nativeFile);
+      }
     } else {
-      // todo
+      this.file = null;
     }
-    
   }
 
   // update user info
@@ -130,21 +157,19 @@ export class MemberMypageComponent implements OnInit {
         // loading
         this.infoLoading = true;
         // photo upload
-        const photoUrl = await this.memberService.updateUserPhoto(this.memberService.user, this.file);
+        const photoUrl = await this.memberService.updateUserPhoto(this.memberService.user, this.file.nativeFile);
         // update photoURL
         await this.memberService.updateUserProfile({photoURL: photoUrl});
-        // getUser
-        this.memberService.loginConfirm();
         // success update info
         this.snackBar.open(this.message.successUpdateInfo, 'CLOSE', {duration: 3000});
         // loading 
         this.infoLoading = false;
         // modified
-        this.modified = !this.modified;
-      } catch(err) {
+        this.modified = false;
+      } catch (err) {
         // failed file upload
-        this.snackBar.open(this.message.failedUpdateFile, 'CLOSE', {duration: 3000});
-        // loading 
+        this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
+        // loading end
         this.infoLoading = false;
       }
     }
@@ -164,43 +189,32 @@ export class MemberMypageComponent implements OnInit {
       disableClose: true
     });
     // close event
-    dialogRef.afterClosed().subscribe((password) => {
-      // loading start
-      this.passwordLoading = true;
-      // if password null
+    dialogRef.afterClosed().subscribe(async (password) => {
       if (!password) {
-        this.passwordLoading = false;
+        // if password null
         return false;
-      }
-      // re-login
-      this.memberService.login(this.memberService.user.email, password)
-      .then(() => {
-        // success re-login
-        this.memberService.updateUserPassword(this.changePasswordForm.get('newPassword').value)
-        .then(() => {
-          // success change password
+      } else {
+        // loading start
+        this.passwordLoading = true;
+        // if password
+        try {
+          // re-login
+          await this.memberService.login(this.memberService.user.email, password);
+          // update password
+          await this.memberService.updateUserPassword(this.changePasswordForm.get('newPassword').value);
+          // alert
           this.snackBar.open(this.message.successChangePassword, 'CLOSE', {duration: 3000});
-          // login confirm
-          this.memberService.loginConfirm();
-          // change password form reset
+          // re-create form
           this.createChangePasswordForm();
           // loading end
           this.passwordLoading = false;
-        })
-        .catch((err) => {
-          throw new Error('Update Failed');
-        });
-      })
-      .catch((err) => {
-        // loading end
-        this.passwordLoading = false;
-        // alert
-        if (err.message === 'Update Failed') {
-          this.snackBar.open(this.message.failedChangePassword, 'CLOSE', {duration: 3000});
-        } else {
-          this.snackBar.open(this.message.wrongPassword, 'CLOSE', {duration: 3000});
+        } catch (err) {
+          // alert
+          this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
+          // loading end
+          this.passwordLoading = false;
         }
-      });
+      }
     })
   }
 
@@ -213,51 +227,25 @@ export class MemberMypageComponent implements OnInit {
       disableClose: true
     });
     // close event
-    dialogRef.afterClosed().subscribe((password) => {
-      // if password null
+    dialogRef.afterClosed().subscribe(async (password) => {
       if (!password) {
+        // if password null
         return false;
-      }
-      // loading start
-      this.deleteLoading = true;
-      // re-login
-      this.memberService.login(this.memberService.user.email, password)
-      .then(() => {
-        // success re-login
-        this.memberService.deleteUserPhoto(this.memberService.user)
-        .then(() => {
-          // success delete photo
-          this.memberService.signOutDatabase(this.memberService.user.uid)
-          .then(() => {
-            // success delete database
-            this.memberService.signOut()
-            .then(() => {
-              // success delete user
-              // redirect home
-              this.router.navigate(['/home']);
-              window.location.reload();
-            })
-            .catch((err) => {
-              // loading end
-              this.deleteLoading = false;
-              // failed delete user
-              this.snackBar.open(this.message.failedDeleteUser, 'CLOSE', {duration: 3000});
-            });
-          });
-        })
-        .catch((err) => {
+      } else {
+        // loading start
+        this.deleteLoading = true;
+        // if password 
+        try {
+          await this.memberService.login(this.memberService.user.email, password);
+          await this.memberService.signOut();
+          this.router.navigate(['/home']);
+        } catch (err) {
+          // alert
+          this.snackBar.open(this.memberService.authErrorHandler(err), 'CLOSE', {duration: 3000});
           // loading end
           this.deleteLoading = false;
-          // failed delete photo
-          this.snackBar.open(this.message.failedDeletePhoto, 'CLOSE', {duration: 3000});
-        })
-      })
-      .catch((err) => {
-        // loading end
-        this.deleteLoading = false;
-        // failed re-login
-        this.snackBar.open(this.message.wrongPassword, 'CLOSE', {duration: 3000});
-      });
+        }
+      }
     });
   }
 
